@@ -1,0 +1,165 @@
+﻿<Page
+    x:Class="Coolapk_UWP.Pages.UserProfile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk_UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Windows.UI.Xaml.Controls"
+    xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc1="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <muxc1:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"/>
+        <DataTemplate x:Name="UserTagTemplate">
+            <muxc:Border
+                Background="{ThemeResource SystemControlAcrylicElementBrush}"
+                CornerRadius="14"
+                VerticalAlignment="Center"
+                Padding="14,4">
+                <TextBlock Foreground="{ThemeResource SystemColorGrayTextBrush}" Text="{Binding}"/>
+            </muxc:Border>
+        </DataTemplate>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <RelativePanel
+            Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource EmptyObjToVisibleConverter}, Mode=OneWay}">
+            <TextBlock
+                x:Name="ErrorMessageTextBlock"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                Foreground="{ThemeResource SystemErrorTextColor}"
+                FontSize="20"
+                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
+            <muxc:Button 
+                x:Name="RetryButton"
+                RelativePanel.Below="ErrorMessageTextBlock"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                Click="RetryButton_Click"
+                Content="重试"/>
+        </RelativePanel>
+        <Grid Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource ReverseEmptyObjToVisibleConverter}, Mode=OneWay}">
+            <ProgressRing IsActive="{x:Bind ViewModel.Busy, Mode=OneWay}"/>
+            <ListView
+                x:Name="ListView"
+                Visibility="{x:Bind ViewModel.Busy, Converter={StaticResource ReverseBoolToVisibilityConverter}, Mode=OneWay}"
+                SelectionMode="None" 
+                IsDoubleTapEnabled="False" 
+                IsHoldingEnabled="False" 
+                IsTapEnabled="False" 
+                DataFetchSize="20" 
+                IncrementalLoadingTrigger="Edge" 
+                IncrementalLoadingThreshold="5"
+                IsItemClickEnabled="False">
+                <ListView.Header>
+                    <cmui:ScrollHeader Mode="QuickReturn">
+                        <Border Padding="12, 0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                            <RelativePanel>
+                                <!-- 用户信息 -->
+                                <muxc:StackPanel
+                            Margin="12,8"
+                            RelativePanel.Above="Pivot"
+                            Orientation="Vertical">
+                                    <PersonPicture
+                                Margin="0,12"
+                                HorizontalAlignment="Left"
+                                ProfilePicture="{x:Bind ViewModel.User.SmallAvatar, Mode=OneWay}" />
+                                    <muxc:TextBlock 
+                                FontWeight="Bold"
+                                Style="{ThemeResource TitleTextBlockStyle}"
+                                Text="{x:Bind ViewModel.User.Username, Mode=OneWay}"/>
+                                    <muxc:TextBlock
+                                Margin="0,12"
+                                Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                Style="{ThemeResource CaptionTextBlockStyle}"
+                                Text="{x:Bind ViewModel.User.Bio, Mode=OneWay}"/>
+                                    <!-- 获赞 关注 粉丝 -->
+                                    <muxc:StackPanel Orientation="Horizontal">
+                                        <muxc:HyperlinkButton
+                                    Padding="0"
+                                    FontWeight="Bold"
+                                    Foreground="{ThemeResource SystemAccentColor}"
+                                    FontSize="18"
+                                    Content="{x:Bind ViewModel.User.GotLike, Mode=OneWay}"/>
+                                        <muxc:TextBlock
+                                    Margin="2,0,16,0"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                    Text="获赞"/>
+
+                                        <muxc:HyperlinkButton
+                                    Padding="0"
+                                    FontWeight="Bold"
+                                    Foreground="{ThemeResource SystemAccentColor}"
+                                    FontSize="18"
+                                    Content="{x:Bind ViewModel.User.Follow, Mode=OneWay}"/>
+                                        <muxc:TextBlock
+                                    Margin="2,0,16,0"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                    Text="关注"/>
+
+                                        <muxc:HyperlinkButton
+                                    Padding="0"
+                                    FontWeight="Bold"
+                                    Foreground="{ThemeResource SystemAccentColor}"
+                                    FontSize="18"
+                                    Content="{x:Bind ViewModel.User.Fans, Mode=OneWay}"/>
+                                        <muxc:TextBlock
+                                    Margin="2,0,16,0"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                    Text="粉丝"/>
+                                    </muxc:StackPanel>
+                                    <!-- User Tag -->
+                                    <ScrollViewer 
+                                HorizontalScrollBarVisibility="Auto"
+                                HorizontalScrollMode="Auto"
+                                IsVerticalScrollChainingEnabled="False"
+                                Margin="0,12,0,0">
+                                        <muxc1:ItemsRepeater
+                                    ItemsSource="{x:Bind ViewModel.UserTag, Mode=OneWay}"
+                                    Layout="{StaticResource HorizontalStackLayout}"
+                                    ItemTemplate="{StaticResource UserTagTemplate}" />
+                                    </ScrollViewer>
+
+                                </muxc:StackPanel>
+                                <!-- Pivot -->
+                                <Pivot x:Name="Pivot"
+                               PivotItemLoaded="Pivot_PivotItemLoaded" 
+                               RelativePanel.AlignBottomWithPanel="True"
+                               ItemsSource="{x:Bind ViewModel.Pivots, Mode=OneWay}">
+                                    <Pivot.HeaderTemplate>
+                                        <DataTemplate>
+                                            <muxc:TextBlock Text="{Binding}" FontSize="16"/>
+                                        </DataTemplate>
+                                    </Pivot.HeaderTemplate>
+                                    <Pivot.ItemTemplate>
+                                        <DataTemplate></DataTemplate>
+                                    </Pivot.ItemTemplate>
+                                </Pivot>
+                            </RelativePanel>
+                        </Border>
+                    </cmui:ScrollHeader>
+                </ListView.Header>
+                <!-- 动态列表 -->
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="fuck"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>
