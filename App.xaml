@@ -3,21 +3,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:viewModels="using:Coolapk_UWP.ViewModels"
-    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    xmlns:local="using:Coolapk_UWP">
+    xmlns:other="using:Coolapk_UWP.Other"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters">
 
     <Application.Resources>
+
         <BitmapImage x:Key="DefaultImage" UriSource="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
 
-        <converters:BoolToObjectConverter x:Key="ReverseBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible"/>
-        <converters:BoolToObjectConverter x:Key="BoolToVisibilityConverter" TrueValue="Visible" FalseValue="Collapsed"/>
-        <converters:EmptyObjectToObjectConverter x:Key="EmptyObjToVisibleConverter" EmptyValue="Collapsed" NotEmptyValue="Visible"/>
-        <converters:EmptyObjectToObjectConverter x:Key="ReverseEmptyObjToVisibleConverter" EmptyValue="Visible" NotEmptyValue="Collapsed"/>
-        <converters:EmptyObjectToObjectConverter x:Key="IsEmptyObjToBoolConverter" EmptyValue="True" NotEmptyValue="False"/>
-        <converters:EmptyObjectToObjectConverter x:Key="ReverseIsEmptyObjToBoolConverter" EmptyValue="False" NotEmptyValue="True"/>
-
-        <!---Converts a source object to the formatted string version using string.Format. The ConverterParameter provides the string format -->
-        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+        <other:IsNotEmptyToTrueConverter x:Key="IsNotEmptyToTrueConverter" />
+        <other:IsEmptyToTrueConverter x:Key="IsEmptyToTrueConverter" />
+        <other:IsEmptyToVisibleConverter x:Key="IsEmptyToVisibleConverter" />
+        <other:IsNotEmptyToVisibleConverter x:Key="IsNotEmptyToVisibleConverter" />
+        <other:IsFalseOrNullToVisibleConverter x:Key="IsFalseOrNullToVisibleConverter" />
+        <other:IsFalseToVisibleConverter x:Key="IsFalseToVisibleConverter" />
+        <other:IsTrueToVisibleConverter x:Key="IsTrueToVisibleConverter"/>
+        
 
         <!--全局使用的ViewModel-->
         <viewModels:AppViewModel x:Name="AppViewModel"/>

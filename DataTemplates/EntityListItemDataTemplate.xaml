@@ -1,0 +1,59 @@
+﻿<ResourceDictionary
+    x:Class="Coolapk_UWP.DataTemplates.EntityListItemDataTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:templates="using:Coolapk_UWP.DataTemplates"
+    xmlns:models="using:Coolapk_UWP.Models">
+
+    <templates:EntityListItemTemplateSelector 
+                x:Key="EntityListItemTemplateSelector"
+                DefaultTemplate="{StaticResource DefaultEntityTemplate}"
+                CarouselCardTemplate="{StaticResource CarouselCardTemplate}"/>
+
+    <!--默认模板-->
+    <DataTemplate x:Key="DefaultEntityTemplate" x:DataType="models:Entity">
+        <StackPanel
+                HorizontalAlignment="Stretch"
+                Background="{ThemeResource SystemControlAcrylicElementBrush}">
+            <TextBlock Text="{x:Bind EntityID}"/>
+            <TextBlock Text="{x:Bind EntityType}"/>
+            <TextBlock Text="{x:Bind EntityTemplate}"/>
+            <TextBlock Text="{x:Bind Title}"/>
+            <TextBlock Text="{x:Bind OtherField}"/>
+            <StackPanel
+                x:Name="pic"
+                x:Load="{x:Bind Pic, Converter={StaticResource IsNotEmptyToTrueConverter}}">
+                <TextBlock Text="图片："/>
+                <Border
+                    CornerRadius="8" 
+                    HorizontalAlignment="Left" 
+                    MaxHeight="200">
+                    <cmui:ImageEx IsCacheEnabled="True" Source="{Binding Pic, FallbackValue={StaticResource DefaultImage}, Mode=OneTime}"/>
+                </Border>
+            </StackPanel>
+            <TextBlock  Text="{x:Bind Url}"/>
+            <TextBlock Text="{x:Bind Lastupdate}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--轮播模板-->
+    <DataTemplate x:Key="CarouselCardTemplate" x:DataType="models:ImageCarouselCard">
+        <cmui:RotatorTile 
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                MaxWidth="780"
+                Height="260"
+                RotationDelay="0:0:4"
+                Direction="Left"
+                ItemsSource="{x:Bind Entities}">
+            <cmui:RotatorTile.ItemTemplate>
+                <DataTemplate x:DataType="models:Entity">
+                    <Border CornerRadius="8">
+                        <Image VerticalAlignment="Stretch" HorizontalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind Pic}" />
+                    </Border>
+                </DataTemplate>
+            </cmui:RotatorTile.ItemTemplate>
+        </cmui:RotatorTile>
+    </DataTemplate>
+</ResourceDictionary>

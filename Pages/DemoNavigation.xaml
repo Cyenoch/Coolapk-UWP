@@ -13,7 +13,6 @@
     <Grid>
         <controls:MasterDetailsView BackButtonBehavior="Automatic"
                                     ItemsSource="{x:Bind NavItems, Mode=TwoWay}"
-                                    NoSelectionContent="Nav a page to view"
                                    >
             <controls:MasterDetailsView.ItemTemplate>
                 <DataTemplate>
@@ -23,6 +22,14 @@
                     </StackPanel>
                 </DataTemplate>
             </controls:MasterDetailsView.ItemTemplate>
+
+            <controls:MasterDetailsView.NoSelectionContent>
+                <StackPanel>
+                    <StackPanel x:Name="fuck">
+                        <TextBlock Text="fuck"/>
+                    </StackPanel>
+                </StackPanel>
+            </controls:MasterDetailsView.NoSelectionContent>
 
             <controls:MasterDetailsView.DetailsTemplate>
                 <DataTemplate x:DataType="pages:DemoNavItem">

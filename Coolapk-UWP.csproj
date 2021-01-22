@@ -98,11 +98,15 @@
     <Compile Include="Controls\DataList.xaml.cs">
       <DependentUpon>DataList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplates\EntityListItemDataTemplate.xaml.cs">
+      <DependentUpon>EntityListItemDataTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Resp.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\TokenHeaderHandler.cs" />
     <Compile Include="Other\AppUtil.cs" />
+    <Compile Include="Other\Converters.cs" />
     <Compile Include="Other\IncrementLoadingCollection.cs" />
     <Compile Include="Other\NotifyPropertyBase.cs" />
     <Compile Include="Pages\DemoFeedList.xaml.cs">
@@ -193,6 +197,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\UserProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\EntityListItemDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

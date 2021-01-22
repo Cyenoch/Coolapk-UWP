@@ -24,5 +24,6 @@ namespace Coolapk_UWP.Models {
         public string Astro { get; set; } // 星座
         public string City { get; set; }
         public string Province { get; set; }
+        public ICollection<Entity> HomeTabCardRows { get; set; }
     }
 }

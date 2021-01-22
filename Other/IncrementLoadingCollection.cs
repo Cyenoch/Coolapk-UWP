@@ -12,6 +12,11 @@ using Windows.Foundation.Metadata;
 using System.ComponentModel;
 
 namespace Coolapk_UWP.Other {
+    public class LoadMoreItemsAsyncFuncConfig {
+        public uint Page { get; set; }
+        public uint? LastItem { get; set; }
+        public uint? FirstItem { get; set; }
+    }
 
     public class IncrementalLoadingEntityCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading where T : Entity {
         public uint Page = 1;
@@ -22,9 +27,9 @@ namespace Coolapk_UWP.Other {
         public Exception Error { get { return _error; } set { Set(ref _error, value); } }
         private bool _loading = false;
         public bool Loading { get { return _loading; } set { Set(ref _loading, value); } }
-        public Func<uint, Task<ICollection<T>>> LoadMoreItemsAsyncFunc;
+        public Func<LoadMoreItemsAsyncFuncConfig, Task<ICollection<T>>> LoadMoreItemsAsyncFunc;
 
-        public IncrementalLoadingEntityCollection(Func<uint, Task<ICollection<T>>> _loadMoreItemsAsyncFunc) {
+        public IncrementalLoadingEntityCollection(Func<LoadMoreItemsAsyncFuncConfig, Task<ICollection<T>>> _loadMoreItemsAsyncFunc) {
             LoadMoreItemsAsyncFunc = _loadMoreItemsAsyncFunc;
         }
 
@@ -32,13 +37,18 @@ namespace Coolapk_UWP.Other {
             return AsyncInfo.Run(async cancelToken => {
                 try {
                     Loading = true;
-                    var loadedItem = await LoadMoreItemsAsyncFunc(count);
-                    var itemList = loadedItem.ToList();
-                    if (itemList.Count < Size) HasMoreItems = false;
+                    var loadedItem = await LoadMoreItemsAsyncFunc(new LoadMoreItemsAsyncFuncConfig {
+                        Page = Page,
+                        LastItem = Count == 0 ? null : this.LastOrDefault(item => item.EntityID > 900)?.EntityID,
+                        FirstItem = Count == 0 ? null : this.FirstOrDefault(item => item.EntityID > 900)?.EntityID,
+                    });
+                    var itemList = loadedItem?.ToList() ?? new List<T>();
+                    var _count = itemList.Count;
+                    if (_count < Size) HasMoreItems = false;
                     for (var i = 0; i < itemList.Count; i++)
                         Add(itemList[i]);
                     Page += 1;
-                    return new LoadMoreItemsResult { Count = (uint)loadedItem.Count };
+                    return new LoadMoreItemsResult { Count = (uint)_count };
                 } catch (Exception err) {
                     Error = err;
                     return new LoadMoreItemsResult { Count = 0 };
@@ -59,19 +69,7 @@ namespace Coolapk_UWP.Other {
 
         // 重写InsertItem使它在插入得时候根据EntityType和EntityTemplate分配正确的Model
         protected override void InsertItem(int index, T entity) {
-            switch (entity.EntityType) {
-                case "card":
-                    switch (entity.EntityTemplate) {
-                        case "configCard":
-                            entity = entity.Cast<ConfigCard>() as T;
-                            break;
-                        case "imageCarouselCard_1":
-                            entity = entity.Cast<ImageCarouselCard>() as T;
-                            break;
-                    }
-                    break;
-            }
-            base.InsertItem(index, entity);
+            base.InsertItem(index, entity.AutoCast() as T);
         }
 
         protected void Set<VT>(ref VT storage, VT value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null) {

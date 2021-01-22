@@ -1,21 +1,10 @@
-﻿using Coolapk_UWP.Other;
-using Coolapk_UWP.ViewModels;
-using System;
+﻿using Coolapk_UWP.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Coolapk_UWP.Pages {
@@ -25,20 +14,7 @@ namespace Coolapk_UWP.Pages {
         public UserProfile() {
             ViewModel = new UserProfileViewModel();
             DataContext = ViewModel;
-            //ViewModel.FeedList = new IncrementalLoadingCollection<string>(async count => {
-            //    return new Collection<string>() {
-            //         Pivot.SelectedItem.ToString(),
-            //         Pivot.SelectedItem.ToString(),
-            //         Pivot.SelectedItem.ToString(),
-            //         Pivot.SelectedItem.ToString(),
-            //         Pivot.SelectedItem.ToString(),
-            //    };
-            //});
             this.InitializeComponent();
-        }
-
-        private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args) {
-            //ViewModel.ClearFeedList();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -56,6 +32,10 @@ namespace Coolapk_UWP.Pages {
 
         private void RetryButton_Click(object sender, RoutedEventArgs e) {
             ViewModel.Reload();
+        }
+
+        private void Pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args) {
+            ViewModel.OnPiovtSelect(args.Item.Content.ToString());
         }
     }
 }

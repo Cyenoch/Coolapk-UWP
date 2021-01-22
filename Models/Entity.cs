@@ -44,6 +44,19 @@ namespace Coolapk_UWP.Models {
             entity = JsonConvert.DeserializeObject<T>(_s);
         }
 
+        public object AutoCast() {
+            switch (EntityType) {
+                case "card":
+                    switch (EntityTemplate) {
+                        case "configCard":
+                            return Cast<ConfigCard>();
+                        case "imageCarouselCard_1":
+                            return Cast<ImageCarouselCard>();
+                    }
+                    break;
+            }
+            return this;
+        }
     }
 
     public class ConfigCard : Entity {

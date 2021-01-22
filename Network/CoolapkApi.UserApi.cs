@@ -17,18 +17,18 @@ namespace Coolapk_UWP.Network {
         //  用户酷图 url	/feed/userCoolPictureFeedList?fragmentTemplate=flex&uid={uid}
         //  用户好物 url	/goods/goodsFeedList?type=default&fragmentTemplate=flex&uid={uid}
         [Get("/v6/page/dataList")]
-        Task<CollectionResp<Entity>> GetDataList(string url, string title = "", uint? page = 1, uint? lastItem = default, uint? firstItem = default);
+        Task<CollectionResp<Entity>> GetDataList(string url, string title = "", uint? page = 1, uint? lastItem = default, uint? firstItem = null);
 
         [Get("/v6/main/indexV8")]
-        Task<CollectionResp<Entity>> GetIndexV8(uint installTime, uint? page = 1, uint? firstLaunch = 0, uint? lastItem = default);
+        Task<CollectionResp<Entity>> GetIndexV8(uint installTime, uint? page = 1, uint? firstLaunch = 0, uint? lastItem = null);
 
         // 获取某人的动态列表
         [Get("/v6/user/feedList")]
         Task<CollectionResp<Entity>> GetUserFeedList(
             uint uid,
             uint page = 1,
-            uint lastItem = default,
-            uint firstItem = default,
+            uint? lastItem = null,
+            uint? firstItem = null,
             uint showAnonymouse = 0, // 未知具体作用
             uint isIncludeTop = 1, // 是否包含置顶动态
             uint showDoing = 1
@@ -36,11 +36,11 @@ namespace Coolapk_UWP.Network {
 
         // 获取某人的图文动态
         [Get("/v6/user/htmlFeedList")]
-        Task<CollectionResp<Entity>> GetUserHtmlFeedList(uint uid, uint page = 1, uint lastItem = default);
+        Task<CollectionResp<Entity>> GetUserHtmlFeedList(uint uid, uint page = 1, uint? lastItem = null);
 
         // 获取某人的问答动态
         [Get("/v6/user/questionAndAnswerList")]
-        Task<CollectionResp<Entity>> GetUserQAList(uint uid, uint page = 1, uint lastItem = default);
+        Task<CollectionResp<Entity>> GetUserQAList(uint uid, uint page = 1, uint? lastItem = null);
 
         // 获取某人的好物单
         [Get("/v6/goodsList/list")]
@@ -54,6 +54,8 @@ namespace Coolapk_UWP.Network {
         [Get("/v6/user/albumlist")]
         Task<CollectionResp<Entity>> GetUserAlbumList(uint uid, uint page = 1);
 
-
+        // 使用当前登录的用户关注某用户
+        [Get("/v6/user/follow")]
+        Task<CollectionResp<Entity>> Follow(uint uid);
     }
 }

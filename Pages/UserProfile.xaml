@@ -9,7 +9,9 @@
     xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc1="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:templates="using:Coolapk_UWP.DataTemplates">
+
     <Page.Resources>
         <muxc1:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"/>
         <DataTemplate x:Name="UserTagTemplate">
@@ -25,11 +27,20 @@
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
         </Style>
+
     </Page.Resources>
 
     <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+
+                <ResourceDictionary.MergedDictionaries>
+                    <templates:EntityListItemDataTemplate />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
         <RelativePanel
-            Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource EmptyObjToVisibleConverter}, Mode=OneWay}">
+            Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource IsNotEmptyToVisibleConverter}, Mode=OneWay}">
             <TextBlock
                 x:Name="ErrorMessageTextBlock"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
@@ -44,28 +55,33 @@
                 Click="RetryButton_Click"
                 Content="重试"/>
         </RelativePanel>
-        <Grid Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource ReverseEmptyObjToVisibleConverter}, Mode=OneWay}">
-            <ProgressRing IsActive="{x:Bind ViewModel.Busy, Mode=OneWay}"/>
+        <RelativePanel Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource IsEmptyToVisibleConverter}, Mode=OneWay}">
+            <TextBlock Margin="24,0" Text="{x:Bind ViewModel.Entities.Error, Mode=OneWay}"/>
             <ListView
                 x:Name="ListView"
-                Visibility="{x:Bind ViewModel.Busy, Converter={StaticResource ReverseBoolToVisibilityConverter}, Mode=OneWay}"
+                RelativePanel.AlignBottomWithPanel="True" 
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
                 SelectionMode="None" 
                 IsDoubleTapEnabled="False" 
                 IsHoldingEnabled="False" 
                 IsTapEnabled="False" 
-                DataFetchSize="20" 
-                IncrementalLoadingTrigger="Edge" 
-                IncrementalLoadingThreshold="5"
-                IsItemClickEnabled="False">
+                DataFetchSize="20"
+                IncrementalLoadingThreshold="0"
+                IncrementalLoadingTrigger="Edge"
+                IsItemClickEnabled="False"
+                ItemTemplateSelector="{StaticResource EntityListItemTemplateSelector}"
+                ItemsSource="{x:Bind ViewModel.Entities, Mode=OneWay}">
                 <ListView.Header>
                     <cmui:ScrollHeader Mode="QuickReturn">
                         <Border Padding="12, 0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
                             <RelativePanel>
                                 <!-- 用户信息 -->
                                 <muxc:StackPanel
-                            Margin="12,8"
-                            RelativePanel.Above="Pivot"
-                            Orientation="Vertical">
+                                Margin="12,8"
+                                RelativePanel.Above="Pivot"
+                                Orientation="Vertical">
                                     <PersonPicture
                                 Margin="0,12"
                                 HorizontalAlignment="Left"
@@ -119,10 +135,10 @@
                                     </muxc:StackPanel>
                                     <!-- User Tag -->
                                     <ScrollViewer 
-                                HorizontalScrollBarVisibility="Auto"
-                                HorizontalScrollMode="Auto"
-                                IsVerticalScrollChainingEnabled="False"
-                                Margin="0,12,0,0">
+                                    HorizontalScrollBarVisibility="Auto"
+                                    HorizontalScrollMode="Auto"
+                                    IsVerticalScrollChainingEnabled="False"
+                                    Margin="0,12,0,0">
                                         <muxc1:ItemsRepeater
                                     ItemsSource="{x:Bind ViewModel.UserTag, Mode=OneWay}"
                                     Layout="{StaticResource HorizontalStackLayout}"
@@ -132,9 +148,9 @@
                                 </muxc:StackPanel>
                                 <!-- Pivot -->
                                 <Pivot x:Name="Pivot"
-                               PivotItemLoaded="Pivot_PivotItemLoaded" 
-                               RelativePanel.AlignBottomWithPanel="True"
-                               ItemsSource="{x:Bind ViewModel.Pivots, Mode=OneWay}">
+                                   PivotItemLoaded="Pivot_PivotItemLoaded" 
+                                   RelativePanel.AlignBottomWithPanel="True"
+                                   ItemsSource="{x:Bind ViewModel.Pivots, Mode=OneWay}">
                                     <Pivot.HeaderTemplate>
                                         <DataTemplate>
                                             <muxc:TextBlock Text="{Binding}" FontSize="16"/>
@@ -151,15 +167,26 @@
                 <!-- 动态列表 -->
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="0,8"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="fuck"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
-        </Grid>
+
+            <Border 
+                Margin="16"
+                CornerRadius="8"
+                Padding="8"
+                Visibility="{x:Bind ViewModel.Entities.Loading, Mode=OneWay, Converter={StaticResource IsTrueToVisibleConverter}}"
+                Background="{ThemeResource SystemControlAcrylicElementBrush}" 
+                RelativePanel.AlignBottomWithPanel="True" 
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True">
+                <ProgressRing IsActive="{x:Bind ViewModel.Entities.Loading, Mode=OneWay}"/>
+            </Border>
+            <ProgressRing IsActive="{x:Bind ViewModel.Busy, Mode=OneWay}"
+                          RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+        </RelativePanel>
     </Grid>
 </Page>

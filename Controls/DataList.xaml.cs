@@ -8,20 +8,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Coolapk_UWP.Controls {
 
-    public class EntityItemTemplateSelector : DataTemplateSelector {
-        public DataTemplate DefaultTemplate { get; set; }
-        public DataTemplate CarouselCardTemplate { get; set; }
-        // 根据item的对象类型分配模板
-        protected override DataTemplate SelectTemplateCore(object item) {
-            switch (item) {
-                case ImageCarouselCard _:
-                    return CarouselCardTemplate;
-                default:
-                    return DefaultTemplate;
-            }
-        }
-    }
-
     public sealed partial class DataList : UserControl, INotifyPropertyChanged {
         public static readonly DependencyProperty titleProperty = DependencyProperty.Register(
             "Title",
@@ -66,20 +52,20 @@ namespace Coolapk_UWP.Controls {
             //DispatcherPriority.DataBind = 8
             _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 if (TouTiaoMode) { // 头条模式 也就是首页 URL https://api.coolapk.com/v6/main/indexV8?page=&firstLaunch=&installTime=&lastItem=
-                    Set(ref Entities, new IncrementalLoadingEntityCollection<Entity>(async _ => {
+                    Set(ref Entities, new IncrementalLoadingEntityCollection<Entity>(async config => {
                         var resp = await App.AppViewModel.CoolapkApis.GetIndexV8(
                             (uint)AppUtil.DateToTimeStamp(DateTime.Now),
-                            Entities.Page,
-                            lastItem: Entities.Count == 0 ? null : Entities.LastOrDefault(item => item.EntityID > 900)?.EntityID
+                            config.Page,
+                            lastItem: config.LastItem
                         );
                         return resp.Data;
                     }), "Entities");
                 } else
-                    Set(ref Entities, new IncrementalLoadingEntityCollection<Entity>(async _ => {
+                    Set(ref Entities, new IncrementalLoadingEntityCollection<Entity>(async config => {
                         var resp = await App.AppViewModel.CoolapkApis.GetDataList(
                             Url,
                             Title,
-                            Entities.Page,
+                            config.Page,
                             lastItem: Entities.Count == 0 ? null : Entities.LastOrDefault(item => item.EntityID > 10000)?.EntityID
                         );
                         return resp.Data;

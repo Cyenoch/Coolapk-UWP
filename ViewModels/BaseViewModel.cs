@@ -65,7 +65,7 @@ namespace Coolapk_UWP.ViewModels {
             }
         }
 
-        public void Reload() {
+        public virtual void Reload() {
             _doOnLoad();
         }
 
