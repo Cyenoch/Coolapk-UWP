@@ -28,6 +28,7 @@ namespace Coolapk_UWP.Models {
         public string Title { get; set; }// 可空
         public string Url { get; set; }// 
         public string Pic { get; set; }// 可空
+        public string Logo { get; set; } //
 
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTime Lastupdate { get; set; } = DateTime.Now;
@@ -36,35 +37,55 @@ namespace Coolapk_UWP.Models {
 
         public T Cast<T>() where T : Entity {
             var _s = JsonConvert.SerializeObject(this);
-            return JsonConvert.DeserializeObject<T>(_s);
+            var entity = JsonConvert.DeserializeObject<T>(_s);
+            if (entity.Entities != null && entity.Entities.Count > 0) {
+                var temp = new Entity[entity.Entities.Count()];
+                entity.Entities.CopyTo(temp, 0);
+                entity.Entities.Clear();
+                foreach (var child in temp) {
+                    entity.Entities.Add(child.AutoCast() as Entity);
+                }
+            }
+            return entity;
         }
 
         public void Cast<T>(out T entity) where T : Entity {
-            var _s = JsonConvert.SerializeObject(this);
-            entity = JsonConvert.DeserializeObject<T>(_s);
+            entity = Cast<T>();
         }
 
         public object AutoCast() {
             switch (EntityType) {
+                case "user":
+                    return Cast<User>();
+                case "product":
+                    // 暂时默认
+                    break;
+                case "apk":
+                    return Cast<Apk>();
                 case "card":
                     switch (EntityTemplate) {
                         case "configCard":
                             return Cast<ConfigCard>();
                         case "imageCarouselCard_1":
                             return Cast<ImageCarouselCard>();
+                        case "iconScrollCard":
+                            return Cast<IconScrollCard>();
+                        case "titleCard":
+                            return Cast<TitleCard>();
                     }
                     break;
             }
             return this;
         }
     }
+    public class TitleCard : Entity { }
 
-    public class ConfigCard : Entity {
+    public class ConfigCard : Entity { }
 
-    }
+    public class ImageCarouselCard : Entity { }
 
-    public class ImageCarouselCard : Entity {
-        public double AspectHeight(double width) => width * (1080d / 360d);
-    }
+    public class IconScrollCard : Entity { }
+
+    public class Apk : Entity { }
 
 }

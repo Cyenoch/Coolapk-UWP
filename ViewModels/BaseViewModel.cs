@@ -48,9 +48,9 @@ namespace Coolapk_UWP.ViewModels {
             }
         }
 
-        public AsyncLoadViewModel() {
-            _doOnLoad();
-        }
+        //public AsyncLoadViewModel() {
+        //    _doOnLoad();
+        //}
 
         private async void _doOnLoad() {
             Busy = true;

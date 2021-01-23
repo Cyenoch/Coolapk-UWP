@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Coolapk_UWP.ViewModels {
 
     public class UserProfileViewModel : AsyncLoadViewModel<User> {
+        public int? Uid { get; set; }
 
         public ObservableCollection<string> Pivots = new ObservableCollection<string>() {
             "主页",
@@ -94,8 +95,9 @@ namespace Coolapk_UWP.ViewModels {
         public IncrementalLoadingEntityCollection<Entity> Entities;
 
         public override async Task<User> OnLoadAsync() {
+            if (Uid == null) Uid = 1412645;// demo default
             await Task.Delay(1000);
-            var data = (await CoolapkApis.GetUser(1412645)).Data;
+            var data = (await CoolapkApis.GetUser((uint)Uid)).Data;
             OnPiovtSelect();
             return data;
         }

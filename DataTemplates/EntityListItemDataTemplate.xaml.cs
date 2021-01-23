@@ -11,11 +11,17 @@ namespace Coolapk_UWP.DataTemplates {
     public class EntityListItemTemplateSelector : DataTemplateSelector {
         public DataTemplate DefaultTemplate { get; set; }
         public DataTemplate CarouselCardTemplate { get; set; }
+        public DataTemplate IconScrollCardTemplate { get; set; }
+        public DataTemplate TitleCardTemplate { get; set; }
         // 根据item的对象类型分配模板
         protected override DataTemplate SelectTemplateCore(object item) {
             switch (item) {
                 case ImageCarouselCard _:
                     return CarouselCardTemplate;
+                case IconScrollCard _:
+                    return IconScrollCardTemplate;
+                case TitleCard _:
+                    return TitleCardTemplate;
                 default:
                     return DefaultTemplate;
             }
@@ -25,6 +31,10 @@ namespace Coolapk_UWP.DataTemplates {
     public partial class EntityListItemDataTemplate : ResourceDictionary {
         public EntityListItemDataTemplate() {
             this.InitializeComponent();
+        }
+
+        private void GoToMore_Click(object sender, RoutedEventArgs e) {
+
         }
     }
 }

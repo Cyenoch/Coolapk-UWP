@@ -101,6 +101,9 @@
     <Compile Include="DataTemplates\EntityListItemDataTemplate.xaml.cs">
       <DependentUpon>EntityListItemDataTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplates\IconScrollCardTemplates.xaml.cs">
+      <DependentUpon>IconScrollCardTemplates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Resp.cs" />
     <Compile Include="Models\User.cs" />
@@ -181,6 +184,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Controls\DataList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\IconScrollCardTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,16 +6,22 @@
     xmlns:templates="using:Coolapk_UWP.DataTemplates"
     xmlns:models="using:Coolapk_UWP.Models">
 
+    <ResourceDictionary.MergedDictionaries>
+        <templates:IconScrollCardTemplates />
+    </ResourceDictionary.MergedDictionaries>
+
     <templates:EntityListItemTemplateSelector 
-                x:Key="EntityListItemTemplateSelector"
-                DefaultTemplate="{StaticResource DefaultEntityTemplate}"
-                CarouselCardTemplate="{StaticResource CarouselCardTemplate}"/>
+        x:Key="EntityListItemTemplateSelector"
+        DefaultTemplate="{StaticResource DefaultEntityTemplate}"
+        CarouselCardTemplate="{StaticResource CarouselCardTemplate}"
+        IconScrollCardTemplate="{StaticResource IconScrollCardTemplate}"
+        TitleCardTemplate="{StaticResource TitleCardTemplate}"/>
 
     <!--默认模板-->
     <DataTemplate x:Key="DefaultEntityTemplate" x:DataType="models:Entity">
         <StackPanel
-                HorizontalAlignment="Stretch"
-                Background="{ThemeResource SystemControlAcrylicElementBrush}">
+            HorizontalAlignment="Stretch"
+            Background="{ThemeResource SystemControlAcrylicElementBrush}">
             <TextBlock Text="{x:Bind EntityID}"/>
             <TextBlock Text="{x:Bind EntityType}"/>
             <TextBlock Text="{x:Bind EntityTemplate}"/>
@@ -34,6 +40,15 @@
             </StackPanel>
             <TextBlock  Text="{x:Bind Url}"/>
             <TextBlock Text="{x:Bind Lastupdate}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TitleCardTemplate" x:DataType="models:Entity">
+        <StackPanel HorizontalAlignment="Stretch" Margin="20,10,0,0" Orientation="Horizontal">
+            <TextBlock Text="{x:Bind Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <HyperlinkButton HorizontalAlignment="Right" x:Name="GoToMore" Margin="10,0,0,0" Click="GoToMore_Click">
+                <TextBlock Text="查看更多" />
+            </HyperlinkButton>
         </StackPanel>
     </DataTemplate>
 

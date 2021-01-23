@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Coolapk_UWP.Models {
-    public class User {
+    public class User : Entity {
         public uint Uid { get; set; }
         public string Username { get; set; }
         public string Bio { get; set; }

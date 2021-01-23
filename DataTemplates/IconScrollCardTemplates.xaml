@@ -1,0 +1,114 @@
+﻿<ResourceDictionary
+    x:Class="Coolapk_UWP.DataTemplates.IconScrollCardTemplates"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:templates="using:Coolapk_UWP.DataTemplates"
+    xmlns:models="using:Coolapk_UWP.Models">
+
+    <!--带标题 横向滚动的item template selector-->
+    <templates:IconScrollCardItemTemplateSelector 
+        x:Key="IconScrollCardItemTemplateSelector"
+        DefaultTemplate="{StaticResource DefaultIconScrollCardItemTemplate}"
+        UserCardTemplate="{StaticResource UserIconScrollCardItemTemplate}"
+        ApkCardTemplate="{StaticResource ApkScrollCardItemTemplate}"/>
+
+    <!--带标题 横向滚动的-->
+    <DataTemplate x:Key="IconScrollCardTemplate" x:DataType="models:IconScrollCard">
+        <StackPanel Margin="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Stretch" Margin="20,10,0,10" Orientation="Horizontal">
+                <TextBlock Text="{x:Bind Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                <HyperlinkButton HorizontalAlignment="Right" x:Name="GoToMore" Margin="10,0,0,0" Click="GoToMore_Click">
+                    <TextBlock Text="查看更多" />
+                </HyperlinkButton>
+            </StackPanel>
+            <FlipView
+                Height="150"
+                Tapped="FlipView_Tapped"
+                ItemsSource="{x:Bind Entities}"
+                ItemTemplateSelector="{StaticResource IconScrollCardItemTemplateSelector}"
+                Background="Transparent">
+                <FlipView.ItemContainerStyle>
+                    <Style TargetType="FlipViewItem">
+                        <Setter Property="MaxWidth" Value="100"/>
+                        <Setter Property="Margin" Value="20,0,0,0"/>
+                    </Style>
+                </FlipView.ItemContainerStyle>
+            </FlipView>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--默认item-->
+    <DataTemplate x:Key="DefaultIconScrollCardItemTemplate" x:DataType="models:Entity">
+        <Border
+            CornerRadius="10">
+            <StackPanel
+                Orientation="Vertical"
+                Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                Padding="0,10,0,0">
+                <PersonPicture
+                    HorizontalAlignment="Center"
+                    Height="80"
+                    Width="80"
+                    ProfilePicture="{x:Bind Pic}"/>
+                <TextBlock 
+                    Margin="0,10,0,0"
+                    Width="80"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="{x:Bind Title}" 
+                    Style="{ThemeResource BodyTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!--user item-->
+    <DataTemplate x:Key="UserIconScrollCardItemTemplate" x:DataType="models:User">
+        <Border
+            CornerRadius="10">
+            <StackPanel
+                Orientation="Vertical"
+                Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                Padding="0,10,0,0">
+                <PersonPicture
+                    HorizontalAlignment="Center"
+                    Height="80"
+                    Width="80"
+                    ProfilePicture="{x:Bind SmallAvatar}"/>
+                <TextBlock 
+                    Margin="0,10,0,0"
+                    Width="80"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="{x:Bind Username}" 
+                    Style="{ThemeResource BodyTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+
+    <!--apk item-->
+    <DataTemplate x:Key="ApkScrollCardItemTemplate" x:DataType="models:Entity">
+        <Border
+            CornerRadius="10">
+            <StackPanel
+                Orientation="Vertical"
+                Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                Padding="0,10,0,0">
+                <cmui:ImageEx
+                    CornerRadius="10"
+                    HorizontalAlignment="Center"
+                    Height="80"
+                    Width="80"
+                    Source="{x:Bind Logo}"/>
+                <TextBlock 
+                    Margin="0,10,0,0"
+                    Width="80"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="{x:Bind Title}" 
+                    Style="{ThemeResource BodyTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+</ResourceDictionary>

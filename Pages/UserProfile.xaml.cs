@@ -20,14 +20,10 @@ namespace Coolapk_UWP.Pages {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var parameters = e.Parameter;
-            //if (parameters != null) {
-            //    var messageDialog = new MessageDialog($"param is {parameters}");
-            //    _ = messageDialog.ShowAsync();
-            //} else {
-
-            //    var messageDialog = new MessageDialog($"no params");
-            //    _ = messageDialog.ShowAsync();
-            //}
+            if (parameters != null && parameters is int) {
+                ViewModel.Uid = parameters as int?;
+            }
+            ViewModel.Reload();
         }
 
         private void RetryButton_Click(object sender, RoutedEventArgs e) {
