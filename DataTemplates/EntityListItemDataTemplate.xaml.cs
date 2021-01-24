@@ -8,13 +8,22 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Coolapk_UWP.DataTemplates {
+    /// <summary>
+    /// 注册模板需要做件事情
+    /// 1: 在Models文件夹下创建继承Entity的类 比如 public class Example:Entity {}
+    /// 2: 在EntityListItemTemplateSelector类中创建一个 DataTemplate 模板名 {get;set;} 字段， 比如 public DataTemplate ExampleTemplate {get;set;}
+    /// 3: 在EntityListItemDatatempalte.xaml中创建一个DataTemplate x:Key自己设，比如<DataTemplate x:Key="ExampleCardTemplate">模板不要是空的</DataTemplate
+    /// 4: 在EntityListItemDatatempalte.xaml中的templates:EntityListItemTemplateSelector 下注册你的模板，如: ExampleTemplate(这个是第二部创建的字段的名称)="{StaticResource ExampleCardTemplate}"
+    /// 5: 在EntityListItemTemplateSelector类下的SelectTemplateCore方法中的switch块中添加一个case Example value: return ExampleTemplate(这个是第二部创建的字段的名字);
+    /// </summary>
     public class EntityListItemTemplateSelector : DataTemplateSelector {
         public DataTemplate DefaultTemplate { get; set; }
-        public DataTemplate CarouselCardTemplate { get; set; }
-        public DataTemplate IconScrollCardTemplate { get; set; }
-        public DataTemplate TitleCardTemplate { get; set; }
+        public DataTemplate CarouselCardTemplate { get; set; } // 轮播
+        public DataTemplate IconScrollCardTemplate { get; set; } // 
+        public DataTemplate TitleCardTemplate { get; set; } // 
+        public FeedCardTemplateSelector FeedCardTemplateSelector { get; set; }
         // 根据item的对象类型分配模板
-        protected override DataTemplate SelectTemplateCore(object item) {
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject c) {
             switch (item) {
                 case ImageCarouselCard _:
                     return CarouselCardTemplate;
@@ -22,6 +31,8 @@ namespace Coolapk_UWP.DataTemplates {
                     return IconScrollCardTemplate;
                 case TitleCard _:
                     return TitleCardTemplate;
+                case Feed _:
+                    return FeedCardTemplateSelector.SelectTemplate(item, c);
                 default:
                     return DefaultTemplate;
             }

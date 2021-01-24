@@ -101,10 +101,14 @@
     <Compile Include="DataTemplates\EntityListItemDataTemplate.xaml.cs">
       <DependentUpon>EntityListItemDataTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplates\FeedCardTemplates.xaml.cs">
+      <DependentUpon>FeedCardTemplates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataTemplates\IconScrollCardTemplates.xaml.cs">
       <DependentUpon>IconScrollCardTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\Feed.cs" />
     <Compile Include="Models\Resp.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\TokenHeaderHandler.cs" />
@@ -184,6 +188,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Controls\DataList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\FeedCardTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

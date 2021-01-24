@@ -9,20 +9,21 @@ using Windows.UI.Xaml.Controls;
 namespace Coolapk_UWP.Controls {
 
     public sealed partial class DataList : UserControl, INotifyPropertyChanged {
+        // 对于GetDataList，需要Title参数
         public static readonly DependencyProperty titleProperty = DependencyProperty.Register(
             "Title",
             typeof(string),
             typeof(DataList),
             null
         );
-
+        // 
         public static readonly DependencyProperty urlProperty = DependencyProperty.Register(
             "Url",
             typeof(string),
             typeof(DataList),
             null
         );
-
+        // 如果是头条页，则用另一个请求接口 复用该组件
         public static readonly DependencyProperty toutiaoMode = DependencyProperty.Register(
             "TouTiao",
             typeof(bool),

@@ -36,8 +36,10 @@ namespace Coolapk_UWP.Models {
         virtual public IList<Entity> Entities { get; set; } = new List<Entity>();
 
         public T Cast<T>() where T : Entity {
+            // 根据目标类型重新解析实体，OtherField包含了Entity未解析的字段
             var _s = JsonConvert.SerializeObject(this);
             var entity = JsonConvert.DeserializeObject<T>(_s);
+            // 遍历Entities然后转换类型 重新解析
             if (entity.Entities != null && entity.Entities.Count > 0) {
                 var temp = new Entity[entity.Entities.Count()];
                 entity.Entities.CopyTo(temp, 0);
@@ -49,9 +51,7 @@ namespace Coolapk_UWP.Models {
             return entity;
         }
 
-        public void Cast<T>(out T entity) where T : Entity {
-            entity = Cast<T>();
-        }
+        public void Cast<T>(out T entity) where T : Entity => entity = Cast<T>();
 
         public object AutoCast() {
             switch (EntityType) {
@@ -62,6 +62,16 @@ namespace Coolapk_UWP.Models {
                     break;
                 case "apk":
                     return Cast<Apk>();
+                case "feed":
+                    switch (EntityTemplate) {
+                        case "feed":
+                            return Cast<Feed>();
+                        case "feedCover":
+                            return Cast<FeedCover>();
+                        default:
+                            break;
+                    }
+                    break;
                 case "card":
                     switch (EntityTemplate) {
                         case "configCard":

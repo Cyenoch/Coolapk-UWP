@@ -1,0 +1,15 @@
+﻿<ResourceDictionary
+    x:Class="Coolapk_UWP.DataTemplates.FeedCardTemplates"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:templates="using:Coolapk_UWP.DataTemplates"
+    xmlns:models="using:Coolapk_UWP.Models"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <templates:FeedCardTemplateSelector 
+        x:Key="FeedCardTemplateSelector"
+        DefaultTemplate="{StaticResource DefaultFeedCardTemplate}"/>
+
+    <DataTemplate x:Key="DefaultFeedCardTemplate" x:DataType="models:Feed">
+        <TextBlock Text="默认动态模板..."/>
+    </DataTemplate>
+</ResourceDictionary>
