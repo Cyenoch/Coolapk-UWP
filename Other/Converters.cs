@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Coolapk_UWP.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +9,41 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace Coolapk_UWP.Other {
+    // 下面是json的converter
+    public class FeedTypeConverter : JsonConverter {
+        public override bool CanConvert(Type objectType) => true;
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+            if (reader.Value == null) return FeedType.Default;
+
+            try {
+                var e = Enum.Parse(typeof(FeedType), Enum.GetName(typeof(FeedType), reader.Value));
+                return e;
+            } catch (Exception _) {
+                return FeedType.Unknow;
+            }
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+            writer.WriteValue((int)value);
+        }
+    }
+
+    public class JsonIntToBoolConverter : JsonConverter {
+        public override bool CanConvert(Type objectType) => true;
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+            if (reader.Value == null) return false;
+            return (long)reader.Value == 1;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+            if ((bool)value == true) writer.WriteValue(1); else writer.WriteValue(0);
+        }
+    }
+
+    // 下面是xaml的converter
+
     /// <summary>
     /// 如果不是空则返回True
     /// </summary>

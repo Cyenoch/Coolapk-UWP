@@ -10,6 +10,12 @@
         DefaultTemplate="{StaticResource DefaultFeedCardTemplate}"/>
 
     <DataTemplate x:Key="DefaultFeedCardTemplate" x:DataType="models:Feed">
-        <TextBlock Text="默认动态模板..."/>
+        <StackPanel>
+            <TextBlock Text="默认动态模板..."/>
+            <TextBlock Text="{x:Bind FeedType}"/>
+            <TextBlock Text="{x:Bind Type}"/>
+            <TextBlock Text="{x:Bind IsHtmlArticle}"/>
+            <TextBlock Text="{x:Bind IsStickTop}"/>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

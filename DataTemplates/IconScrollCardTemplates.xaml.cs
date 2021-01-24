@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Coolapk_UWP.DataTemplates {
 
@@ -21,6 +22,8 @@ namespace Coolapk_UWP.DataTemplates {
                     return UserCardTemplate;
                 case Apk _:
                     return ApkCardTemplate;
+                case Product _:
+                    return ApkCardTemplate;
                 default:
                     return DefaultTemplate;
             }
@@ -28,6 +31,8 @@ namespace Coolapk_UWP.DataTemplates {
     }
 
     public partial class IconScrollCardTemplates : ResourceDictionary {
+        ScrollViewer _InternalListScrollViewer;
+
         public IconScrollCardTemplates() {
             this.InitializeComponent();
         }
@@ -40,8 +45,9 @@ namespace Coolapk_UWP.DataTemplates {
 
         }
 
-        private void FlipView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            Entity selectedItem = (sender as FlipView).SelectedItem as Entity;
+        private void ListView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            FrameworkElement ele = (FrameworkElement)e.OriginalSource;
+            Entity selectedItem = ele.DataContext as Entity;
             var goUrl = selectedItem.Url;
             if (goUrl != null) {
                 if (goUrl.StartsWith("/u/")) {

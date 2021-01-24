@@ -58,7 +58,7 @@ namespace Coolapk_UWP.Models {
                 case "user":
                     return Cast<User>();
                 case "product":
-                    // 暂时默认
+                    return Cast<Product>();
                     break;
                 case "apk":
                     return Cast<Apk>();
@@ -97,5 +97,7 @@ namespace Coolapk_UWP.Models {
     public class IconScrollCard : Entity { }
 
     public class Apk : Entity { }
+
+    public class Product : Entity { }
 
 }
