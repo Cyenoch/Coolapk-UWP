@@ -94,12 +94,12 @@ namespace Coolapk_UWP.ViewModels {
 
         public IncrementalLoadingEntityCollection<Entity> Entities;
 
-        public override async Task<User> OnLoadAsync() {
+        public override async Task<RespBase<User>> OnLoadAsync() {
             if (Uid == null) Uid = 1412645;// demo default
             await Task.Delay(1000);
-            var data = (await CoolapkApis.GetUser((uint)Uid)).Data;
+            var resp = await CoolapkApis.GetUser((uint)Uid);
             OnPiovtSelect();
-            return data;
+            return resp;
         }
 
         override public string[] NotifyChangedProperties() {

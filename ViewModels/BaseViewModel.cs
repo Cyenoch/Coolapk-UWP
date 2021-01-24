@@ -1,4 +1,5 @@
-﻿using Coolapk_UWP.Network;
+﻿using Coolapk_UWP.Models;
+using Coolapk_UWP.Network;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace Coolapk_UWP.ViewModels {
 
 
     public interface IAsyncLoadViewModel<T> {
-        Task<T> OnLoadAsync();
+        Task<RespBase<T>> OnLoadAsync();
         string[] NotifyChangedProperties();
     }
 
@@ -57,7 +58,7 @@ namespace Coolapk_UWP.ViewModels {
             Data = default;
             ErrorMessage = null;
             try {
-                Data = await OnLoadAsync();
+                Data = (await OnLoadAsync()).Data;
             } catch (Exception exception) {
                 ErrorMessage = exception.Message;
             } finally {
@@ -69,8 +70,9 @@ namespace Coolapk_UWP.ViewModels {
             _doOnLoad();
         }
 
-        public abstract Task<T> OnLoadAsync();
+        public abstract Task<RespBase<T>> OnLoadAsync();
 
+        // Data字段更新时，同时有哪些字段也要通知改变
         virtual public string[] NotifyChangedProperties() {
             return new string[] { };
         }

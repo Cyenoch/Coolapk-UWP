@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Coolapk_UWP</RootNamespace>
     <AssemblyName>Coolapk_UWP</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -98,6 +98,9 @@
     <Compile Include="Controls\DataList.xaml.cs">
       <DependentUpon>DataList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MyRichTextBlock.xaml.cs">
+      <DependentUpon>MyRichTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataTemplates\EntityListItemDataTemplate.xaml.cs">
       <DependentUpon>EntityListItemDataTemplate.xaml</DependentUpon>
     </Compile>
@@ -109,8 +112,11 @@
     </Compile>
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Feed.cs" />
+    <Compile Include="Models\Feed.Message.cs" />
     <Compile Include="Models\Resp.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Network\CoolapkApi.FeedApi.cs" />
+    <Compile Include="Network\CoolapkApi.MainApi.cs" />
     <Compile Include="Network\TokenHeaderHandler.cs" />
     <Compile Include="Other\AppUtil.cs" />
     <Compile Include="Other\Converters.cs" />
@@ -125,12 +131,16 @@
     <Compile Include="Pages\DemoNavigation.xaml.cs">
       <DependentUpon>DemoNavigation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\FeedDetail.xaml.cs">
+      <DependentUpon>FeedDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\UserProfile.xaml.cs">
       <DependentUpon>UserProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\FeedDetailViewModel.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +167,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.11.29</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.11</Version>
     </PackageReference>
@@ -191,6 +204,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MyRichTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataTemplates\FeedCardTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,6 +227,10 @@
     <Page Include="Pages\DemoNavigation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\FeedDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\UserProfile.xaml">
       <SubType>Designer</SubType>

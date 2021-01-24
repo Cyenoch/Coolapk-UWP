@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:templates="using:Coolapk_UWP.DataTemplates"
     xmlns:models="using:Coolapk_UWP.Models"
+    xmlns:controls="using:Coolapk_UWP.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <templates:FeedCardTemplateSelector 
@@ -14,6 +15,7 @@
             <TextBlock Text="默认动态模板..."/>
             <TextBlock Text="{x:Bind FeedType}"/>
             <TextBlock Text="{x:Bind Type}"/>
+            <controls:MyRichTextBlock Text="{x:Bind Message}" Wrap="False"/>
             <TextBlock Text="{x:Bind IsHtmlArticle}"/>
             <TextBlock Text="{x:Bind IsStickTop}"/>
         </StackPanel>

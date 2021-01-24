@@ -1,6 +1,5 @@
 ﻿using Coolapk_UWP.Other;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +32,14 @@ namespace Coolapk_UWP.Models {
     }
 
     public class FeedCover : Feed {
+    }
+
+    public class FeedDetail : Feed {
+        /// <summary>
+        /// 仅FeedCover该字段才不是null
+        /// </summary>
+        [JsonProperty("message_raw_output")]
+        [JsonConverter(typeof(MessageRawConverter))]
+        public ICollection<MessageRawStructBase> MessageRaw { get; set; }
     }
 }

@@ -43,6 +43,12 @@ namespace Coolapk_UWP.Pages {
             {
                 Name = "Feed List Demo",
                 PageType = typeof(DemoFeedList),
+            },
+
+            new DemoNavItem
+            {
+                Name = "Feed Detail Demo (HtmlArticle)",
+                PageType = typeof(FeedDetail),
             }
         };
 

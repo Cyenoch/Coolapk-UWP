@@ -17,10 +17,7 @@
         <other:IsFalseOrNullToVisibleConverter x:Key="IsFalseOrNullToVisibleConverter" />
         <other:IsFalseToVisibleConverter x:Key="IsFalseToVisibleConverter" />
         <other:IsTrueToVisibleConverter x:Key="IsTrueToVisibleConverter"/>
-        
-
-        <!--全局使用的ViewModel-->
-        <viewModels:AppViewModel x:Name="AppViewModel"/>
+       
     </Application.Resources>
 
 </Application>

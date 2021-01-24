@@ -11,15 +11,11 @@ namespace Coolapk_UWP.Models {
         public string Error { get; set; }
         public string Message { get; set; } // 一般错误信息
         public string ForwardUrl { get; set; } // 一般没有 未登录时=/account/login
+        [JsonProperty(PropertyName = "data")]
+        public virtual T Data { get; set; }
     }
 
-    public class Resp<T> : RespBase<T> {
-        [JsonProperty(PropertyName = "data")]
-        public T Data { get; set; }
-    }
+    public class Resp<T> : RespBase<T> { }
 
-    public class CollectionResp<T>: RespBase<T> {
-        [JsonProperty(PropertyName = "data")]
-        public ICollection<T> Data { get; set; }
-    }
+    public class CollectionResp<T> : RespBase<ICollection<T>> {}
 }

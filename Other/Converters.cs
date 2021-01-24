@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,34 @@ using Windows.UI.Xaml.Data;
 
 namespace Coolapk_UWP.Other {
     // 下面是json的converter
+    /// <summary>
+    /// 转换MessageRaw
+    /// </summary>
+    public class MessageRawConverter : JsonConverter {
+        public override bool CanConvert(Type objectType) => true;
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+            var result = new Collection<MessageRawStructBase>();
+            var value = reader.Value?.ToString();
+            if (value == null) return result;
+            try {
+                var baseStruct = JsonConvert.DeserializeObject<MessageRawStructBase[]>(value);
+                foreach (var child in baseStruct) {
+                    result.Add(child.AutoCast());
+                }
+            } catch (Exception _) {
+            }
+            return result;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 转换FeedType
+    /// </summary>
     public class FeedTypeConverter : JsonConverter {
         public override bool CanConvert(Type objectType) => true;
 
@@ -29,6 +58,9 @@ namespace Coolapk_UWP.Other {
         }
     }
 
+    /// <summary>
+    /// 将json中int转成bool: 1=>true otherwise false
+    /// </summary>
     public class JsonIntToBoolConverter : JsonConverter {
         public override bool CanConvert(Type objectType) => true;
 
