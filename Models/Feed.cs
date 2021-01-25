@@ -41,5 +41,8 @@ namespace Coolapk_UWP.Models {
         [JsonProperty("message_raw_output")]
         [JsonConverter(typeof(MessageRawConverter))]
         public ICollection<MessageRawStructBase> MessageRaw { get; set; }
+
+        [JsonProperty("message_cover")]
+        public string Cover { get; set; }
     }
 }

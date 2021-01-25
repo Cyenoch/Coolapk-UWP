@@ -7,23 +7,110 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:Coolapk_UWP.ViewModels"
     xmlns:controls="using:Coolapk_UWP.Controls"
+    xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:mctrls="using:Coolapk_UWP.Controls"
+    xmlns:Triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
         <viewModels:FeedDetailViewModel/>
     </Page.DataContext>
 
+    <Page.BottomAppBar>
+        <CommandBar >
+            <AppBarButton Label="点赞" Icon="Like"/>
+            <AppBarButton Label="转发" Icon="Share"/>
+            <AppBarToggleButton Label="评论" Icon="Comment" IsChecked="{x:Bind RootSplitView.IsPaneOpen, Mode=TwoWay}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
     <Page.Resources>
         <DataTemplate x:Key="FeedDetailTemplate" x:DataType="viewModels:FeedDetailViewModel">
-            <controls:MyRichTextBlock 
-                Text="{x:Bind Data.Message, Mode=OneWay}"
-                DefaultTemplate="{StaticResource DefaultFeedDetailTemplate}"/>
+            <ListView
+                HorizontalAlignment="Stretch"
+                SelectionMode="None"
+                IsItemClickEnabled="False">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListViewItem>
+                    <cmui:ImageEx
+                        x:Name="CoverStackPanel"
+                        HorizontalAlignment="Stretch"
+                        x:Load="{x:Bind Data.IsHtmlArticle}"
+                        Source="{x:Bind Data.Cover}"/>
+                </ListViewItem>
+                <ListViewItem>
+                    <controls:MyRichTextBlock
+                        HorizontalAlignment="Stretch"
+                        Text="{x:Bind Data.Message}"/>
+                </ListViewItem>
+            </ListView>
         </DataTemplate>
     </Page.Resources>
-    
-    <controls:AsyncLoadStateControl
-            IsLoading="{x:Bind ViewModel.Busy, Mode=OneWay}"
-            ErrorMessage="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
-            Retry="AsyncLoadStateControl_Retry"
-            DataLoadedTemplate="{StaticResource FeedDetailTemplate}"/>
+    <RelativePanel>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="fuck">
+                <VisualState x:Name="a">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.OpenPaneLength" Value="356"/>
+                        <Setter Target="RootSplitView.DisplayMode" Value="Inline"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="b">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.OpenPaneLength" Value="456"/>
+                        <Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="c">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <SplitView
+            x:Name="RootSplitView"
+            PaneBackground="{ThemeResource SystemControlAcrylicElementBrush}"
+            IsPaneOpen="False"
+            OpenPaneLength="356"
+            PanePlacement="Right"
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True">
+            <SplitView.Content>
+                <controls:AsyncLoadStateControl
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    IsLoading="{x:Bind ViewModel.Busy, Mode=OneWay}"
+                    ErrorMessage="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                    Retry="AsyncLoadStateControl_Retry"
+                    DataLoadedTemplate="{StaticResource FeedDetailTemplate}"/>
+            </SplitView.Content>
+            <SplitView.Pane>
+                <mctrls:DataList
+                    x:Name="DataListView"
+                    Title="热榜"
+                    Url="V9_HOME_TAB_RANKING"/>
+            </SplitView.Pane>
+        </SplitView>
+    </RelativePanel>
 </Page>

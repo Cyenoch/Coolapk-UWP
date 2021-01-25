@@ -69,7 +69,7 @@ namespace Coolapk_UWP.Controls {
         }
 
         public void LoadContent() {
-            if (TemplateSelector == null) TemplateSelector = (DataTemplateSelector)Resources["DefaultAsyncLoadStateTemplateSelector"];
+            if (TemplateSelector == null) TemplateSelector = (AsyncLoadStateTemplateSelector)Resources["DefaultAsyncLoadStateTemplateSelector"];
             var tempContent = (FrameworkElement)TemplateSelector.SelectTemplate(this, this).LoadContent();
             // 仅在有错误的情况下，设置DataContext以便于错误页的信息展示
             if (ErrorMessage != null && ErrorMessage.Length > 0) tempContent.SetValue(FrameworkElement.DataContextProperty, this);

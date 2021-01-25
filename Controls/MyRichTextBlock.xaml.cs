@@ -26,12 +26,6 @@ namespace Coolapk_UWP.Controls {
             typeof(MyRichTextBlock),
             new PropertyMetadata("", new PropertyChangedCallback(OnTextChanged))
         );
-        public static readonly DependencyProperty DefaultTemplateProperty = DependencyProperty.Register(
-            "DefaultTemplate",
-            typeof(DataTemplate),
-            typeof(MyRichTextBlock),
-            null
-        );
         public static readonly DependencyProperty WrapProperty = DependencyProperty.Register(
             "Wrap",
             typeof(bool),
@@ -55,7 +49,6 @@ namespace Coolapk_UWP.Controls {
             null
         );
 
-        public DataTemplate DefaultTemplate { get { return (DataTemplate)GetValue(DefaultTemplateProperty); } set { SetValue(DefaultTemplateProperty, value); } }
         public string Text {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }

@@ -14,8 +14,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace Coolapk_UWP.Pages {
     public sealed partial class FeedDetail : Page {
         public FeedDetailViewModel ViewModel => DataContext as FeedDetailViewModel;
