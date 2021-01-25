@@ -17,6 +17,7 @@
         <other:IsFalseOrNullToVisibleConverter x:Key="IsFalseOrNullToVisibleConverter" />
         <other:IsFalseToVisibleConverter x:Key="IsFalseToVisibleConverter" />
         <other:IsTrueToVisibleConverter x:Key="IsTrueToVisibleConverter"/>
+        <other:NegateBoolConverter x:Key="NegateBoolConverter"/>
        
     </Application.Resources>
 

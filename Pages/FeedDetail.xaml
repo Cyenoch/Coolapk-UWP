@@ -9,6 +9,8 @@
     xmlns:controls="using:Coolapk_UWP.Controls"
     xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:mctrls="using:Coolapk_UWP.Controls"
+    xmlns:templates="using:Coolapk_UWP.DataTemplates"
+    xmlns:models="using:Coolapk_UWP.Models"
     xmlns:Triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -17,7 +19,7 @@
     </Page.DataContext>
 
     <Page.BottomAppBar>
-        <CommandBar >
+        <CommandBar DefaultLabelPosition="Right">
             <AppBarButton Label="点赞" Icon="Like"/>
             <AppBarButton Label="转发" Icon="Share"/>
             <AppBarToggleButton Label="评论" Icon="Comment" IsChecked="{x:Bind RootSplitView.IsPaneOpen, Mode=TwoWay}"/>
@@ -26,31 +28,90 @@
 
     <Page.Resources>
         <DataTemplate x:Key="FeedDetailTemplate" x:DataType="viewModels:FeedDetailViewModel">
-            <ListView
-                HorizontalAlignment="Stretch"
-                SelectionMode="None"
-                IsItemClickEnabled="False">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="Margin" Value="0"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListViewItem>
-                    <cmui:ImageEx
-                        x:Name="CoverStackPanel"
-                        HorizontalAlignment="Stretch"
-                        x:Load="{x:Bind Data.IsHtmlArticle}"
-                        Source="{x:Bind Data.Cover}"/>
-                </ListViewItem>
-                <ListViewItem>
-                    <controls:MyRichTextBlock
-                        HorizontalAlignment="Stretch"
-                        Text="{x:Bind Data.Message}"/>
-                </ListViewItem>
-            </ListView>
+            <Grid
+                Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                <Grid.Resources>
+                    <ResourceDictionary>
+
+                        <ResourceDictionary.MergedDictionaries>
+                            <templates:PicTextMixTemplates />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Grid.Resources>
+                <ListView
+                    x:Name="DefaultFeedContent"
+                    x:Load="{x:Bind Data.IsHtmlArticle, Converter={StaticResource NegateBoolConverter}}"
+                    Padding="0,30,0,30"
+                    SelectionMode="None"
+                    IsItemClickEnabled="False">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="MaxWidth" Value="600"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListViewItem>
+                        <controls:MyRichTextBlock
+                            HorizontalAlignment="Stretch"
+                            Text="{x:Bind Data.Message}"/>
+                    </ListViewItem>
+                    <ListViewItem x:Name="_____" x:Load="{x:Bind Data.HasPics}">
+                        <ListView
+                            SelectionMode="None"
+                            IsItemClickEnabled="True"
+                            ItemsSource="{x:Bind Data.PicArr}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Padding" Value="0,4"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <cmui:ImageEx
+                                        CornerRadius="8"
+                                        Source="{x:Bind}"
+                                        Stretch="Uniform"
+                                        MaxHeight="500"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ListViewItem>
+                </ListView>
+                <!--上面是非图文的样子-->
+                <!--下面是图文的样子-->
+                <ListView
+                    x:Name="HtmlArticleFeedContent"
+                    x:Load="{x:Bind Data.IsHtmlArticle}"
+                    ItemsSource="{x:Bind Data.MessageRaw}"
+                    SelectionMode="None"
+                    IsItemClickEnabled="False"
+                    Padding="0,0,0,30"
+                    ItemTemplateSelector="{StaticResource PicTextMixTemplateSelector}" >
+                    <ListView.Header>
+                        <cmui:ScrollHeader
+                            Margin="0,0,0,20">
+                            <cmui:ImageEx
+                                MaxHeight="300"
+                                Stretch="UniformToFill"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Source="{x:Bind Data.Cover}"/>
+                        </cmui:ScrollHeader>
+                    </ListView.Header>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="MaxWidth" Value="600"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
     <RelativePanel>
@@ -61,8 +122,8 @@
                         <AdaptiveTrigger MinWindowWidth="1000"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="RootSplitView.OpenPaneLength" Value="356"/>
-                        <Setter Target="RootSplitView.DisplayMode" Value="Inline"/>
+                        <Setter Target="RootSplitView.OpenPaneLength" Value="456"/>
+                        <Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -105,11 +166,10 @@
                     Retry="AsyncLoadStateControl_Retry"
                     DataLoadedTemplate="{StaticResource FeedDetailTemplate}"/>
             </SplitView.Content>
-            <SplitView.Pane>
-                <mctrls:DataList
+            <SplitView.Pane >
+                <mctrls:ReplyList
                     x:Name="DataListView"
-                    Title="热榜"
-                    Url="V9_HOME_TAB_RANKING"/>
+                    FeedId="{x:Bind ViewModel.FeedId}"/>
             </SplitView.Pane>
         </SplitView>
     </RelativePanel>

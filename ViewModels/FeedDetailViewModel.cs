@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Coolapk_UWP.ViewModels {
     public class FeedDetailViewModel : AsyncLoadViewModel<FeedDetail> {
+        public uint FeedId = 18484842;
+
         public FeedDetailViewModel() {
             this.Reload();
         }
 
         public override async Task<RespBase<FeedDetail>> OnLoadAsync() {
-            var resp = await CoolapkApis.GetFeedDetail(24371467);
+            var resp = await CoolapkApis.GetFeedDetail(FeedId);
             return resp;
         }
 

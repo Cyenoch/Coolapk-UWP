@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Coolapk_UWP.Models {
-    public class Entity {
+    public class Entity : NotifyPropertyBase {
         [JsonExtensionData]
         public IDictionary<string, JToken> OtherField { get; set; }
 
@@ -51,6 +51,10 @@ namespace Coolapk_UWP.Models {
             return entity;
         }
 
+        public string HumanReadableDateString {
+            get { return AppUtil.GetReadDateString(Lastupdate); }
+        }
+
         public void Cast<T>(out T entity) where T : Entity => entity = Cast<T>();
 
         public object AutoCast() {
@@ -59,7 +63,8 @@ namespace Coolapk_UWP.Models {
                     return Cast<User>();
                 case "product":
                     return Cast<Product>();
-                    break;
+                case "feed_reply":
+                    return Cast<FeedReply>();
                 case "apk":
                     return Cast<Apk>();
                 case "feed":

@@ -104,14 +104,23 @@
     <Compile Include="Controls\MyRichTextBlock.xaml.cs">
       <DependentUpon>MyRichTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ReplyList.xaml.cs">
+      <DependentUpon>ReplyList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataTemplates\EntityListItemDataTemplate.xaml.cs">
       <DependentUpon>EntityListItemDataTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataTemplates\FeedCardTemplates.xaml.cs">
       <DependentUpon>FeedCardTemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplates\FeedReplyTemplate.xaml.cs">
+      <DependentUpon>FeedReplyTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataTemplates\IconScrollCardTemplates.xaml.cs">
       <DependentUpon>IconScrollCardTemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataTemplates\PicTextMixTemplates.xaml.cs">
+      <DependentUpon>PicTextMixTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Feed.cs" />
@@ -215,11 +224,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ReplyList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataTemplates\FeedCardTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DataTemplates\FeedReplyTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataTemplates\IconScrollCardTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\PicTextMixTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

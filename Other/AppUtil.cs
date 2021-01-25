@@ -113,6 +113,28 @@ namespace Coolapk_UWP.Other {
         /// </summary>
         /// <param name="seconds">秒</param>
         /// <returns></returns>
+        public static string GetReadDateString(DateTime date) {
+            var span = DateTime.Now - date;
+            if (span.TotalSeconds < 60)
+                return "刚刚";
+            else if (span.TotalMinutes < 60)
+                return span.Minutes + "分钟前";
+            else if (span.TotalHours < 24)
+                return span.Hours + "小时前";
+            else if (span.TotalDays < 2)
+                return "昨天";
+            else if (span.TotalDays < 30)
+                return span.Days + "天前";
+            else if (span.TotalDays < 365)
+                return date.ToString("MM-dd");
+            else
+                return date.ToString("yyyy-MM-dd");
+        }
+        /// <summary>
+        /// 获取友好的时间表示
+        /// </summary>
+        /// <param name="seconds">秒</param>
+        /// <returns></returns>
         public static string GetReadDateString(int seconds) {
             var date = TimeStampToDate(seconds);
             var span = DateTime.Now - date;

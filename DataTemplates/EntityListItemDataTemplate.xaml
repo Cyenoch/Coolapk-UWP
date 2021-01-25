@@ -12,6 +12,9 @@
         
         <!--FeedCardTemplateSelector-->
         <templates:FeedCardTemplates />
+
+        <!--FeedReplyTemplate-->
+        <templates:FeedReplyTemplate />
     </ResourceDictionary.MergedDictionaries>
 
     <templates:EntityListItemTemplateSelector 
@@ -20,7 +23,8 @@
         CarouselCardTemplate="{StaticResource CarouselCardTemplate}"
         IconScrollCardTemplate="{StaticResource IconScrollCardTemplate}"
         TitleCardTemplate="{StaticResource TitleCardTemplate}"
-        FeedCardTemplateSelector="{StaticResource FeedCardTemplateSelector}"/>
+        FeedCardTemplateSelector="{StaticResource FeedCardTemplateSelector}"
+        FeedReplyTemplate="{StaticResource FeedReplyTemplate}"/>
 
     <!--默认模板-->
     <DataTemplate x:Key="DefaultEntityTemplate" x:DataType="models:Entity">

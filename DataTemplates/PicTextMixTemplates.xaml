@@ -1,0 +1,30 @@
+﻿<ResourceDictionary
+    x:Class="Coolapk_UWP.DataTemplates.PicTextMixTemplates"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:templates="using:Coolapk_UWP.DataTemplates"
+    xmlns:controls="using:Coolapk_UWP.Controls"
+    xmlns:models="using:Coolapk_UWP.Models">
+
+    <templates:PicTextMixTemplateSelector 
+        x:Key="PicTextMixTemplateSelector"
+        TextTemplate="{StaticResource MessageRawStructTextTemplate}"
+        ImageTempalte="{StaticResource MessageRawStructImageTemplate}"
+        UnsupportTemplate="{StaticResource MessageRawStructUnsupportTemplate}"/>
+
+    <DataTemplate x:Key="MessageRawStructTextTemplate" x:DataType="models:MessageRawStructText">
+        <controls:MyRichTextBlock Text="{x:Bind Message}" HorizontalAlignment="Stretch"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MessageRawStructImageTemplate" x:DataType="models:MessageRawStructImage">
+        <StackPanel Margin="0,16,0,8" Orientation="Vertical">
+            <cmui:ImageEx CornerRadius="8" Source="{x:Bind Url}" MaxHeight="500" Stretch="Uniform" HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,8,0,0" Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind Description}" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MessageRawStructUnsupportTemplate" x:DataType="models:MessageRawStructUnsupport">
+        <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="ERROR: 尚未支持的模板"/>
+    </DataTemplate>
+</ResourceDictionary>

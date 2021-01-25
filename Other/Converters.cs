@@ -20,7 +20,7 @@ namespace Coolapk_UWP.Other {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
             var result = new Collection<MessageRawStructBase>();
             var value = reader.Value?.ToString();
-            if (value == null) return result;
+            if (value == null || value == "null") return result;
             try {
                 var baseStruct = JsonConvert.DeserializeObject<MessageRawStructBase[]>(value);
                 foreach (var child in baseStruct) {
@@ -181,6 +181,23 @@ namespace Coolapk_UWP.Other {
                     default:
                         return Visibility.Visible;
                 } else return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// bool取反
+    /// </summary>
+    public class NegateBoolConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, string language) {
+            if (value != null)
+                if (value is bool)
+                    return !((bool)value);
+                else return false;
+            else return true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language) {
