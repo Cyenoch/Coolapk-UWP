@@ -14,14 +14,16 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <DataTemplate x:Key="DefaultFeedDetailTemplate">
-            <TextBlock Text="{Binding}"/>
+        <DataTemplate x:Key="FeedDetailTemplate" x:DataType="viewModels:FeedDetailViewModel">
+            <controls:MyRichTextBlock 
+                Text="{x:Bind Data.Message, Mode=OneWay}"
+                DefaultTemplate="{StaticResource DefaultFeedDetailTemplate}"/>
         </DataTemplate>
     </Page.Resources>
-
-    <Grid>
-        <controls:MyRichTextBlock 
-            Text="{x:Bind ViewModel.Data.Message, Mode=OneWay}"
-            DefaultTemplate="{StaticResource DefaultFeedDetailTemplate}"/>
-    </Grid>
+    
+    <controls:AsyncLoadStateControl
+            IsLoading="{x:Bind ViewModel.Busy, Mode=OneWay}"
+            ErrorMessage="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+            Retry="AsyncLoadStateControl_Retry"
+            DataLoadedTemplate="{StaticResource FeedDetailTemplate}"/>
 </Page>

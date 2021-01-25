@@ -95,6 +95,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AsyncLoadStateControl.xaml.cs">
+      <DependentUpon>AsyncLoadStateControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DataList.xaml.cs">
       <DependentUpon>DataList.xaml</DependentUpon>
     </Compile>
@@ -200,6 +203,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Controls\AsyncLoadStateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DataList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

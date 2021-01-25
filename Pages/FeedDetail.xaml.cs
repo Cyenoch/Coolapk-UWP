@@ -22,5 +22,9 @@ namespace Coolapk_UWP.Pages {
         public FeedDetail() {
             this.InitializeComponent();
         }
+
+        private void AsyncLoadStateControl_Retry(object sender, RoutedEventArgs e) {
+            ViewModel.Reload();
+        }
     }
 }
