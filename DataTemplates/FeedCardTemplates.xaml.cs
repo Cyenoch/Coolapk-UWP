@@ -8,11 +8,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Coolapk_UWP.DataTemplates {
+
     public class FeedCardTemplateSelector : DataTemplateSelector {
         public DataTemplate DefaultTemplate { get; set; }
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container) {
             Feed feed = (Feed)item;
-
             return DefaultTemplate;
         }
     }

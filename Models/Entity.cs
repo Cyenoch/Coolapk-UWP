@@ -51,6 +51,14 @@ namespace Coolapk_UWP.Models {
             return entity;
         }
 
+        [JsonIgnore]
+        public string JsonString {
+            get {
+                return JsonConvert.SerializeObject(this, Formatting.Indented);
+            }
+        }
+
+        [JsonIgnore]
         public string HumanReadableDateString {
             get { return AppUtil.GetReadDateString(Lastupdate); }
         }
@@ -79,6 +87,8 @@ namespace Coolapk_UWP.Models {
                     break;
                 case "card":
                     switch (EntityTemplate) {
+                        case "iconLinkGridCard":
+                            return Cast<IconLinkGridCard>();
                         case "configCard":
                             return Cast<ConfigCard>();
                         case "imageCarouselCard_1":
@@ -87,12 +97,21 @@ namespace Coolapk_UWP.Models {
                             return Cast<IconScrollCard>();
                         case "titleCard":
                             return Cast<TitleCard>();
+                        case "apkImageCard":
+                            return Cast<IgnoreCard>();
                     }
                     break;
             }
             return this;
         }
     }
+    /// <summary>
+    /// 广告
+    /// </summary>
+    public class IgnoreCard : Entity { }
+
+    public class IconLinkGridCard : Entity { }
+
     public class TitleCard : Entity { }
 
     public class ConfigCard : Entity { }

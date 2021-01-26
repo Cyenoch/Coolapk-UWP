@@ -4,20 +4,52 @@
     xmlns:templates="using:Coolapk_UWP.DataTemplates"
     xmlns:models="using:Coolapk_UWP.Models"
     xmlns:controls="using:Coolapk_UWP.Controls"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mtui="using:Microsoft.Toolkit.Uwp.UI.Controls">
+
     <templates:FeedCardTemplateSelector 
         x:Key="FeedCardTemplateSelector"
         DefaultTemplate="{StaticResource DefaultFeedCardTemplate}"/>
 
     <DataTemplate x:Key="DefaultFeedCardTemplate" x:DataType="models:Feed">
-        <StackPanel>
-            <TextBlock Text="默认动态模板..."/>
-            <TextBlock Text="{x:Bind FeedType}"/>
-            <TextBlock Text="{x:Bind Type}"/>
-            <controls:MyRichTextBlock Text="{x:Bind Message}" Wrap="False"/>
-            <TextBlock Text="{x:Bind IsHtmlArticle}"/>
-            <TextBlock Text="{x:Bind IsStickTop}"/>
-        </StackPanel>
+        <Border Margin="12,6" Padding="12" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" CornerRadius="8">
+            <StackPanel>
+                <Grid x:Name="Fuck" Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <mtui:ImageEx CornerRadius="100" Width="40" Height="40" Source="{x:Bind UserInfo.SmallAvatar, Mode=OneWay}"/>
+                    <StackPanel VerticalAlignment="Center" Margin="12,0,0,0" Grid.Column="1" Orientation="Vertical">
+                        <TextBlock Text="{x:Bind UserInfo.Username, Mode=OneWay}"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   FontSize="16"
+                                   Margin="0,0,0,2"/>
+                        <RichTextBlock FontSize="12" Foreground="{ThemeResource SystemColorGrayTextColor}">
+                            <Paragraph>
+                                <Run Text="{x:Bind InfoHtml}"/>
+                                <Run Text="{x:Bind HumanReadableDateString}"/>
+                                <Run Text="{x:Bind FeedType}"/>
+                            </Paragraph>
+                        </RichTextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="__" x:Load="{x:Bind IsHtmlArticle}"
+                           Text="{x:Bind Title}"
+                           Style="{ThemeResource SubtitleTextBlockStyle}"
+                           FontWeight="Bold"
+                           Margin="0,3"/>
+                <controls:MyRichTextBlock 
+                    Text="{x:Bind Message}" 
+                    Wrap="False"
+                    Margin="0,6"/>
+
+                <controls:PicArrBox Margin="0,6" PicArr="{x:Bind SmallPicArr}" />
+
+            </StackPanel>
+        </Border>
     </DataTemplate>
 </ResourceDictionary>

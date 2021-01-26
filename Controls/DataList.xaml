@@ -29,15 +29,8 @@
             IncrementalLoadingTrigger="Edge"
             IsItemClickEnabled="True"
             ItemTemplateSelector="{StaticResource EntityListItemTemplateSelector}"
-            ItemsSource="{x:Bind Entities, Mode=OneWay}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Margin" Value="0,8"/>
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+            ItemContainerStyleSelector="{StaticResource DataListItemContainerStyleSelector}"
+            ItemsSource="{x:Bind Entities, Mode=OneWay}"/>
         <Border 
             Margin="16"
             CornerRadius="8"

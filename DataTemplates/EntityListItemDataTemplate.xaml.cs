@@ -23,6 +23,7 @@ namespace Coolapk_UWP.DataTemplates {
         public DataTemplate TitleCardTemplate { get; set; } // 
         public FeedCardTemplateSelector FeedCardTemplateSelector { get; set; }
         public DataTemplate FeedReplyTemplate { get; set; }
+        public DataTemplate IconLinkGridCardTemplate { get; set; }
         // 根据item的对象类型分配模板
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject c) {
             switch (item) {
@@ -36,11 +37,28 @@ namespace Coolapk_UWP.DataTemplates {
                     return FeedCardTemplateSelector.SelectTemplate(item, c);
                 case FeedReply _:
                     return FeedReplyTemplate;
+                case IconLinkGridCard _:
+                    return IconLinkGridCardTemplate;
                 default:
                     return DefaultTemplate;
             }
         }
     }
+
+    public class DataListItemContainerStyleSelector : StyleSelector {
+        public Style WidthLimitedContainer { get; set; }
+        public Style WidthNoLimitedContainer { get; set; }
+
+        protected override Style SelectStyleCore(object item, DependencyObject container) {
+            switch (item) {
+                case IconLinkGridCard _:
+                case ImageCarouselCard _:
+                    return WidthNoLimitedContainer;
+            }
+            return WidthLimitedContainer;
+        }
+    }
+
 
     public partial class EntityListItemDataTemplate : ResourceDictionary {
         public EntityListItemDataTemplate() {

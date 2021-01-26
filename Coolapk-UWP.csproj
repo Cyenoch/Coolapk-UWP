@@ -104,6 +104,9 @@
     <Compile Include="Controls\MyRichTextBlock.xaml.cs">
       <DependentUpon>MyRichTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PicArrBox.xaml.cs">
+      <DependentUpon>PicArrBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ReplyList.xaml.cs">
       <DependentUpon>ReplyList.xaml</DependentUpon>
     </Compile>
@@ -224,6 +227,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\PicArrBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ReplyList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -267,6 +274,10 @@
     <Page Include="DataTemplates\EntityListItemDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

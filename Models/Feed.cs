@@ -17,7 +17,10 @@ namespace Coolapk_UWP.Models {
     }
 
     public class Feed : Entity {
+        public User UserInfo { get; set; }
+
         public string Message { get; set; }
+        public string InfoHtml { get; set; }
 
         [JsonProperty("is_html_article")]
         [JsonConverter(typeof(JsonIntToBoolConverter))]
@@ -26,7 +29,10 @@ namespace Coolapk_UWP.Models {
         [JsonConverter(typeof(JsonIntToBoolConverter))]
         public bool IsStickTop { get; set; }
 
-        // feedArticle feed
+        [JsonProperty("device_title")]
+        public string DeviceTitle { get; set; }
+
+        // 已知值 feedArticle feed
         public string FeedType { get; set; }
 
         // 重要
@@ -34,18 +40,29 @@ namespace Coolapk_UWP.Models {
         public FeedType Type { get; set; }
 
         [JsonIgnore]
-        public ICollection<string> _picArr;
+        public IList<string> _picArr;
+        [JsonIgnore]
+        public IList<string> _smallPicArr;
 
-        public ICollection<string> PicArr {
+        [JsonIgnore]
+        public IList<string> SmallPicArr {
+            get {
+                return _smallPicArr;
+            }
+        }
+
+        public IList<string> PicArr {
             get {
                 return _picArr;
             }
             set {
                 // 酷安有时候会有一个 [""] 这样的坑壁操作
                 _picArr = value.Where((pic) => pic.Length > 8).ToList();
+                _smallPicArr = _picArr.Select(pic => pic + ".s.jpg").ToList();
             }
         }
 
+        [JsonIgnore]
         public bool HasPics {
             get {
                 return PicArr != null && PicArr.Count > 0;

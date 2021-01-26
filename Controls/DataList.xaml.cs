@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Coolapk_UWP.Controls {
-
     public sealed partial class DataList : UserControl, INotifyPropertyChanged {
         // 对于GetDataList，需要Title参数
         public static readonly DependencyProperty titleProperty = DependencyProperty.Register(

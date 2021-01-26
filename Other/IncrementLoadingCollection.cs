@@ -69,7 +69,9 @@ namespace Coolapk_UWP.Other {
 
         // 重写InsertItem使它在插入得时候根据EntityType和EntityTemplate分配正确的Model
         protected override void InsertItem(int index, T entity) {
-            base.InsertItem(index, entity.AutoCast() as T);
+            var _ = entity.AutoCast() as T;
+            if (!(_ is IgnoreCard))
+                base.InsertItem(index, _);
         }
 
         protected void Set<VT>(ref VT storage, VT value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null) {
