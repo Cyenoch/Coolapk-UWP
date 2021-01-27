@@ -16,7 +16,7 @@
     <!--带标题 横向滚动的-->
     <DataTemplate x:Key="IconScrollCardTemplate" x:DataType="models:IconScrollCard">
         <StackPanel Margin="0" Orientation="Vertical" HorizontalAlignment="Stretch">
-            <StackPanel HorizontalAlignment="Stretch" Margin="20,10,0,10" Orientation="Horizontal">
+            <StackPanel MaxWidth="600" HorizontalAlignment="Stretch" Margin="20,10,0,10" Orientation="Horizontal">
                 <TextBlock Text="{x:Bind Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
                 <HyperlinkButton HorizontalAlignment="Right" x:Name="GoToMore" Margin="10,0,0,0" Click="GoToMore_Click">
                     <TextBlock Text="查看更多" />
@@ -38,7 +38,7 @@
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                         <Setter Property="Width" Value="100"/>
-                        <Setter Property="Margin" Value="20,0,0,0"/>
+                        <Setter Property="Margin" Value="12,0,0,0"/>
                         <Setter Property="Padding" Value="0"/>
                     </Style>
                 </ListView.ItemContainerStyle>
@@ -59,7 +59,7 @@
                 Margin="0"
                 Width="100"
                 Orientation="Vertical"
-                Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                 Padding="0,10,0,0">
                 <PersonPicture
                     HorizontalAlignment="Center"
@@ -85,7 +85,7 @@
                 Margin="0"
                 Width="100"
                 Orientation="Vertical"
-                Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                 Padding="0,10,0,0">
                 <PersonPicture
                     HorizontalAlignment="Center"
@@ -112,7 +112,7 @@
                 Margin="0"
                 Width="100"
                 Orientation="Vertical"
-                Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                 Padding="0,10,0,0">
                 <cmui:ImageEx
                     CornerRadius="10"

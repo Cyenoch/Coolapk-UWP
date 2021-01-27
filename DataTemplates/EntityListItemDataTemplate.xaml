@@ -21,7 +21,7 @@
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="MaxWidth" Value="600"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 
     <Style x:Key="WidthNoLimitedContainerStyle" TargetType="ListViewItem">

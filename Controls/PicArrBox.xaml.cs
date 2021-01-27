@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Coolapk_UWP.Controls {
     public class FeedPicArrBoxTemplateSelector : DataTemplateSelector {
+        public DataTemplate NonePicTemplate { get; set; }
         public DataTemplate OnePicTemplate { get; set; }
         public DataTemplate TwoColumnTemplate { get; set; }
         public DataTemplate ThreeColumnTemplate { get; set; }
@@ -33,7 +34,7 @@ namespace Coolapk_UWP.Controls {
             else if (picArr.Count >= 4 && picArr.Count < 6) return FourGridTemplate;
             else if (picArr.Count >= 6 && picArr.Count < 9) return SixGridTemplate;
             else if (picArr.Count >= 9) return NineGridTemplate;
-            else return OnePicTemplate;
+            else return NonePicTemplate;
         }
     }
 
@@ -56,7 +57,7 @@ namespace Coolapk_UWP.Controls {
         }
         public void LoadContent() {
             if (FeedPicArrBoxTemplateSelector == null) FeedPicArrBoxTemplateSelector = (FeedPicArrBoxTemplateSelector)Resources["FeedPicArrBoxTemplateSelector"];
-            if (FeedPicArrBoxTemplateSelector != null) {
+            if (PicArr != null && PicArr.Count > 0 && FeedPicArrBoxTemplateSelector != null) {
                 var ele = (FrameworkElement)(FeedPicArrBoxTemplateSelector.SelectTemplate(PicArr, this)?.LoadContent());
                 ele.SetValue(FrameworkElement.DataContextProperty, this);
                 Content = ele;

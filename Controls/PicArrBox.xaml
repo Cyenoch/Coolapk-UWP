@@ -17,20 +17,21 @@
             ThreeColumnTemplate="{StaticResource ThreeColumnPicArrBoxTemplate}"
             FourGridTemplate="{StaticResource FourGridPicArrBoxTemplate}"
             SixGridTemplate="{StaticResource SixGridPicArrBoxTemplate}"
-            NineGridTemplate="{StaticResource NineGridPicArrBoxTemplate}"/>
+            NineGridTemplate="{StaticResource NineGridPicArrBoxTemplate}"
+            NonePicTemplate="{StaticResource NonePicTemplate}"/>
 
-        <DataTemplate x:Key="OnePicArrBoxTempalte" x:DataType="models:Feed">
-            <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
-                <Border CornerRadius="8">
-                    <controls:ImageEx Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
-                </Border>
-            </Viewbox>
+        <DataTemplate x:Key="NonePicTemplate" x:DataType="local:PicArrBox">
+            <Grid Visibility="Collapsed"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OnePicArrBoxTempalte" x:DataType="local:PicArrBox">
+            <controls:ImageEx MaxHeight="600" CornerRadius="8" HorizontalAlignment="Stretch" Stretch="Uniform" Source="{x:Bind PicArr[0]}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="TwoColumnPicArrBoxTemplate" x:DataType="local:PicArrBox">
             <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
                 <Border CornerRadius="8">
-                    <Grid Width="500" Height="250" ColumnSpacing="2" RowSpacing="2">
+                    <Grid Width="600" Height="300" ColumnSpacing="2" RowSpacing="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
@@ -38,8 +39,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <controls:ImageEx Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
                     </Grid>
                 </Border>
             </Viewbox>
@@ -48,7 +49,7 @@
         <DataTemplate x:Key="ThreeColumnPicArrBoxTemplate" x:DataType="local:PicArrBox">
             <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
                 <Border CornerRadius="8">
-                    <Grid Width="500" Height="167" ColumnSpacing="2" RowSpacing="2">
+                    <Grid Width="600" Height="200" ColumnSpacing="2" RowSpacing="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
@@ -57,9 +58,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <controls:ImageEx Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="2" Source="{x:Bind PicArr[2]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="2" Source="{x:Bind PicArr[2]}"/>
                     </Grid>
                 </Border>
             </Viewbox>
@@ -68,7 +69,7 @@
         <DataTemplate x:Key="FourGridPicArrBoxTemplate" x:DataType="local:PicArrBox">
             <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
                 <Border CornerRadius="8">
-                    <Grid Width="500" Height="300" ColumnSpacing="2" RowSpacing="2">
+                    <Grid Width="600" Height="600" ColumnSpacing="2" RowSpacing="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -77,10 +78,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <controls:ImageEx Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Source="{x:Bind PicArr[2]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Grid.Column="1" Source="{x:Bind PicArr[3]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Source="{x:Bind PicArr[2]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Grid.Column="1" Source="{x:Bind PicArr[3]}"/>
                     </Grid>
                 </Border>
             </Viewbox>
@@ -89,7 +90,7 @@
         <DataTemplate x:Key="SixGridPicArrBoxTemplate" x:DataType="local:PicArrBox">
             <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
                 <Border CornerRadius="8">
-                    <Grid Width="500" Height="300" ColumnSpacing="2" RowSpacing="2">
+                    <Grid Width="600" Height="400" ColumnSpacing="2" RowSpacing="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -99,12 +100,12 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <controls:ImageEx Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="2" Source="{x:Bind PicArr[2]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Source="{x:Bind PicArr[3]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Grid.Column="1" Source="{x:Bind PicArr[4]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Grid.Column="2" Source="{x:Bind PicArr[5]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="2" Source="{x:Bind PicArr[2]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Source="{x:Bind PicArr[3]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Grid.Column="1" Source="{x:Bind PicArr[4]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Grid.Column="2" Source="{x:Bind PicArr[5]}"/>
                     </Grid>
                 </Border>
             </Viewbox>
@@ -114,7 +115,7 @@
         <DataTemplate x:Key="NineGridPicArrBoxTemplate" x:DataType="local:PicArrBox">
             <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
                 <Border CornerRadius="8">
-                    <Grid Width="500" Height="500" ColumnSpacing="2" RowSpacing="2">
+                    <Grid Width="600" Height="600" ColumnSpacing="2" RowSpacing="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -125,15 +126,15 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <controls:ImageEx Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Column="2" Source="{x:Bind PicArr[2]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Source="{x:Bind PicArr[3]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Grid.Column="1" Source="{x:Bind PicArr[4]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="1" Grid.Column="2" Source="{x:Bind PicArr[5]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="2" Source="{x:Bind PicArr[6]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="2" Grid.Column="1" Source="{x:Bind PicArr[7]}"/>
-                        <controls:ImageEx Stretch="UniformToFill" Grid.Row="2" Grid.Column="2" Source="{x:Bind PicArr[8]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind PicArr[0]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="1" Source="{x:Bind PicArr[1]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Column="2" Source="{x:Bind PicArr[2]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Source="{x:Bind PicArr[3]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Grid.Column="1" Source="{x:Bind PicArr[4]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="1" Grid.Column="2" Source="{x:Bind PicArr[5]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="2" Source="{x:Bind PicArr[6]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="2" Grid.Column="1" Source="{x:Bind PicArr[7]}"/>
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Grid.Row="2" Grid.Column="2" Source="{x:Bind PicArr[8]}"/>
                     </Grid>
                 </Border>
             </Viewbox>

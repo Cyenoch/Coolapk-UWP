@@ -44,7 +44,7 @@ namespace Coolapk_UWP.Models {
                 var temp = new Entity[entity.Entities.Count()];
                 entity.Entities.CopyTo(temp, 0);
                 entity.Entities.Clear();
-                foreach (var child in temp) {
+                foreach (var child in temp.OfType<Entity>()) {
                     entity.Entities.Add(child.AutoCast() as Entity);
                 }
             }

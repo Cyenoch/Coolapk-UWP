@@ -38,11 +38,17 @@ namespace Coolapk_UWP.Controls {
             typeof(MyRichTextBlock),
             new PropertyMetadata(false)
         );
+        public static readonly DependencyProperty LineHeightProperty = DependencyProperty.Register(
+            "LineHeight",
+            typeof(int),
+            typeof(MyRichTextBlock),
+            new PropertyMetadata(25, new PropertyChangedCallback(OnTextChanged))
+        );
 
         /// <summary>
         /// 用于Hyperlink传递href参数
         /// </summary>
-        public static readonly DependencyProperty hrefClickParam = DependencyProperty.Register(
+        public static readonly DependencyProperty HrefClickParam = DependencyProperty.Register(
             "HrefParam",
             typeof(string),
             typeof(Hyperlink),
@@ -60,6 +66,10 @@ namespace Coolapk_UWP.Controls {
         public bool IsTextSelectionEnabled {
             get { return (bool)GetValue(IsTextSelectionEnabledProperty); }
             set { SetValue(IsTextSelectionEnabledProperty, value); }
+        }
+        public int LineHeight {
+            get { return (int)GetValue(LineHeightProperty); }
+            set { SetValue(LineHeightProperty, value); }
         }
 
         public MyRichTextBlock() {
@@ -82,7 +92,15 @@ namespace Coolapk_UWP.Controls {
             foreach (var node in nodes) {
                 switch (node.NodeType) {
                     case HtmlAgilityPack.HtmlNodeType.Text: // 如果是文本节点，创建Run并添加到paragraph
-                        Run run = new Run() { Text = node.InnerText };
+                        Run run = new Run() {
+                            Text =
+                            node.InnerText
+                            .Replace("&gt;", ">")
+                            .Replace("&lt;", "<")
+                            .Replace("&amp;", "&")
+                            .Replace("&apos;", "'")
+                            .Replace("&quot;", "\"")
+                        };
                         paragraph.Inlines.Add(run);
                         break;
                     case HtmlAgilityPack.HtmlNodeType.Element: // 如果是element
@@ -95,12 +113,12 @@ namespace Coolapk_UWP.Controls {
                                 Text = node.InnerText
                             };
                             link.Click += OnHref;
-                            link.SetValue(hrefClickParam, href); // 使link携带参数，在OnHref中可获取href地址
+                            link.SetValue(HrefClickParam, href); // 使link携带参数，在OnHref中可获取href地址
                             link.Inlines.Add(linkRun);
                             link.TextDecorations = Windows.UI.Text.TextDecorations.None; // 去掉hyperlink下划线
-                            Run mf = new Run() { Text = " " };
                             paragraph.Inlines.Add(link);
-                            paragraph.Inlines.Add(mf); // 别问 问就是魔法
+                            Run magic = new Run() { Text = " " };
+                            paragraph.Inlines.Add(magic); // 别问 问就是魔法
                         }
                         break;
                 }
@@ -108,7 +126,7 @@ namespace Coolapk_UWP.Controls {
             RichTextBlock root = new RichTextBlock() {
                 IsTextSelectionEnabled = IsTextSelectionEnabled,
                 LineStackingStrategy = LineStackingStrategy.BlockLineHeight, // 行高
-                LineHeight = !Wrap ? 0 : 25, // 行高
+                LineHeight = LineHeight, // 行高
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
             root.Blocks.Add(paragraph);
@@ -117,7 +135,7 @@ namespace Coolapk_UWP.Controls {
         }
 
         public void OnHref(Hyperlink sender, HyperlinkClickEventArgs e) {
-            var value = sender.GetValue(hrefClickParam);
+            var value = sender.GetValue(HrefClickParam);
             // TODO: fuck
         }
 

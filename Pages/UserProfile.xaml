@@ -9,7 +9,7 @@
     xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc1="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     xmlns:templates="using:Coolapk_UWP.DataTemplates">
 
     <Page.Resources>
@@ -72,6 +72,7 @@
                 IncrementalLoadingTrigger="Edge"
                 IsItemClickEnabled="False"
                 ItemTemplateSelector="{StaticResource EntityListItemTemplateSelector}"
+                ItemContainerStyleSelector="{StaticResource DataListItemContainerStyleSelector}"
                 ItemsSource="{x:Bind ViewModel.Entities, Mode=OneWay}">
                 <ListView.Header>
                     <cmui:ScrollHeader Mode="QuickReturn">
@@ -164,14 +165,6 @@
                         </Border>
                     </cmui:ScrollHeader>
                 </ListView.Header>
-                <!-- 动态列表 -->
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0,8"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
             </ListView>
 
             <Border 

@@ -51,6 +51,7 @@ namespace Coolapk_UWP.DataTemplates {
 
         protected override Style SelectStyleCore(object item, DependencyObject container) {
             switch (item) {
+                case IconScrollCard _:
                 case IconLinkGridCard _:
                 case ImageCarouselCard _:
                     return WidthNoLimitedContainer;

@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <RelativePanel Background="{ThemeResource  SystemControlAcrylicWindowBrush}">
+    <RelativePanel Background="Transparent">
         <TextBlock Margin="24,0" Text="{x:Bind Entities.Error, Mode=OneWay}"/>
         <ListView
             x:Name="EntityListView"

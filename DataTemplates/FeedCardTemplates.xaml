@@ -44,11 +44,16 @@
                            Margin="0,3"/>
                 <controls:MyRichTextBlock 
                     Text="{x:Bind Message}" 
-                    Wrap="False"
+                    Wrap="True"
                     Margin="0,6"/>
+
 
                 <controls:PicArrBox Margin="0,6" PicArr="{x:Bind SmallPicArr}" />
 
+                <!--TODO:-->
+                <StackPanel  Orientation="Horizontal">
+                    <SymbolIcon Symbol="Like"/>
+                </StackPanel>
             </StackPanel>
         </Border>
     </DataTemplate>

@@ -32,7 +32,7 @@ namespace Coolapk_UWP.Models {
         [JsonProperty("device_title")]
         public string DeviceTitle { get; set; }
 
-        // 已知值 feedArticle feed
+        // 已知值 feedArticle feed comment (评论某个应用啥的，作为一个评论存在)
         public string FeedType { get; set; }
 
         // 重要
