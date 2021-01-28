@@ -7,17 +7,27 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 
 namespace Coolapk_UWP.ViewModels {
     public class BaseViewModel : INotifyPropertyChanged {
-        public AppViewModel AppViewModel { get { return App.AppViewModel; } }
-        public ICoolapkApis CoolapkApis { get { return App.AppViewModel.CoolapkApis; } }
+        public AppViewModel AppViewModel => App.AppViewModel;
+        public ICoolapkApis CoolapkApis => AppViewModel.CoolapkApis;
+        public ApplicationDataContainer LocalSettings => AppViewModel.LocalSettings;
+        public Frame AppRootFrame {
+            get { return AppViewModel.AppRootFrame; }
+            set { AppViewModel.AppRootFrame = value; }
+        }
+        public Frame HomeContentFrame {
+            get { return AppViewModel.HomeContentFrame; }
+            set { AppViewModel.HomeContentFrame = value; }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyChanged([CallerMemberName] string propertyName = null) {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public void NotifyChanged([CallerMemberName] string propertyName = null)
+            => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
 
@@ -73,8 +83,6 @@ namespace Coolapk_UWP.ViewModels {
         public abstract Task<RespBase<T>> OnLoadAsync();
 
         // Data字段更新时，同时有哪些字段也要通知改变
-        virtual public string[] NotifyChangedProperties() {
-            return new string[] { };
-        }
+        virtual public string[] NotifyChangedProperties() => new string[] { };
     }
 }

@@ -31,9 +31,9 @@ namespace Coolapk_UWP.Network {
             request.Headers.Add("X-Sdk-Int", "28");
             request.Headers.Add("X-Sdk-Locale", "zh-CN");
             request.Headers.Add("X-App-Id", "com.coolapk.market");
-            request.Headers.Add("X-App-Version", "10.5.3");
-            request.Headers.Add("X-App-Code", "2009271");
-            request.Headers.Add("X-Api-Version", "10");
+            request.Headers.Add("X-App-Version", "11.0");
+            request.Headers.Add("X-App-Code", "2101202");
+            request.Headers.Add("X-Api-Version", "11");
             request.Headers.Add("X-App-Device", AppUtil.GetMD5(guid));
 
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);

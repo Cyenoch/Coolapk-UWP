@@ -16,6 +16,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Coolapk_UWP.Pages;
 using Coolapk_UWP.ViewModels;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 namespace Coolapk_UWP {
     sealed partial class App : Application {
@@ -28,6 +31,33 @@ namespace Coolapk_UWP {
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
+
+            //var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            //coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            //var view = ApplicationView.GetForCurrentView();
+
+            //// active
+            //view.TitleBar.BackgroundColor = Color.FromArgb(255, 8, 87, 180);
+            //view.TitleBar.ForegroundColor = Colors.White;
+
+            //// inactive  
+            //view.TitleBar.InactiveBackgroundColor = Color.FromArgb(255, 8, 87, 180);
+            //view.TitleBar.InactiveForegroundColor = Colors.Black;
+
+            //// button
+            //view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 8, 87, 180);
+            //view.TitleBar.ButtonForegroundColor = Colors.White;
+
+            //view.TitleBar.ButtonHoverBackgroundColor = Colors.Blue;
+            //view.TitleBar.ButtonHoverForegroundColor = Colors.White;
+
+            //view.TitleBar.ButtonPressedBackgroundColor = Colors.Blue;
+            //view.TitleBar.ButtonPressedForegroundColor = Colors.White;
+
+            //view.TitleBar.ButtonInactiveBackgroundColor = Colors.DarkGray;
+            //view.TitleBar.ButtonInactiveForegroundColor = Colors.Gray;
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null) {
@@ -44,7 +74,7 @@ namespace Coolapk_UWP {
 
             if (e.PrelaunchActivated == false) {
                 if (rootFrame.Content == null) {
-                    rootFrame.Navigate(typeof(DemoNavigation), e.Arguments);
+                    rootFrame.Navigate(typeof(Home), e.Arguments);
                 }
 
                 Window.Current.Activate();

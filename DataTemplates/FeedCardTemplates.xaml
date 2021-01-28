@@ -12,7 +12,12 @@
         DefaultTemplate="{StaticResource DefaultFeedCardTemplate}"/>
 
     <DataTemplate x:Key="DefaultFeedCardTemplate" x:DataType="models:Feed">
-        <Border Margin="12,6" Padding="12" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" CornerRadius="8">
+        <Border 
+            BorderThickness="1.2" 
+            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+            Padding="12"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            CornerRadius="0">
             <StackPanel>
                 <Grid x:Name="Fuck" Margin="0,0,0,6">
                     <Grid.ColumnDefinitions>

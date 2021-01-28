@@ -66,6 +66,7 @@ namespace Coolapk_UWP.Other {
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
             if (reader.Value == null) return false;
+            if (reader.Value is string) return (string)reader.Value == "1";
             return (long)reader.Value == 1;
         }
 

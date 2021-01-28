@@ -137,17 +137,20 @@
     <Compile Include="Other\Converters.cs" />
     <Compile Include="Other\IncrementLoadingCollection.cs" />
     <Compile Include="Other\NotifyPropertyBase.cs" />
+    <Compile Include="Pages\DataListWrapper.xaml.cs">
+      <DependentUpon>DataListWrapper.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DemoFeedList.xaml.cs">
       <DependentUpon>DemoFeedList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\DemoIndexV8.xaml.cs">
       <DependentUpon>DemoIndexV8.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DemoNavigation.xaml.cs">
-      <DependentUpon>DemoNavigation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\FeedDetail.xaml.cs">
       <DependentUpon>FeedDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserProfile.xaml.cs">
       <DependentUpon>UserProfile.xaml</DependentUpon>
@@ -156,6 +159,7 @@
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FeedDetailViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +210,9 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Layout">
       <Version>7.0.0-preview4</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.6.0-prerelease.210113001</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
@@ -251,6 +258,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\DataListWrapper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\DemoFeedList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -259,11 +270,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DemoNavigation.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\FeedDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

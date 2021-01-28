@@ -82,5 +82,9 @@ namespace Coolapk_UWP.Controls {
             OnPropertyChanged(propertyName);
         }
         public void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        private void EntityListView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+
+        }
     }
 }

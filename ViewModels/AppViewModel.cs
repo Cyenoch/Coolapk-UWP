@@ -9,9 +9,16 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 
 namespace Coolapk_UWP.ViewModels {
     public class AppViewModel {
+
+        public ApplicationDataContainer LocalSettings => ApplicationData.Current.LocalSettings;
+        public Frame AppRootFrame { get; set; }
+        public Frame HomeContentFrame { get; set; }
+
         public ICoolapkApis CoolapkApis;
         public AppViewModel() {
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings() {

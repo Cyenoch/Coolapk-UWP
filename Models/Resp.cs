@@ -17,5 +17,5 @@ namespace Coolapk_UWP.Models {
 
     public class Resp<T> : RespBase<T> { }
 
-    public class CollectionResp<T> : RespBase<ICollection<T>> {}
+    public class CollectionResp<T> : RespBase<IList<T>> {}
 }

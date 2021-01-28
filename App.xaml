@@ -7,18 +7,29 @@
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters">
 
     <Application.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="DefaultImage" UriSource="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
 
-        <BitmapImage x:Key="DefaultImage" UriSource="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
+            <other:IsNotEmptyToTrueConverter x:Key="IsNotEmptyToTrueConverter" />
+            <other:IsEmptyToTrueConverter x:Key="IsEmptyToTrueConverter" />
+            <other:IsEmptyToVisibleConverter x:Key="IsEmptyToVisibleConverter" />
+            <other:IsNotEmptyToVisibleConverter x:Key="IsNotEmptyToVisibleConverter" />
+            <other:IsFalseOrNullToVisibleConverter x:Key="IsFalseOrNullToVisibleConverter" />
+            <other:IsFalseToVisibleConverter x:Key="IsFalseToVisibleConverter" />
+            <other:IsTrueToVisibleConverter x:Key="IsTrueToVisibleConverter"/>
+            <other:NegateBoolConverter x:Key="NegateBoolConverter"/>
 
-        <other:IsNotEmptyToTrueConverter x:Key="IsNotEmptyToTrueConverter" />
-        <other:IsEmptyToTrueConverter x:Key="IsEmptyToTrueConverter" />
-        <other:IsEmptyToVisibleConverter x:Key="IsEmptyToVisibleConverter" />
-        <other:IsNotEmptyToVisibleConverter x:Key="IsNotEmptyToVisibleConverter" />
-        <other:IsFalseOrNullToVisibleConverter x:Key="IsFalseOrNullToVisibleConverter" />
-        <other:IsFalseToVisibleConverter x:Key="IsFalseToVisibleConverter" />
-        <other:IsTrueToVisibleConverter x:Key="IsTrueToVisibleConverter"/>
-        <other:NegateBoolConverter x:Key="NegateBoolConverter"/>
-       
+            <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                  BackgroundSource="Backdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity=".5"/>
+            <AcrylicBrush x:Key="NavigationViewTopPaneBackground"
+                  BackgroundSource="Backdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity=".5"/>
+            <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+                  BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity=".7"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 
 </Application>

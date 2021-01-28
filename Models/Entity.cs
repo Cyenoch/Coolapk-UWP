@@ -124,4 +124,19 @@ namespace Coolapk_UWP.Models {
 
     public class Product : Entity { }
 
+    public class MainInit {
+        public string Title;
+        public string Icon;
+        [JsonProperty("entities")]
+        public IList<MainInitTabConfig> Tabs;
+    }
+    public class MainInitTabConfig {
+        public string Title;
+        [JsonProperty("page_name")]
+        public string PageName;
+        public string Url;
+        public string Logo;
+        [JsonProperty("entities")]
+        public IList<MainInitTabConfig> SubTabs;
+    }
 }

@@ -18,6 +18,7 @@
     <RelativePanel Background="Transparent">
         <TextBlock Margin="24,0" Text="{x:Bind Entities.Error, Mode=OneWay}"/>
         <ListView
+            Padding="{x:Bind Padding, Mode=OneWay}"
             x:Name="EntityListView"
             RelativePanel.AlignBottomWithPanel="True" 
             RelativePanel.AlignLeftWithPanel="True"
@@ -28,6 +29,7 @@
             IncrementalLoadingThreshold="0"
             IncrementalLoadingTrigger="Edge"
             IsItemClickEnabled="True"
+            Tapped="EntityListView_Tapped"
             ItemTemplateSelector="{StaticResource EntityListItemTemplateSelector}"
             ItemContainerStyleSelector="{StaticResource DataListItemContainerStyleSelector}"
             ItemsSource="{x:Bind Entities, Mode=OneWay}"/>

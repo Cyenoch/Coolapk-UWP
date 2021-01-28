@@ -17,5 +17,8 @@ namespace Coolapk_UWP.Network {
 
         [Get("/v6/main/indexV8")]
         Task<CollectionResp<Entity>> GetIndexV8(uint installTime, uint? page = 1, uint? firstLaunch = 0, uint? lastItem = null);
+
+        [Get("/v6/main/init")]
+        Task<CollectionResp<MainInit>> GetMainInit();
     }
 }

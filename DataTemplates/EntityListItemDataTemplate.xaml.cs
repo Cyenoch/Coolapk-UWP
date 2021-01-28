@@ -48,6 +48,7 @@ namespace Coolapk_UWP.DataTemplates {
     public class DataListItemContainerStyleSelector : StyleSelector {
         public Style WidthLimitedContainer { get; set; }
         public Style WidthNoLimitedContainer { get; set; }
+        public Style WidthLimitedFeedContainerStyle { get; set; }
 
         protected override Style SelectStyleCore(object item, DependencyObject container) {
             switch (item) {
@@ -55,6 +56,8 @@ namespace Coolapk_UWP.DataTemplates {
                 case IconLinkGridCard _:
                 case ImageCarouselCard _:
                     return WidthNoLimitedContainer;
+                case Feed _:
+                    return WidthLimitedFeedContainerStyle;
             }
             return WidthLimitedContainer;
         }
