@@ -30,6 +30,7 @@
             IncrementalLoadingTrigger="Edge"
             IsItemClickEnabled="True"
             Tapped="EntityListView_Tapped"
+            ItemClick="EntityListView_ItemClick"
             ItemTemplateSelector="{StaticResource EntityListItemTemplateSelector}"
             ItemContainerStyleSelector="{StaticResource DataListItemContainerStyleSelector}"
             ItemsSource="{x:Bind Entities, Mode=OneWay}"/>

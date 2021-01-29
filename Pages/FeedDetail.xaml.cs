@@ -21,6 +21,17 @@ namespace Coolapk_UWP.Pages {
             this.InitializeComponent();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            var param = e.Parameter;
+            if (param == null) {
+                ViewModel.ErrorMessage = "请传入正确的参数";
+                return;
+            } else if (ViewModel.Data == null) {
+                ViewModel.FeedId = (uint)param;
+                ViewModel.Reload();
+            }
+        }
+
         private void AsyncLoadStateControl_Retry(object sender, RoutedEventArgs e) {
             ViewModel.Reload();
         }

@@ -32,6 +32,12 @@ namespace Coolapk_UWP.Models {
 
     public class MessageRawStructImage : MessageRawStructBase {
         public string Url { get; set; }
+        [JsonIgnore]
+        public string SmallPic {
+            get {
+                return Url.EndsWith(".gif") ? Url : (Url + ".s.jpg");
+            }
+        }
         public string Description { get; set; }
     }
 

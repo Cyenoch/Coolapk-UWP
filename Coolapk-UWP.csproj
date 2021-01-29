@@ -122,6 +122,9 @@
     <Compile Include="DataTemplates\IconScrollCardTemplates.xaml.cs">
       <DependentUpon>IconScrollCardTemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplates\ImageTextScrollCardTemplate.xaml.cs">
+      <DependentUpon>ImageTextScrollCardTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataTemplates\PicTextMixTemplates.xaml.cs">
       <DependentUpon>PicTextMixTemplates.xaml</DependentUpon>
     </Compile>
@@ -251,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DataTemplates\IconScrollCardTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\ImageTextScrollCardTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

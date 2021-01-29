@@ -24,6 +24,7 @@ namespace Coolapk_UWP.DataTemplates {
         public FeedCardTemplateSelector FeedCardTemplateSelector { get; set; }
         public DataTemplate FeedReplyTemplate { get; set; }
         public DataTemplate IconLinkGridCardTemplate { get; set; }
+        public DataTemplate ImageTextScrollCardTemplate { get; set; }
         // 根据item的对象类型分配模板
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject c) {
             switch (item) {
@@ -39,6 +40,8 @@ namespace Coolapk_UWP.DataTemplates {
                     return FeedReplyTemplate;
                 case IconLinkGridCard _:
                     return IconLinkGridCardTemplate;
+                case ImageTextScrollCard _:
+                    return ImageTextScrollCardTemplate;
                 default:
                     return DefaultTemplate;
             }

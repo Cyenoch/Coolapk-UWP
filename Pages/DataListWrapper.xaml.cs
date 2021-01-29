@@ -21,9 +21,11 @@ using Windows.ApplicationModel.Core;
 namespace Coolapk_UWP.Pages {
     public sealed partial class DataListWrapper : Page {
         DataList DataList;
+        HomeMenuItem PrePage;
 
         public DataListWrapper() {
             //this.InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
         }
@@ -31,7 +33,8 @@ namespace Coolapk_UWP.Pages {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var param = e.Parameter as HomeMenuItem;
-            if (param != null) {
+            if (param != null && PrePage != param) {
+                PrePage = param;
                 DataList = new DataList();
                 DataList.SetValue(DataList.titleProperty, param.Config.Title);
                 DataList.SetValue(DataList.urlProperty, param.Config.Url);

@@ -81,8 +81,6 @@ namespace Coolapk_UWP.Models {
                             return Cast<Feed>();
                         case "feedCover":
                             return Cast<FeedCover>();
-                        default:
-                            break;
                     }
                     break;
                 case "card":
@@ -99,14 +97,28 @@ namespace Coolapk_UWP.Models {
                             return Cast<TitleCard>();
                         case "apkImageCard":
                             return Cast<IgnoreCard>();
+                        case "imageTextScrollCard":
+                            return Cast<ImageTextScrollCard>();
+                    }
+                    break;
+                case "album":
+                    switch(EntityTemplate) {
+                        case "albumExpandCardTopCover": // 应用集
+                            return Cast<IgnoreCard>();
                     }
                     break;
             }
             return this;
         }
     }
+
+    // 比如 新鲜图文
+    public class ImageTextScrollCard: Entity {
+        // href to datalist => URL + Title
+    }
+
     /// <summary>
-    /// 广告
+    /// 不会做适配或是广告内容
     /// </summary>
     public class IgnoreCard : Entity { }
 

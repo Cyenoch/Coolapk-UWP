@@ -15,6 +15,9 @@
 
         <!--FeedReplyTemplate-->
         <templates:FeedReplyTemplate />
+
+        <!--ImageTextScrollCardTemplate-->
+        <templates:ImageTextScrollCardTemplate />
     </ResourceDictionary.MergedDictionaries>
     
     <Style x:Key="WidthLimitedFeedContainerStyle" TargetType="ListViewItem">
@@ -51,7 +54,8 @@
         TitleCardTemplate="{StaticResource TitleCardTemplate}"
         FeedCardTemplateSelector="{StaticResource FeedCardTemplateSelector}"
         FeedReplyTemplate="{StaticResource FeedReplyTemplate}"
-        IconLinkGridCardTemplate="{StaticResource IconLinkGridCardTemplate}"/>
+        IconLinkGridCardTemplate="{StaticResource IconLinkGridCardTemplate}"
+        ImageTextScrollCardTemplate="{StaticResource ImageTextScrollCardTemplate}"/>
 
     <!--默认模板-->
     <DataTemplate x:Key="DefaultEntityTemplate" x:DataType="models:Entity">

@@ -19,7 +19,7 @@
 
     <DataTemplate x:Key="MessageRawStructImageTemplate" x:DataType="models:MessageRawStructImage">
         <StackPanel Margin="0,16,0,8" Orientation="Vertical">
-            <cmui:ImageEx CornerRadius="8" Source="{x:Bind Url}" MaxHeight="500" Stretch="Uniform" HorizontalAlignment="Center"/>
+            <cmui:ImageEx IsCacheEnabled="True" CornerRadius="8" Source="{x:Bind SmallPic}" MaxHeight="500" Stretch="Uniform" HorizontalAlignment="Center"/>
             <TextBlock Margin="0,8,0,0" Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind Description}" HorizontalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>

@@ -84,7 +84,15 @@ namespace Coolapk_UWP.Controls {
         public void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private void EntityListView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            // f*ck
+        }
 
+        private void EntityListView_ItemClick(object sender, ItemClickEventArgs e) {
+            var entity = e.ClickedItem;
+            if (entity is Feed) {
+                var feed = entity as Feed;
+                App.AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), feed.EntityID);
+            }
         }
     }
 }

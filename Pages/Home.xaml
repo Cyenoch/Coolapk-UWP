@@ -77,7 +77,12 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups >
-                <Frame x:Name="ContentFrame" Loaded="ContentFrame_Loaded" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Frame 
+                    CacheMode="BitmapCache"
+                    Navigated="ContentFrame_Navigated"
+                    x:Name="ContentFrame" 
+                    Loaded="ContentFrame_Loaded" 
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}"
                             Padding="24">
                         <StackPanel
@@ -143,6 +148,7 @@
 
     <Grid>
         <Frame
+            Navigated="AppRootFrame_Navigated"
             Padding="0,41,0,0"
             Loaded="AppRootFrame_Loaded"
             x:Name="AppRootFrame">

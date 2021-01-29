@@ -18,14 +18,6 @@
         <viewModels:FeedDetailViewModel/>
     </Page.DataContext>
 
-    <Page.BottomAppBar>
-        <CommandBar DefaultLabelPosition="Right">
-            <AppBarButton Label="点赞" Icon="Like"/>
-            <AppBarButton Label="转发" Icon="Share"/>
-            <AppBarToggleButton Label="评论" Icon="Comment" IsChecked="{x:Bind RootSplitView.IsPaneOpen, Mode=TwoWay}"/>
-        </CommandBar>
-    </Page.BottomAppBar>
-
     <Page.Resources>
         <DataTemplate x:Key="FeedDetailTemplate" x:DataType="viewModels:FeedDetailViewModel">
             <Grid
@@ -41,7 +33,7 @@
                 <ListView
                     x:Name="DefaultFeedContent"
                     x:Load="{x:Bind Data.IsHtmlArticle, Converter={StaticResource NegateBoolConverter}}"
-                    Padding="0,30,0,30"
+                    Padding="0,30,0,130"
                     SelectionMode="None"
                     IsItemClickEnabled="False">
                     <ListView.ItemContainerStyle>
@@ -58,27 +50,7 @@
                             Text="{x:Bind Data.Message}"/>
                     </ListViewItem>
                     <ListViewItem x:Name="_____" x:Load="{x:Bind Data.HasPics}">
-                        <ListView
-                            SelectionMode="None"
-                            IsItemClickEnabled="True"
-                            ItemsSource="{x:Bind Data.PicArr}">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="Margin" Value="0"/>
-                                    <Setter Property="Padding" Value="0,4"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                    <cmui:ImageEx
-                                        CornerRadius="8"
-                                        Source="{x:Bind}"
-                                        Stretch="Uniform"
-                                        MaxHeight="500"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <controls:PicArrBox Margin="0,6" PicArr="{x:Bind Data.SmallPicArr}" />
                     </ListViewItem>
                 </ListView>
                 <!--上面是非图文的样子-->
@@ -89,24 +61,27 @@
                     ItemsSource="{x:Bind Data.MessageRaw}"
                     SelectionMode="None"
                     IsItemClickEnabled="False"
-                    Padding="0,0,0,30"
+                    Padding="0,0,0,130"
                     ItemTemplateSelector="{StaticResource PicTextMixTemplateSelector}" >
                     <ListView.Header>
                         <cmui:ScrollHeader
                             Margin="0,0,0,20">
-                            <cmui:ImageEx
-                                MaxHeight="300"
-                                Stretch="UniformToFill"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Source="{x:Bind Data.Cover}"/>
+                            <StackPanel Orientation="Vertical">
+                                <cmui:ImageEx
+                                    MaxHeight="300"
+                                    Stretch="UniformToFill"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Source="{x:Bind Data.Cover}"/>
+                                <TextBlock Text="{x:Bind Data.Title}" Margin="12,24,12,0" FontWeight="Bold" MaxWidth="600" Style="{ThemeResource TitleTextBlockStyle}"/>
+                            </StackPanel>
                         </cmui:ScrollHeader>
                     </ListView.Header>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Setter Property="Margin" Value="0"/>
-                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Padding" Value="12,0"/>
                             <Setter Property="MaxWidth" Value="600"/>
                         </Style>
                     </ListView.ItemContainerStyle>
@@ -149,7 +124,7 @@
         </VisualStateManager.VisualStateGroups>
         <SplitView
             x:Name="RootSplitView"
-            PaneBackground="{ThemeResource SystemControlAcrylicElementBrush}"
+            PaneBackground="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
             IsPaneOpen="False"
             OpenPaneLength="356"
             PanePlacement="Right"
@@ -167,10 +142,29 @@
                     DataLoadedTemplate="{StaticResource FeedDetailTemplate}"/>
             </SplitView.Content>
             <SplitView.Pane >
-                <mctrls:ReplyList
-                    x:Name="DataListView"
-                    FeedId="{x:Bind ViewModel.FeedId}"/>
+                <RelativePanel>
+                    <TextBlock x:Name="ReplyPanelTitle" Text="回复" Margin="24" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <mctrls:ReplyList
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignBottomWithPanel="True"
+                        RelativePanel.Below="ReplyPanelTitle"
+                        x:Name="DataListView"
+                        FeedId="{x:Bind ViewModel.FeedId}"/>
+                </RelativePanel>
             </SplitView.Pane>
         </SplitView>
+
+        <CommandBar
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
+            DefaultLabelPosition="Right">
+            <AppBarButton Label="{x:Bind ViewModel.Data.HumanReadableDateString}"/>
+            <AppBarButton Label="点赞" Icon="Like"/>
+            <AppBarButton Label="转发" Icon="Share"/>
+            <AppBarToggleButton Label="查看评论" Icon="Comment" IsChecked="{x:Bind RootSplitView.IsPaneOpen, Mode=TwoWay}"/>
+        </CommandBar>
     </RelativePanel>
 </Page>

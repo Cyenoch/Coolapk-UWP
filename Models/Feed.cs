@@ -58,7 +58,7 @@ namespace Coolapk_UWP.Models {
             set {
                 // 酷安有时候会有一个 [""] 这样的坑壁操作
                 _picArr = value.Where((pic) => pic.Length > 8).ToList();
-                _smallPicArr = _picArr.Select(pic => pic + ".s.jpg").ToList();
+                _smallPicArr = _picArr.Select(pic => pic.EndsWith(".gif") ? pic : (pic + ".s.jpg")).ToList();
             }
         }
 
@@ -66,6 +66,19 @@ namespace Coolapk_UWP.Models {
         public bool HasPics {
             get {
                 return PicArr != null && PicArr.Count > 0;
+            }
+        }
+
+        [JsonProperty("likenum")]
+        public uint _likenum;
+
+        [JsonIgnore]
+        public uint Likenum {
+            get {
+                return _likenum;
+            }
+            set {
+                Set(ref _likenum, value);
             }
         }
     }

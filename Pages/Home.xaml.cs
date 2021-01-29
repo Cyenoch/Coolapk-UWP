@@ -26,9 +26,12 @@ namespace Coolapk_UWP.Pages {
     public sealed partial class Home : Page {
 
         HomeMenuItem CurrentMenuItem;
+        Microsoft.UI.Xaml.Controls.NavigationView HomeNavigationView;
 
         public Home() {
             this.InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
             ((HomeViewModel)DataContext).Reload();
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
@@ -56,9 +59,17 @@ namespace Coolapk_UWP.Pages {
         }
 
         private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args) {
+            HomeNavigationView = sender;
             var item = args.SelectedItem as HomeMenuItem;
             var frame = sender.Content as Frame;
-
+            if (item ==null && args.SelectedItem is NavigationViewItem) {
+                var content = ((NavigationViewItem)args.SelectedItem).Content;
+                switch(content) {
+                    case "设置":
+                        break;
+                }
+                return;
+            }
             MainInitTabConfig target;
             if (item.Children != null && item.Children.Count > 0) {
                 target = item.DefaultConfig ?? item.Children[0].Config;
@@ -70,7 +81,6 @@ namespace Coolapk_UWP.Pages {
                 if (CurrentMenuItem != item)
                     frame.Navigate(typeof(DataListWrapper), item);
                 CurrentMenuItem = item;
-                sender.IsBackEnabled = frame.CanGoBack; //
             }
         }
 
@@ -103,11 +113,19 @@ namespace Coolapk_UWP.Pages {
         }
 
         private void HomeNavigationView_Loaded(object sender, RoutedEventArgs e) {
-
+            HomeNavigationView = sender as Microsoft.UI.Xaml.Controls.NavigationView;
         }
 
         private void DisplayProperties_DpiChanged(DisplayInformation info, object o) {
 
+        }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e) {
+            HomeNavigationView.IsBackEnabled = ((Frame)sender).CanGoBack;
+        }
+
+        private void AppRootFrame_Navigated(object sender, NavigationEventArgs e) {
+            HomeNavigationView.IsBackEnabled = ((Frame)sender).CanGoBack;
         }
     }
 }
