@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Web.Http.Filters;
 
 namespace Coolapk_UWP.Network {
     public class TokenHeaderHandler : DelegatingHandler {
@@ -35,6 +36,12 @@ namespace Coolapk_UWP.Network {
             request.Headers.Add("X-App-Code", "2101202");
             request.Headers.Add("X-Api-Version", "11");
             request.Headers.Add("X-App-Device", AppUtil.GetMD5(guid));
+
+            var httpBaseProtocolFilter = new HttpBaseProtocolFilter();
+            var cookieManager = httpBaseProtocolFilter.CookieManager;
+            var cookieCollection = cookieManager.GetCookies(request.RequestUri);
+            var x = cookieCollection.ToList();
+            request.Headers.Add("cookie", string.Join(";", x.Select(cookie => $"{cookie.Name}={cookie.Value}")));
 
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }

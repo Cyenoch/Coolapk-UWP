@@ -1,0 +1,80 @@
+﻿<Page
+    x:Class="Coolapk_UWP.Pages.LaunchPad"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk_UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+            Padding="24">
+        <StackPanel
+            MaxWidth="500"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <TextBlock
+                Style="{ThemeResource HeaderTextBlockStyle}"
+                Text="欢迎~"/>
+            <Border
+                Margin="0,12"
+                Height="4"
+                Width="240"
+                HorizontalAlignment="Left"
+                Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"/>
+            <TextBlock
+                Style="{ThemeResource SubtitleTextBlockStyle}"
+                Foreground="{ThemeResource SystemColorGrayTextColor}"
+                Text="这是一个启动页，很高兴您能在没有任何报错的情况下正常进入到这个页面O(∩_∩)O"/>
+
+            <ListView 
+                x:Name="LaunchPadListView"
+                Margin="0,24,0,0"
+                SelectionMode="None"
+                ItemClick="LaunchPadListView_ItemClick"
+                IsItemClickEnabled="True">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                        <Setter Property="Margin" Value="0,0,12,0"/>
+                        <Setter Property="Padding" Value="12"/>
+                        <Setter Property="Width" Value="140"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListViewItem Visibility="{x:Bind ViewModel.CurrentUser, Converter={StaticResource IsEmptyToVisibleConverter}, Mode=OneWay}" >
+                    <StackPanel Name="GoToLogin" Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <TextBlock Text="登录酷安" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <SymbolIcon HorizontalAlignment="Right" Margin="0,114,0,0" Symbol="Forward"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Visibility="{x:Bind ViewModel.CurrentUser, Converter={StaticResource IsNotEmptyToVisibleConverter}, Mode=OneWay}" >
+                    <StackPanel Name="GoToUserProfile" Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <TextBlock Text="欢迎~" Style="{ThemeResource TitleTextBlockStyle}" Foreground="{ThemeResource SystemChromeGrayColor}"/>
+                        <PersonPicture Margin="0,12,0,0" HorizontalAlignment="Left" ProfilePicture="{x:Bind ViewModel.CurrentUser.SmallAvatar}" Width="42" Height="42"/>
+                        <TextBlock Margin="0,12,0,0" Text="{x:Bind ViewModel.CurrentUser.Username}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource InkToolbarAccentColorThemeBrush}"/>
+                        <SymbolIcon HorizontalAlignment="Right" Margin="0,20,0,0" Symbol="Forward"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel Name="GoToQQGroup" Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <TextBlock Text="进群聊天" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <SymbolIcon HorizontalAlignment="Right" Margin="0,114,0,0" Symbol="Forward"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel Name="GoToGitHub" Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <TextBlock Text="项目GitHub" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <SymbolIcon HorizontalAlignment="Right" Margin="0,114,0,0" Symbol="Forward"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+    </Border>
+</Page>

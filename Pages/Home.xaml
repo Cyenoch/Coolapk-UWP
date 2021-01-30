@@ -83,64 +83,7 @@
                     x:Name="ContentFrame" 
                     Loaded="ContentFrame_Loaded" 
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                    <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}"
-                            Padding="24">
-                        <StackPanel
-                            MaxWidth="500"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                            <TextBlock
-                                Style="{ThemeResource HeaderTextBlockStyle}"
-                                Text="欢迎~"/>
-                            <Border
-                                Margin="0,12"
-                                Height="4"
-                                Width="240"
-                                HorizontalAlignment="Left"
-                                Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"/>
-                            <TextBlock
-                                Style="{ThemeResource SubtitleTextBlockStyle}"
-                                Foreground="{ThemeResource SystemColorGrayTextColor}"
-                                Text="这是一个启动页，很高兴您能在没有任何报错的情况下正常进入到这个页面O(∩_∩)O"/>
-
-                            <ListView Margin="0,24,0,0"
-                                      SelectionMode="None"
-                                      IsItemClickEnabled="True">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                        <Setter Property="Margin" Value="0,0,12,0"/>
-                                        <Setter Property="Padding" Value="12"/>
-                                        <Setter Property="Width" Value="140"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                                <ListViewItem>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="登录酷安" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                        <SymbolIcon HorizontalAlignment="Right" Margin="0,44,0,0" Symbol="Forward"/>
-                                    </StackPanel>
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="进群聊天" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                        <SymbolIcon HorizontalAlignment="Right" Margin="0,44,0,0" Symbol="Forward"/>
-                                    </StackPanel>
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="项目GitHub" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                        <SymbolIcon HorizontalAlignment="Right" Margin="0,44,0,0" Symbol="Forward"/>
-                                    </StackPanel>
-                                </ListViewItem>
-                            </ListView>
-                        </StackPanel>
-                    </Border>
+                    
                 </Frame>
             </muxc:NavigationView>
         </DataTemplate>

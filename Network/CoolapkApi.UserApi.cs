@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Coolapk_UWP.Network {
     public partial interface ICoolapkApis {
+        [Get("/v6/user/profile")]
+        Task<Resp<UserProfile>> GetUserProfile(uint uid, int installTime);
+
         [Get("/v6/user/space")]
         Task<Resp<User>> GetUser(uint uid);
 

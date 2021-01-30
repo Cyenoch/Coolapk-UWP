@@ -26,4 +26,7 @@ namespace Coolapk_UWP.Models {
         public string Province { get; set; }
         public ICollection<Entity> HomeTabCardRows { get; set; }
     }
+    public class UserProfile : User {
+
+    }
 }

@@ -90,6 +90,7 @@ namespace Coolapk_UWP.Pages {
 
         private void ContentFrame_Loaded(object sender, RoutedEventArgs e) {
             App.AppViewModel.HomeContentFrame = sender as Frame;
+            App.AppViewModel.HomeContentFrame.Navigate(typeof(LaunchPad));
         }
 
         private void HomeNavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args) {

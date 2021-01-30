@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="Coolapk_UWP.Pages.Login"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk_UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <RelativePanel>
+        <WebView
+            x:Name="LoginWebView"
+            NavigationCompleted="LoginWebView_NavigationCompleted"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True"
+            Source="https://account.coolapk.com/auth/loginByCoolapk"/>
+        <CommandBar
+            DefaultLabelPosition="Right"
+            Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignBottomWithPanel="True">
+            <AppBarButton Tapped="AppBarButtonClearLoginState_Tapped" Foreground="{ThemeResource InkToolbarAccentColorThemeBrush}" Label="退出登录/清除登录信息"/>
+            <AppBarButton Tapped="AppBarButton_Tapped" Foreground="{ThemeResource InkToolbarAccentColorThemeBrush}" Label=" 👉 已完成登录，验证 👈 "/>
+        </CommandBar>
+    </RelativePanel>
+</Page>

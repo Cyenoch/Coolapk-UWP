@@ -51,7 +51,7 @@ namespace Coolapk_UWP.DataTemplates {
             var goUrl = selectedItem.Url;
             if (goUrl != null) {
                 if (goUrl.StartsWith("/u/")) {
-                    (Window.Current.Content as Frame).Navigate(typeof(UserProfile), int.Parse(goUrl.Replace("/u/", "")));
+                    (Window.Current.Content as Frame).Navigate(typeof(Pages.UserProfile), int.Parse(goUrl.Replace("/u/", "")));
                 }
             }
         }
