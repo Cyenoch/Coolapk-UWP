@@ -35,5 +35,13 @@ namespace Coolapk_UWP.Pages {
         private void AsyncLoadStateControl_Retry(object sender, RoutedEventArgs e) {
             ViewModel.Reload();
         }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e) {
+            App.AppViewModel.HomeContentFrame.Navigate(typeof(UserProfile), ViewModel.Data.UserInfo.Uid);
+        }
+
+        private void FollowButton_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

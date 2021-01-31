@@ -21,5 +21,10 @@ namespace Coolapk_UWP.DataTemplates {
         public FeedCardTemplates() {
             this.InitializeComponent();
         }
+
+        private void Fuck_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            var feed = ((FrameworkElement)sender).DataContext as Feed;
+            App.AppViewModel.HomeContentFrame.Navigate(typeof(Pages.UserProfile), feed.UserInfo.Uid);
+        }
     }
 }

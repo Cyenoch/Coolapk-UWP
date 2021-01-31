@@ -80,70 +80,70 @@
                             <RelativePanel>
                                 <!-- 用户信息 -->
                                 <muxc:StackPanel
-                                Margin="12,8"
-                                RelativePanel.Above="Pivot"
-                                Orientation="Vertical">
+                                    Margin="12,8"
+                                    RelativePanel.Above="Pivot"
+                                    Orientation="Vertical">
                                     <PersonPicture
-                                Margin="0,12"
-                                HorizontalAlignment="Left"
-                                ProfilePicture="{x:Bind ViewModel.User.SmallAvatar, Mode=OneWay}" />
+                                        Margin="0,24"
+                                        HorizontalAlignment="Left"
+                                        ProfilePicture="{x:Bind ViewModel.User.SmallAvatar, Mode=OneWay}" />
                                     <muxc:TextBlock 
-                                FontWeight="Bold"
-                                Style="{ThemeResource TitleTextBlockStyle}"
-                                Text="{x:Bind ViewModel.User.Username, Mode=OneWay}"/>
+                                        FontWeight="Bold"
+                                        Style="{ThemeResource TitleTextBlockStyle}"
+                                        Text="{x:Bind ViewModel.User.Username, Mode=OneWay}"/>
                                     <muxc:TextBlock
-                                Margin="0,12"
-                                Foreground="{ThemeResource SystemColorGrayTextBrush}"
-                                Style="{ThemeResource CaptionTextBlockStyle}"
-                                Text="{x:Bind ViewModel.User.Bio, Mode=OneWay}"/>
+                                        Margin="0,12"
+                                        Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind ViewModel.User.Bio, Mode=OneWay}"/>
                                     <!-- 获赞 关注 粉丝 -->
                                     <muxc:StackPanel Orientation="Horizontal">
                                         <muxc:HyperlinkButton
-                                    Padding="0"
-                                    FontWeight="Bold"
-                                    Foreground="{ThemeResource SystemAccentColor}"
-                                    FontSize="18"
-                                    Content="{x:Bind ViewModel.User.GotLike, Mode=OneWay}"/>
+                                            Padding="0"
+                                            FontWeight="Bold"
+                                            Foreground="{ThemeResource SystemAccentColor}"
+                                            FontSize="18"
+                                            Content="{x:Bind ViewModel.User.GotLike, Mode=OneWay}"/>
                                         <muxc:TextBlock
-                                    Margin="2,0,16,0"
-                                    VerticalAlignment="Bottom"
-                                    Foreground="{ThemeResource SystemColorGrayTextBrush}"
-                                    Text="获赞"/>
+                                            Margin="2,0,16,0"
+                                            VerticalAlignment="Bottom"
+                                            Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                            Text="获赞"/>
 
                                         <muxc:HyperlinkButton
-                                    Padding="0"
-                                    FontWeight="Bold"
-                                    Foreground="{ThemeResource SystemAccentColor}"
-                                    FontSize="18"
-                                    Content="{x:Bind ViewModel.User.Follow, Mode=OneWay}"/>
+                                            Padding="0"
+                                            FontWeight="Bold"
+                                            Foreground="{ThemeResource SystemAccentColor}"
+                                            FontSize="18"
+                                            Content="{x:Bind ViewModel.User.Follow, Mode=OneWay}"/>
                                         <muxc:TextBlock
-                                    Margin="2,0,16,0"
-                                    VerticalAlignment="Bottom"
-                                    Foreground="{ThemeResource SystemColorGrayTextBrush}"
-                                    Text="关注"/>
+                                            Margin="2,0,16,0"
+                                            VerticalAlignment="Bottom"
+                                            Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                            Text="关注"/>
 
                                         <muxc:HyperlinkButton
-                                    Padding="0"
-                                    FontWeight="Bold"
-                                    Foreground="{ThemeResource SystemAccentColor}"
-                                    FontSize="18"
-                                    Content="{x:Bind ViewModel.User.Fans, Mode=OneWay}"/>
+                                            Padding="0"
+                                            FontWeight="Bold"
+                                            Foreground="{ThemeResource SystemAccentColor}"
+                                            FontSize="18"
+                                            Content="{x:Bind ViewModel.User.Fans, Mode=OneWay}"/>
                                         <muxc:TextBlock
-                                    Margin="2,0,16,0"
-                                    VerticalAlignment="Bottom"
-                                    Foreground="{ThemeResource SystemColorGrayTextBrush}"
-                                    Text="粉丝"/>
+                                            Margin="2,0,16,0"
+                                            VerticalAlignment="Bottom"
+                                            Foreground="{ThemeResource SystemColorGrayTextBrush}"
+                                            Text="粉丝"/>
                                     </muxc:StackPanel>
                                     <!-- User Tag -->
                                     <ScrollViewer 
-                                    HorizontalScrollBarVisibility="Auto"
-                                    HorizontalScrollMode="Auto"
-                                    IsVerticalScrollChainingEnabled="False"
-                                    Margin="0,12,0,0">
+                                        HorizontalScrollBarVisibility="Auto"
+                                        HorizontalScrollMode="Auto"
+                                        IsVerticalScrollChainingEnabled="False"
+                                        Margin="0,12,0,0">
                                         <muxc1:ItemsRepeater
-                                    ItemsSource="{x:Bind ViewModel.UserTag, Mode=OneWay}"
-                                    Layout="{StaticResource HorizontalStackLayout}"
-                                    ItemTemplate="{StaticResource UserTagTemplate}" />
+                                            ItemsSource="{x:Bind ViewModel.UserTag, Mode=OneWay}"
+                                            Layout="{StaticResource HorizontalStackLayout}"
+                                            ItemTemplate="{StaticResource UserTagTemplate}" />
                                     </ScrollViewer>
 
                                 </muxc:StackPanel>

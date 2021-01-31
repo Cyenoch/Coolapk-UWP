@@ -33,7 +33,7 @@
                 <ListView
                     x:Name="DefaultFeedContent"
                     x:Load="{x:Bind Data.IsHtmlArticle, Converter={StaticResource NegateBoolConverter}}"
-                    Padding="0,30,0,130"
+                    Padding="12,12,12,130"
                     SelectionMode="None"
                     IsItemClickEnabled="False">
                     <ListView.ItemContainerStyle>
@@ -44,6 +44,35 @@
                             <Setter Property="MaxWidth" Value="600"/>
                         </Style>
                     </ListView.ItemContainerStyle>
+                    <ListViewItem>
+                        <Grid Tapped="Grid_Tapped" Margin="0,24,0,12">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <PersonPicture Grid.RowSpan="2" Grid.Column="0" ProfilePicture="{x:Bind Data.UserInfo.SmallAvatar}" Width="50" Height="50"/>
+                            <TextBlock 
+                                Grid.Column="1"
+                                FontWeight="Bold"
+                                Margin="12,0,0,0"
+                                Text="{x:Bind Data.UserInfo.Username}"
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                FontSize="16"/>
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="12,6,0,0"
+                                Text="{x:Bind Data.HumanReadableDateString}"
+                                Style="{ThemeResource CaptionTextBlockStyle}"
+                                Foreground="{ThemeResource SystemChromeGrayColor}"/>
+                            <Button Click="FollowButton_Click" Margin="0,0,0,0" Grid.Column="2" Grid.RowSpan="2" Content="关注"/>
+                        </Grid>
+                    </ListViewItem>
                     <ListViewItem>
                         <controls:MyRichTextBlock
                             HorizontalAlignment="Stretch"
@@ -73,7 +102,35 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Source="{x:Bind Data.Cover}"/>
-                                <TextBlock Text="{x:Bind Data.Title}" Margin="12,24,12,0" FontWeight="Bold" MaxWidth="600" Style="{ThemeResource TitleTextBlockStyle}"/>
+                                <TextBlock Text="{x:Bind Data.Title}" Margin="12,24,12,0" FontWeight="Bold" MaxWidth="580" Style="{ThemeResource TitleTextBlockStyle}"/>
+
+                                <Grid Tapped="Grid_Tapped" Margin="12,24,12,12" MaxWidth="580">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <PersonPicture Grid.RowSpan="2" Grid.Column="0" ProfilePicture="{x:Bind Data.UserInfo.SmallAvatar}" Width="50" Height="50"/>
+                                    <TextBlock 
+                                        Grid.Column="1"
+                                        FontWeight="Bold"
+                                        Margin="12,0,0,0"
+                                        Text="{x:Bind Data.UserInfo.Username}"
+                                        Style="{ThemeResource BodyTextBlockStyle}"
+                                        FontSize="16"/>
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="12,6,0,0"
+                                        Text="{x:Bind Data.HumanReadableDateString}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Foreground="{ThemeResource SystemChromeGrayColor}"/>
+                                    <Button Click="FollowButton_Click" Margin="0,0,0,0" Grid.Column="2" Grid.RowSpan="2" Content="关注"/>
+                                </Grid>
                             </StackPanel>
                         </cmui:ScrollHeader>
                     </ListView.Header>
