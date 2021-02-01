@@ -58,7 +58,7 @@ namespace Coolapk_UWP.DataTemplates {
                 case IconScrollCard _:
                 case IconLinkGridCard _:
                 case ImageCarouselCard _:
-                    return WidthNoLimitedContainer;
+                    return WidthLimitedContainer;
                 case Feed _:
                     return WidthLimitedFeedContainerStyle;
             }

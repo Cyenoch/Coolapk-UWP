@@ -96,25 +96,23 @@
 
     <!--轮播模板-->
     <DataTemplate x:Key="CarouselCardTemplate" x:DataType="models:ImageCarouselCard">
-        <ListView
-            SelectionMode="None"
-            IsItemClickEnabled="True"
-            ScrollViewer.HorizontalScrollMode="Enabled"
-            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-            ScrollViewer.VerticalScrollMode="Disabled"
-            ScrollViewer.IsHorizontalRailEnabled="True"
-            ItemsSource="{x:Bind Entities}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Entity">
-                    <cmui:ImageEx CornerRadius="8" IsCacheEnabled="True" Height="220" HorizontalAlignment="Stretch" Stretch="Uniform" Source="{x:Bind Pic}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
+        <Viewbox Stretch="Uniform" Margin="12,0,12,0">
+            <Border CornerRadius="8" Margin="0">
+                <cmui:RotatorTile
+                    Width="600"
+                    Height="200"
+                    RotationDelay="0:0:2.5"
+                    Direction="Left"
+                    
+                    ItemsSource="{x:Bind Entities}">
+                    <cmui:RotatorTile.ItemTemplate>
+                        <DataTemplate x:DataType="models:Entity">
+                            <Image HorizontalAlignment="Stretch" Stretch="Uniform" Source="{x:Bind Pic}" />
+                        </DataTemplate>
+                    </cmui:RotatorTile.ItemTemplate>
+                </cmui:RotatorTile>
+            </Border>
+        </Viewbox>
     </DataTemplate>
 
     <!--IconLinkGridCard-->

@@ -70,6 +70,7 @@ namespace Coolapk_UWP.Controls {
                         );
                         return resp.Data;
                     }), "Entities");
+                _ = Entities.LoadMoreItemsAsync(20);
             });
         }
 

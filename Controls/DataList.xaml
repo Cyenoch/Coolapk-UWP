@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     xmlns:templates="using:Coolapk_UWP.DataTemplates">
 
@@ -17,6 +18,36 @@
     
     <RelativePanel Background="Transparent">
         <TextBlock Margin="24,0" Text="{x:Bind Entities.Error, Mode=OneWay}"/>
+        <TextBlock Text="fuck"/>
+        <!--GridView
+            Padding="{x:Bind Padding, Mode=OneWay}"
+            x:Name="EntityListView"
+            RelativePanel.AlignBottomWithPanel="True" 
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True"
+            DataFetchSize="20"
+            SelectionMode="None"
+            IncrementalLoadingThreshold="0"
+            IncrementalLoadingTrigger="Edge"
+            IsItemClickEnabled="True"
+            Tapped="EntityListView_Tapped"
+            ItemClick="EntityListView_ItemClick"
+            ItemTemplateSelector="{StaticResource EntityListItemTemplateSelector}"
+            ItemContainerStyleSelector="{StaticResource DataListItemContainerStyleSelector}"
+            ItemsSource="{x:Bind Entities, Mode=OneWay}">
+            
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:StaggeredPanel
+                        DesiredColumnWidth="400"
+                        HorizontalAlignment="Stretch"
+                        ColumnSpacing="5"
+                        RowSpacing="5"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        
+        </GridView -->
         <ListView
             Padding="{x:Bind Padding, Mode=OneWay}"
             x:Name="EntityListView"
