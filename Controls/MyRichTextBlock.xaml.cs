@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coolapk_UWP.Pages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -136,6 +137,15 @@ namespace Coolapk_UWP.Controls {
 
         public void OnHref(Hyperlink sender, HyperlinkClickEventArgs e) {
             var value = sender.GetValue(HrefClickParam);
+            switch(value)
+            {
+                case string strValue:
+                    if (strValue.StartsWith("/u/"))
+                    {
+                        App.AppViewModel.HomeContentFrame.Navigate(typeof(UserProfile), strValue.Replace("/u/", ""));
+                    }
+                    break;
+            }
             // TODO: fuck
         }
 

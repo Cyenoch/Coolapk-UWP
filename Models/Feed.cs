@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml;
 
 namespace Coolapk_UWP.Models {
@@ -19,6 +20,12 @@ namespace Coolapk_UWP.Models {
     public class Feed : Entity {
         public User UserInfo { get; set; }
 
+        [JsonIgnore]
+        public string MessageWithUserSpaceLink {
+            get {
+                return $"<a href=\"/u/{UserInfo.Uid}\">@{UserInfo.Username}:</a>" + Message;
+            }
+        }
         public string Message { get; set; }
         public string InfoHtml { get; set; }
 
@@ -45,16 +52,10 @@ namespace Coolapk_UWP.Models {
         public IList<string> _smallPicArr;
 
         [JsonIgnore]
-        public IList<string> SmallPicArr {
-            get {
-                return _smallPicArr;
-            }
-        }
+        public IList<string> SmallPicArr { get { return _smallPicArr; } }
 
         public IList<string> PicArr {
-            get {
-                return _picArr;
-            }
+            get { return _picArr; }
             set {
                 // 酷安有时候会有一个 [""] 这样的坑壁操作
                 _picArr = value.Where((pic) => pic.Length > 8).ToList();
@@ -69,18 +70,35 @@ namespace Coolapk_UWP.Models {
             }
         }
 
+        [JsonProperty("replynum")]
+        public uint _replynum;
+
+        [JsonIgnore]
+        public uint ReplyNum { get { return _replynum; } set { Set(ref _replynum, value); } }
+        [JsonIgnore]
+        public bool ShowReplyNum { get { return _replynum > 0; } }
+
+
         [JsonProperty("likenum")]
         public uint _likenum;
 
         [JsonIgnore]
-        public uint Likenum {
-            get {
-                return _likenum;
-            }
-            set {
-                Set(ref _likenum, value);
-            }
-        }
+        public bool ShowLikeNum { get { return _likenum > 0; } }
+
+        [JsonIgnore]
+        public uint Likenum { get { return _likenum; } set { Set(ref _likenum, value); } }
+
+        [JsonIgnore]
+        public bool HasForwardFeed { get { return ForwardSourceFeed != null; } }
+
+        // 转发的feed
+        public Feed ForwardSourceFeed { get; set; }
+
+        // 已知 "feed"
+        public string ForwardSourceType { get; set; }
+
+        public UserAction UserAction { get; set; }
+        public IList<RelationRow> RelationRows { get; set; }
     }
 
     public class FeedCover : Feed {
@@ -107,14 +125,7 @@ namespace Coolapk_UWP.Models {
         public uint _likenum;
 
         [JsonIgnore]
-        public uint Likenum {
-            get {
-                return _likenum;
-            }
-            set {
-                Set(ref _likenum, value);
-            }
-        }
+        public uint Likenum { get { return _likenum; } set { Set(ref _likenum, value); } }
 
         [JsonProperty("rusername")]
         public string ReplyToUsername { get; set; }
@@ -152,5 +163,37 @@ namespace Coolapk_UWP.Models {
         [JsonIgnore]
         public bool IsReplyToRootReply { get { return ReplyToReplyId == RootReplyId && RootReplyId != 0; } }
 
+        public IList<RelationRow> RelationRows { get; set; }
+
+    }
+
+    /// <summary>
+    /// Logo Title Url EntityType
+    /// </summary>
+    public class RelationRow : Entity {}
+
+    public class UserAction : NotifyPropertyBase {
+        public bool _like = false;
+        public bool _favorite = false;
+        public bool _follow = false;
+        public bool _collect = false;
+
+        [JsonConverter(typeof(JsonIntToBoolConverter))]
+        public bool Like { get { return _like; } set { Set(ref _like, value); OnPropertyChanged("LikeButtonColor"); } }
+
+        [JsonConverter(typeof(JsonIntToBoolConverter))]
+        public bool Favorite { get { return _favorite; } set { Set(ref _favorite, value); } }
+
+        [JsonConverter(typeof(JsonIntToBoolConverter))]
+        public bool Follow { get { return _follow; } set { Set(ref _follow, value); } }
+
+        [JsonConverter(typeof(JsonIntToBoolConverter))]
+        public bool Collect { get { return _collect; } set { Set(ref _collect, value); } }
+
+        public Windows.UI.Xaml.Media.SolidColorBrush LikeButtonColor {
+            get {
+                return ((Windows.UI.Xaml.Media.SolidColorBrush)App.Current.Resources[Like ? "SystemColorControlAccentBrush" : "SystemColorGrayTextBrush"]);
+            }
+        }
     }
 }

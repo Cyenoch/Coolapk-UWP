@@ -15,6 +15,9 @@ namespace Coolapk_UWP.Network {
         [Get("/v6/user/space")]
         Task<Resp<User>> GetUser(uint uid);
 
+        [Get("/v6/user/space")]
+        Task<Resp<User>> GetUser(string uid);
+
         // 获取某人的动态列表
         [Get("/v6/user/feedList")]
         Task<CollectionResp<Entity>> GetUserFeedList(

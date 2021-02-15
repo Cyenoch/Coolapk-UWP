@@ -13,13 +13,15 @@
 
     <DataTemplate x:Key="DefaultFeedCardTemplate" x:DataType="models:Feed">
         <Border 
-            BorderThickness="1.2" 
+            x:Name="FeedBlock"
+            Tapped="FeedBlock_Tapped"
+            BorderThickness=".4" 
             BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
             Padding="12"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-            CornerRadius="0">
+            CornerRadius="8">
             <StackPanel>
-                <Grid Tapped="Fuck_Tapped" x:Name="Fuck" Margin="0,0,0,6">
+                <Grid Tapped="UserProfileBlock_Tapped" x:Name="UserProfileBlock" Margin="0,0,0,6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -40,25 +42,92 @@
                             </Paragraph>
                         </RichTextBlock>
                     </StackPanel>
+
+                    <StackPanel x:Name="FeedCardMore" Tapped="FeedCardMore_Tapped" Grid.Column="2" Padding="8" Margin="12,0,0,0" Background="{ThemeResource SystemChromeLowColor}" CornerRadius="8" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <SymbolIcon Symbol="More" Foreground="{ThemeResource SystemColorGrayTextBrush}"/>
+                    </StackPanel>
                 </Grid>
 
                 <TextBlock x:Name="__" x:Load="{x:Bind IsHtmlArticle}"
                            Text="{x:Bind Title}"
                            Style="{ThemeResource SubtitleTextBlockStyle}"
                            FontWeight="Bold"
-                           Margin="0,3"/>
+                           Margin="0,4,0,2"/>
+                
                 <controls:MyRichTextBlock 
                     Text="{x:Bind Message}" 
                     Wrap="True"
                     Margin="0,6"/>
 
 
-                <controls:PicArrBox Margin="0,6" PicArr="{x:Bind SmallPicArr}" />
+                <controls:PicArrBox Visibility="{x:Bind HasPics, Mode=OneWay}" Margin="0,6,0,6" PicArr="{x:Bind SmallPicArr}" />
 
-                <!--TODO:-->
-                <StackPanel  Orientation="Horizontal">
-                    <SymbolIcon Symbol="Like"/>
-                </StackPanel>
+                <Border Tapped="ForwardFeedBlock_Tapped" Padding="8,0" Margin="0,6,0,6" x:Name="ForwardFeedBlock" x:Load="{x:Bind HasForwardFeed}" CornerRadius="8" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                    <StackPanel Orientation="Vertical">
+                        <controls:MyRichTextBlock 
+                            Text="{x:Bind ForwardSourceFeed.MessageWithUserSpaceLink}" 
+                            Wrap="True"
+                            Margin="0,6"/>
+                        <controls:PicArrBox Margin="0,6" PicArr="{x:Bind ForwardSourceFeed.SmallPicArr}" />
+
+                    </StackPanel>
+                </Border>
+
+                <Grid Margin="0,4,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
+                        ItemsSource="{x:Bind RelationRows}"
+                        SelectionMode="None"
+                        ScrollViewer.IsVerticalRailEnabled="False"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollMode="Enabled"
+                        ScrollViewer.IsHorizontalRailEnabled="True"
+                        IsItemClickEnabled="True"
+                        x:Name="RelationRows"
+                        ItemClick="RelationRows_ItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Entity">
+                                <StackPanel Padding="8" Orientation="Horizontal" Background="{ThemeResource SystemChromeLowColor}" CornerRadius="8">
+                                    <mtui:ImageEx Stretch="UniformToFill" VerticalAlignment="Stretch" Height="20" CornerRadius="8" Source="{x:Bind Logo}"/>
+                                    <TextBlock Text="{x:Bind Title}" Padding="8,0,0,0" Foreground="{ThemeResource SystemColorGrayTextBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0,0,12,0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                    
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel Padding="8" Margin="12,0,0,0" Background="{ThemeResource SystemChromeLowColor}" CornerRadius="8" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Tapped="LikeButton_Tapped">
+                            <SymbolIcon Symbol="Like" Foreground="{x:Bind UserAction.LikeButtonColor, Mode=OneWay}"/>
+                            <TextBlock Visibility="{x:Bind ShowLikeNum, Mode=OneWay}" Padding="8,0,0,0" Foreground="{x:Bind UserAction.LikeButtonColor, Mode=OneWay}" Text="{x:Bind Likenum, Mode=OneWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Padding="8" Margin="12,0,0,0" Background="{ThemeResource SystemChromeLowColor}" CornerRadius="8" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <SymbolIcon Symbol="Comment" Foreground="{ThemeResource SystemColorGrayTextBrush}"/>
+                            <TextBlock Visibility="{x:Bind ShowReplyNum, Mode=OneWay}" Foreground="{ThemeResource SystemColorGrayTextBrush}" Padding="8,0,0,0" Text="{x:Bind ReplyNum, Mode=OneWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Padding="8" Margin="12,0,0,0" Background="{ThemeResource SystemChromeLowColor}" CornerRadius="8" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <SymbolIcon Symbol="Share" Foreground="{ThemeResource SystemColorGrayTextBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Grid>
             </StackPanel>
         </Border>
     </DataTemplate>

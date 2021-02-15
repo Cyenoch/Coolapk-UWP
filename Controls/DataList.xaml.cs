@@ -91,8 +91,9 @@ namespace Coolapk_UWP.Controls {
         private void EntityListView_ItemClick(object sender, ItemClickEventArgs e) {
             var entity = e.ClickedItem;
             if (entity is Feed) {
-                var feed = entity as Feed;
-                App.AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), feed.EntityID);
+                // feed类留给相应item自行处理
+                //var feed = entity as Feed;
+                //App.AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), feed.EntityID);
             }
         }
     }

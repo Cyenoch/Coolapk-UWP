@@ -25,7 +25,9 @@
         </DataTemplate>
 
         <DataTemplate x:Key="OnePicArrBoxTempalte" x:DataType="local:PicArrBox">
-            <controls:ImageEx MaxHeight="600" CornerRadius="8" HorizontalAlignment="Stretch" Stretch="Uniform" Source="{x:Bind PicArr[0]}"/>
+            <Border CornerRadius="8" HorizontalAlignment="Left">
+                <controls:ImageEx MaxHeight="600" CornerRadius="8" Stretch="Uniform" Source="{x:Bind PicArr[0]}"/>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="TwoColumnPicArrBoxTemplate" x:DataType="local:PicArrBox">

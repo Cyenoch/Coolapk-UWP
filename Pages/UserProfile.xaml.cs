@@ -20,8 +20,16 @@ namespace Coolapk_UWP.Pages {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var parameters = e.Parameter;
-            if (parameters != null && parameters is int) {
-                ViewModel.Uid = parameters as int?;
+            if (parameters != null) {
+                switch(parameters)
+                {
+                    case int uid:
+                        ViewModel.Uid = (uint)uid;
+                        break;
+                    case string username:
+                        ViewModel.Username = username;
+                        break;
+                }
             }
             ViewModel.Reload();
         }

@@ -1,6 +1,31 @@
 # Coolapk-UWP
 
-创建一个UserControl用于显示不同的状态 使用DataTemplate实现 针对需要单次异步获取数据的页面 比如动态详情
- - Loading 或许可以做做骨架效果
- - Done 
- - Error 具备重试按钮 显示错误信息
+各目录作用：
+ - Assets 资源文件
+ - Controls 控件
+   - AsyncLoadStateControl.xaml 针对一波获取的页面提供三种状态
+   - DataList.xaml 数据列表
+   - MyRichTextBlock.xaml 富文本编辑器实现
+   - PicArrBox.xaml 宫格图片
+   - ReplyList.xaml 回复列表
+ - DataTemplates 模板
+   - EntityListItemDataTemplate.xaml 提供一个TemplateSelector和简单的模板用于动态列表
+   - FeedCardTemplates.xaml 和动态有关的Item的模板
+   - FeedReplyTemplate.xaml 和评论有关的Item模板以及Selector
+   - IconScrollCardTemplates.xaml
+   - ImageTextScrollCardTemplate.xaml
+   - PicTextMixTemplates.xaml 图文模板
+ - Models 数据模型
+   - Entity.cs 包括所有数据模型的基类
+ - Network 网络相关
+   - CoolapkApi.*.cs 酷安Api
+   - TokenHeaderHandler.cs Token生成等
+ - Other 其他工具
+   - AppUtil.cs
+   - IncrementLoadingCollection.cs
+   - NotifyPropertyBase.cs
+ - Pages 各个页面
+ - Themes ...
+ - ViewModels 视图模型
+   - BaseViewModel.cs 视图模型基类
+ - App.xaml
