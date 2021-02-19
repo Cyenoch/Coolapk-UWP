@@ -17,8 +17,6 @@
     </UserControl.Resources>
     
     <RelativePanel Background="Transparent">
-        <TextBlock Margin="24,0" Text="{x:Bind Entities.Error, Mode=OneWay}"/>
-        <TextBlock Text="fuck"/>
         <!--GridView
             Padding="{x:Bind Padding, Mode=OneWay}"
             x:Name="EntityListView"
@@ -76,6 +74,7 @@
             RelativePanel.AlignRightWithPanel="True">
             <ProgressRing IsActive="{x:Bind Entities.Loading, Mode=OneWay}"/>
         </Border>
+        <TextBlock Margin="24,0" Text="{x:Bind Entities.Error, Mode=OneWay}"/>
     </RelativePanel>
 
 </UserControl>

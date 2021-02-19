@@ -13,11 +13,10 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Controls;
+using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -62,7 +61,7 @@ namespace Coolapk_UWP.Pages {
             HomeNavigationView = sender;
             var item = args.SelectedItem as HomeMenuItem;
             var frame = sender.Content as Frame;
-            if (item ==null && args.SelectedItem is NavigationViewItem) {
+            if (item ==null && ((NavigationViewItem)args.SelectedItem) != null) {
                 var content = ((NavigationViewItem)args.SelectedItem).Content;
                 switch(content) {
                     case "设置":
