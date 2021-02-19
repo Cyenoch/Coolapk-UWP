@@ -17,7 +17,7 @@ namespace Coolapk_UWP.Models {
         HtmlArticle = 12,
     }
 
-    public class Feed : Entity {
+    public class Feed : ActionEntity {
         public User UserInfo { get; set; }
 
         [JsonIgnore]
@@ -78,16 +78,6 @@ namespace Coolapk_UWP.Models {
         [JsonIgnore]
         public bool ShowReplyNum { get { return _replynum > 0; } }
 
-
-        [JsonProperty("likenum")]
-        public uint _likenum;
-
-        [JsonIgnore]
-        public bool ShowLikeNum { get { return _likenum > 0; } }
-
-        [JsonIgnore]
-        public uint Likenum { get { return _likenum; } set { Set(ref _likenum, value); } }
-
         [JsonIgnore]
         public bool HasForwardFeed { get { return ForwardSourceFeed != null; } }
 
@@ -97,7 +87,6 @@ namespace Coolapk_UWP.Models {
         // 已知 "feed"
         public string ForwardSourceType { get; set; }
 
-        public UserAction UserAction { get; set; }
         public IList<RelationRow> RelationRows { get; set; }
     }
 
@@ -116,16 +105,10 @@ namespace Coolapk_UWP.Models {
         public string Cover { get; set; }
     }
 
-    public class FeedReply : Entity {
+    public class FeedReply : ActionEntity {
         public User UserInfo { get; set; }
         public uint ReplyRowsCount { get; set; }
         public bool IsFeedAuthor { get; set; }
-
-        [JsonProperty("likenum")]
-        public uint _likenum;
-
-        [JsonIgnore]
-        public uint Likenum { get { return _likenum; } set { Set(ref _likenum, value); } }
 
         [JsonProperty("rusername")]
         public string ReplyToUsername { get; set; }
@@ -170,7 +153,7 @@ namespace Coolapk_UWP.Models {
     /// <summary>
     /// Logo Title Url EntityType
     /// </summary>
-    public class RelationRow : Entity {}
+    public class RelationRow : Entity { }
 
     public class UserAction : NotifyPropertyBase {
         public bool _like = false;

@@ -132,6 +132,7 @@
     <Compile Include="Models\Feed.cs" />
     <Compile Include="Models\Feed.Message.cs" />
     <Compile Include="Models\Resp.cs" />
+    <Compile Include="Models\Results.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\CoolapkApi.FeedApi.cs" />
     <Compile Include="Network\CoolapkApi.MainApi.cs" />

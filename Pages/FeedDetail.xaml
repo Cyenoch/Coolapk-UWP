@@ -218,8 +218,7 @@
             RelativePanel.AlignRightWithPanel="True"
             Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
             DefaultLabelPosition="Right">
-            <AppBarButton Label="{x:Bind ViewModel.Data.HumanReadableDateString}"/>
-            <AppBarButton Label="点赞" Icon="Like"/>
+            <AppBarButton Foreground="{x:Bind ViewModel.Data.UserAction.LikeButtonColor, Mode=OneWay}" Label="{x:Bind ViewModel.Data.Likenum, Mode=OneWay}" Icon="Like" x:Name="LikeButton" Tapped="LikeButton_Tapped"/>
             <AppBarButton Label="转发" Icon="Share"/>
             <AppBarToggleButton Label="查看评论" Icon="Comment" IsChecked="{x:Bind RootSplitView.IsPaneOpen, Mode=TwoWay}"/>
         </CommandBar>

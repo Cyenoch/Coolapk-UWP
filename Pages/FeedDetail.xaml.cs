@@ -43,5 +43,18 @@ namespace Coolapk_UWP.Pages {
         private void FollowButton_Click(object sender, RoutedEventArgs e) {
 
         }
+
+        private async void LikeButton_Tapped(object sender, TappedRoutedEventArgs e) {
+            try {
+                _ = await ViewModel.Data.ToggleLike();
+            } catch (Exception err) {
+                var dialog = new ContentDialog() {
+                    PrimaryButtonText = "确定",
+                    Content = err.Message,
+                    Title = "点赞失败",
+                };
+                _ = dialog.ShowAsync();
+            }
+        }
     }
 }

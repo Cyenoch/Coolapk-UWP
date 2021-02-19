@@ -102,7 +102,7 @@ namespace Coolapk_UWP.Models {
                     }
                     break;
                 case "album":
-                    switch(EntityTemplate) {
+                    switch (EntityTemplate) {
                         case "albumExpandCardTopCover": // 应用集
                             return Cast<IgnoreCard>();
                     }
@@ -112,8 +112,41 @@ namespace Coolapk_UWP.Models {
         }
     }
 
+    public class ActionEntity : Entity {
+        [JsonProperty("likenum")]
+        public uint _likenum;
+
+        [JsonIgnore]
+        public bool ShowLikeNum { get { return _likenum > 0; } }
+
+        [JsonIgnore]
+        public uint Likenum { get { return _likenum; } set { Set(ref _likenum, value); } }
+
+        public UserAction UserAction { get; set; }
+
+        public async Task<Resp<LikeActionResult>> ToggleLike() {
+            Resp<LikeActionResult> resp;
+            var old = UserAction.Like;
+            try {
+                if (UserAction.Like) {
+                    UserAction.Like = false;
+                    resp = await App.AppViewModel.CoolapkApis.DoUnLike(this.EntityID);
+                } else {
+                    UserAction.Like = true;
+                    resp = await App.AppViewModel.CoolapkApis.DoLike(this.EntityID);
+                }
+                if (resp.Message != null) throw new Exception(resp.Message);
+                Likenum = resp.Data.Count;
+                return resp;
+            } catch (Exception err) {
+                UserAction.Like = old;
+                throw err;
+            }
+        }
+    }
+
     // 比如 新鲜图文
-    public class ImageTextScrollCard: Entity {
+    public class ImageTextScrollCard : Entity {
         // href to datalist => URL + Title
     }
 

@@ -33,5 +33,12 @@ namespace Coolapk_UWP.Network {
             uint fromFeedAuthor = 0,
             uint? lastItem = null,
             uint? firstItem = null);
+
+        [Post("/v6/feed/like")]
+        Task<Resp<LikeActionResult>> DoLike(uint id);
+
+        [Post("/v6/feed/unlike")]
+        Task<Resp<LikeActionResult>> DoUnLike(uint id);
     }
+
 }

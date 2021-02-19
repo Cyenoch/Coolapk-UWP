@@ -30,8 +30,7 @@ namespace Coolapk_UWP.DataTemplates {
             e.Handled = true;
         }
 
-        private void ForwardFeedBlock_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
+        private void ForwardFeedBlock_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             var feed = (sender as FrameworkElement).DataContext as Feed;
             App.AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), feed.ForwardSourceFeed.EntityID);
             e.Handled = true;
@@ -43,12 +42,19 @@ namespace Coolapk_UWP.DataTemplates {
             e.Handled = true;
         }
 
-        private void LikeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+        private async void LikeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             e.Handled = true;
             var feed = (sender as FrameworkElement).DataContext as Feed;
-            feed.Likenum += 1;
-            feed.UserAction.Like = !feed.UserAction.Like;
-
+            try {
+                _ = await feed.ToggleLike();
+            } catch (Exception err) {
+                var dialog = new ContentDialog() {
+                    PrimaryButtonText = "确定",
+                    Content = err.Message,
+                    Title = "点赞失败",
+                };
+                _ = dialog.ShowAsync();
+            }
         }
 
         private void FeedCardMore_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
