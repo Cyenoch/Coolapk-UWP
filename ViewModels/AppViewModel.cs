@@ -19,9 +19,20 @@ using Windows.Web.Http.Filters;
 namespace Coolapk_UWP.ViewModels {
     public class AppViewModel : NotifyPropertyBase {
 
+        public delegate void HomeContentFrameLoadedHandler(Frame HomeContentFrame);
+        public event HomeContentFrameLoadedHandler HomeContentFrameLoadedEvent;
+
         public ApplicationDataContainer LocalSettings => ApplicationData.Current.LocalSettings;
         public Frame AppRootFrame { get; set; }
-        public Frame HomeContentFrame { get; set; }
+
+        private Frame _homeContentFrame;
+        public Frame HomeContentFrame {
+            get { return _homeContentFrame; }
+            set {
+                if (_homeContentFrame == null) HomeContentFrameLoadedEvent?.Invoke(value);
+                _homeContentFrame = value;
+            }
+        }
 
         public UserProfile _currentUser;
         public UserProfile CurrentUser {

@@ -19,6 +19,7 @@ using Coolapk_UWP.ViewModels;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI;
+using System.Threading.Tasks;
 
 namespace Coolapk_UWP {
     sealed partial class App : Application {
@@ -30,34 +31,7 @@ namespace Coolapk_UWP {
             App.AppViewModel = new AppViewModel();
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs e) {
-
-            //var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            //coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            //var view = ApplicationView.GetForCurrentView();
-
-            //// active
-            //view.TitleBar.BackgroundColor = Color.FromArgb(255, 8, 87, 180);
-            //view.TitleBar.ForegroundColor = Colors.White;
-
-            //// inactive  
-            //view.TitleBar.InactiveBackgroundColor = Color.FromArgb(255, 8, 87, 180);
-            //view.TitleBar.InactiveForegroundColor = Colors.Black;
-
-            //// button
-            //view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 8, 87, 180);
-            //view.TitleBar.ButtonForegroundColor = Colors.White;
-
-            //view.TitleBar.ButtonHoverBackgroundColor = Colors.Blue;
-            //view.TitleBar.ButtonHoverForegroundColor = Colors.White;
-
-            //view.TitleBar.ButtonPressedBackgroundColor = Colors.Blue;
-            //view.TitleBar.ButtonPressedForegroundColor = Colors.White;
-
-            //view.TitleBar.ButtonInactiveBackgroundColor = Colors.DarkGray;
-            //view.TitleBar.ButtonInactiveForegroundColor = Colors.Gray;
-
+        private void HandleActivation(IActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null) {
@@ -72,13 +46,22 @@ namespace Coolapk_UWP {
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false) {
+            var launch = e as LaunchActivatedEventArgs;
+            if (launch != null && launch.PrelaunchActivated == false) {
                 if (rootFrame.Content == null) {
-                    rootFrame.Navigate(typeof(Home), e.Arguments);
+                    rootFrame.Navigate(typeof(Home), launch.Arguments);
                 }
-
+                Window.Current.Activate();
+            } else {
+                if (rootFrame.Content == null) {
+                    rootFrame.Navigate(typeof(Home));
+                }
                 Window.Current.Activate();
             }
+        }
+
+        protected override void OnLaunched(LaunchActivatedEventArgs e) {
+            HandleActivation(e);
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
@@ -88,6 +71,32 @@ namespace Coolapk_UWP {
         private void OnSuspending(object sender, SuspendingEventArgs e) {
             var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args) {
+            base.OnActivated(args);
+            HandleActivation(args);
+
+            if (args.Kind == ActivationKind.Protocol)
+                switch (args) {
+                    case ProtocolActivatedEventArgs args1:
+                        if (args1.Uri.Scheme == "coolmarket") {
+                            switch (args1.Uri.Host) {
+                                case "feed": // 动态
+                                    var feedId = args1.Uri.Segments[1];
+                                    if (feedId != null) {
+                                        // 跳转到动态
+                                        if (AppViewModel.HomeContentFrame == null) App.AppViewModel.HomeContentFrameLoadedEvent += new AppViewModel.HomeContentFrameLoadedHandler(async homeContentFrame => {
+                                            await Task.Delay(200);
+                                            homeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), uint.Parse(feedId));
+                                        });
+                                        else AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), uint.Parse(feedId));
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                }
         }
     }
 }
