@@ -47,7 +47,9 @@ namespace Coolapk_UWP.Controls {
                         lastItem: config.LastItem
                     );
                     return resp.Data;
-                }), "Entities");
+                }) {
+                    AutoCast = false // 关闭该功能
+                }, "Entities");
             });
         }
 

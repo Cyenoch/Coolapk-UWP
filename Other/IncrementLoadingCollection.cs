@@ -33,6 +33,8 @@ namespace Coolapk_UWP.Other {
             LoadMoreItemsAsyncFunc = _loadMoreItemsAsyncFunc;
         }
 
+        public bool AutoCast = true;
+
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count) {
             return AsyncInfo.Run(async cancelToken => {
                 try {
@@ -69,6 +71,10 @@ namespace Coolapk_UWP.Other {
 
         // 重写InsertItem使它在插入得时候根据EntityType和EntityTemplate分配正确的Model
         protected override void InsertItem(int index, T entity) {
+            if (!AutoCast) {
+                base.InsertItem(index, entity);
+                return;
+            }
             var _ = entity.AutoCast() as T;
             if (!(_ is IgnoreCard))
                 base.InsertItem(index, _);
