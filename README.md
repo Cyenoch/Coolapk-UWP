@@ -1,6 +1,17 @@
 # Coolapk-UWP
 
-各目录作用：
+**这是一个兴趣使然的项目，主要目的用于学习UWP应用开发，以及C#语言**
+
+其次，为了方便在Windows10(包括未来的Windows X) 上刷酷安
+
+> **仅供个人用于学习、研究;不得用于商业用途;**
+
+### 适配酷安的URI SCHEME
+  - 打开动态
+    > coolmarket://feed/ + feed id
+
+### 简要说明各目录及文件作用:
+
  - Assets 资源文件
  - Controls 控件
    - AsyncLoadStateControl.xaml 针对一波获取的页面提供三种状态
