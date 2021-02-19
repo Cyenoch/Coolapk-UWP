@@ -47,6 +47,8 @@ namespace Coolapk_UWP.Controls {
 
         public IncrementalLoadingEntityCollection<Entity> Entities;
 
+        public uint installTime = (uint)AppUtil.DateToTimeStamp(DateTime.Now);
+
         public DataList() {
             this.InitializeComponent();
             //DispatcherPriority.DataBind = 8
@@ -54,7 +56,7 @@ namespace Coolapk_UWP.Controls {
                 if (TouTiaoMode) { // 头条模式 也就是首页 URL https://api.coolapk.com/v6/main/indexV8?page=&firstLaunch=&installTime=&lastItem=
                     Set(ref Entities, new IncrementalLoadingEntityCollection<Entity>(async config => {
                         var resp = await App.AppViewModel.CoolapkApis.GetIndexV8(
-                            (uint)AppUtil.DateToTimeStamp(DateTime.Now),
+                            installTime,
                             config.Page,
                             lastItem: config.LastItem
                         );
@@ -70,7 +72,7 @@ namespace Coolapk_UWP.Controls {
                         );
                         return resp.Data;
                     }), "Entities");
-                _ = Entities.LoadMoreItemsAsync(20);
+                //_ = Entities.LoadMoreItemsAsync(20);
             });
         }
 
