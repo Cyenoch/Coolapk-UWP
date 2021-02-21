@@ -21,6 +21,10 @@ namespace Coolapk_UWP.ViewModels {
         public IList<HomeMenuItem> Children { get; set; }
     }
 
+    public class SpecialHomeMenuItem : HomeMenuItem {
+        public string Tag;
+    }
+
     public class HomeNavigationViewMenuTemplateSelector : DataTemplateSelector {
         public DataTemplate NoIconTemplate { get; set; }
         public DataTemplate IconTemplate { get; set; }
@@ -38,6 +42,14 @@ namespace Coolapk_UWP.ViewModels {
         public IList<MainInitTabConfig> HomeTabs => Data?[1]?.Tabs;
         public IList<MainInitTabConfig> DigitalTabs => Data?[3]?.Tabs;
         public IList<MainInitTabConfig> DiscoveryTabs => Data?[2]?.Tabs;
+
+        public IList<HomeMenuItem> BottomItems = new List<HomeMenuItem>() {
+            new SpecialHomeMenuItem() {
+                Name = "发布动态",
+                Icon = Symbol.Edit,
+                Tag = "发布动态"
+            }
+        };
 
         public IList<HomeMenuItem> Tabs => HomeTabs == null ? null : new List<HomeMenuItem>() {
             new HomeMenuItem() {

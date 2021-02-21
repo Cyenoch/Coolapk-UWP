@@ -56,7 +56,8 @@
                 DisplayModeChanged="HomeNavigationView_DisplayModeChanged"
                 Loaded="HomeNavigationView_Loaded"
                 MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
-                SelectionChanged="NavigationView_SelectionChanged">
+                SelectionChanged="NavigationView_SelectionChanged"
+                FooterMenuItemsSource="{x:Bind BottomItems}">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup>
                         <VisualState>

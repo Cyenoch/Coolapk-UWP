@@ -8,6 +8,7 @@ using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,13 @@ namespace Coolapk_UWP.ViewModels {
             }
         }
 
-        public UserProfile _currentUser;
+        private double _appBarHeight;
+        public double AppBarHeight {
+            get => _appBarHeight;
+            set => Set(ref _appBarHeight, value);
+        }
+
+        private UserProfile _currentUser;
         public UserProfile CurrentUser {
             get { return _currentUser; }
             set { Set(ref _currentUser, value); }
@@ -45,18 +52,30 @@ namespace Coolapk_UWP.ViewModels {
 
         public ICoolapkApis CoolapkApis;
         public AppViewModel() {
+
+            App.AppViewModel = this;
+
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings() {
                 Converters = { new StringEnumConverter() }
             };
-            var httpClient = new System.Net.Http.HttpClient(new TokenHeaderHandler()) {
+            var httpClient = new System.Net.Http.HttpClient(new TokenHeaderHandler(
+                    new HttpClientHandler {
+                    }
+                )) {
                 BaseAddress = new Uri("https://api.coolapk.com"),
             };
 
-            CoolapkApis = RestService.For<ICoolapkApis>(httpClient, new RefitSettings { });
+            CoolapkApis = RestService.For<ICoolapkApis>(httpClient, new RefitSettings {
+                ContentSerializer = new NewtonsoftJsonContentSerializer(),
+            });
 
+            InitLoginState();
+        }
+
+        private async void InitLoginState() {
             try {
-                LoadLoginState();
-            } catch (Exception _) {
+                await LoadLoginState();
+            } catch (Exception) {
                 // ignore
             }
         }
@@ -71,14 +90,15 @@ namespace Coolapk_UWP.ViewModels {
             CurrentUser = null;
         }
 
-        public async void LoadLoginState() {
+        public async Task LoadLoginState() {
             var uid = GetCookies().FirstOrDefault((cookie) => cookie.Name == "uid")?.Value;
             if (uid == null) return;
             var profile = await CoolapkApis.GetUserProfile((uint)int.Parse(uid.ToString()), AppUtil.DateToTimeStamp(DateTime.Now));
             if (profile.Data == null || profile.Error != null) throw new Exception(profile.Error);
-            if (profile.Data.OtherField.ContainsKey("mobilestatus"))
+            if (profile.Data.OtherField?.ContainsKey("mobilestatus") == true)
                 App.AppViewModel.CurrentUser = profile.Data;
             else throw new Exception("登录失败");
+            return;
         }
 
         public IList<HttpCookie> GetCookies() {

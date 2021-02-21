@@ -1,10 +1,18 @@
 ﻿using Coolapk_UWP.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Windows.Graphics.Imaging;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 
 namespace Coolapk_UWP.Network {
     public class ListSortType {
@@ -17,7 +25,62 @@ namespace Coolapk_UWP.Network {
         public const string FeedArticle = "feedArticle";
     }
 
+    public class UploadFileFragment {
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("resolution")]
+        public string Resolution { get; set; }
+
+        [JsonPropertyName("md5")]
+        public string Md5 { get; set; }
+
+        public static async Task<UploadFileFragment> FromPictureFile(string filePath) {
+            var img = await BitmapDecoder.CreateAsync(File.OpenRead(filePath).AsRandomAccessStream());
+
+            return new UploadFileFragment {
+                Name = Path.GetFileName(filePath),
+                Resolution = $"{img.PixelWidth}x{img.PixelHeight}",
+                Md5 = GetMD5Hash(filePath),
+            };
+        }
+        public static string GetMD5Hash(string file) {
+            byte[] computedHash = new MD5CryptoServiceProvider().ComputeHash(File.ReadAllBytes(file));
+            var sBuilder = new StringBuilder();
+            foreach (byte b in computedHash) {
+                sBuilder.Append(b.ToString("x2").ToLower());
+            }
+            string result = sBuilder.ToString();
+            return result;
+        }
+    }
+
+    public class OssUploadPicturePrepareBody {
+        public IList<UploadFileFragment> UploadFileFragmentsSource { private get; set; }
+
+        [AliasAs("uploadFileList")]
+        public string UploadFileList {
+            get => JsonConvert.SerializeObject(UploadFileFragmentsSource, new JsonSerializerSettings {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
+        }
+
+        [AliasAs("uploadBucket")]
+        public string UploadBucket { get; set; } = "image";
+
+        [AliasAs("uploadDir")]
+        public string UploadDir { get; set; } = "feed"; // feed feed_cover
+
+        [AliasAs("is_anonymous")]
+        public uint IsAnonymous { get; set; } = 0;
+    }
+
     public partial interface ICoolapkApis {
+        [Post("/v6/upload/ossUploadPrepare")]
+        Task<Resp<OssUploadPicturePrepareResult>> OssUploadPicturePrepare(
+            [Body(BodySerializationMethod.UrlEncoded)] OssUploadPicturePrepareBody body
+        );
+
         [Get("/v6/feed/detail")]
         Task<Resp<FeedDetail>> GetFeedDetail(uint id);
 

@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="Coolapk_UWP.Pages.CreateFeed"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk_UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Coolapk_UWP.Controls" 
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:viewmodels="using:Coolapk_UWP.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <viewmodels:CreateFeedViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <RelativePanel>
+        <ScrollViewer
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True"
+            RelativePanel.AlignBottomWithPanel="True"
+            HorizontalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                    <RelativePanel>
+                        <Viewbox Stretch="Uniform" >
+                            <controls1:ImageEx Width="720" Height="324" Stretch="UniformToFill" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="{x:Bind ViewModel.AppBarHeight}" Visibility="{x:Bind ViewModel.ShowCoverHint, Mode=OneWay}"/>
+                        </Viewbox>
+                        <TextBlock Foreground="{ThemeResource SystemChromeGrayColor}" Style="{ThemeResource TitleTextBlockStyle}" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                            点击添加题图
+                        </TextBlock>
+                    </RelativePanel>
+                </Border>
+
+                <TextBox Margin="0,12,0,12" PlaceholderText="标题" HorizontalAlignment="Center" Width="600"/>
+                <Border HorizontalAlignment="Stretch" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
+                <controls:PicTextEditor x:Name="MPicTextEditor"/>
+            </StackPanel>
+        </ScrollViewer>
+        <CommandBar 
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            DefaultLabelPosition="Bottom">
+            <AppBarButton
+                Label="插入图片" Icon="BrowsePhotos" Tapped="InsertImageButton_Tapped"/>
+            <AppBarButton
+                Label="测试" Icon="Send" Tapped="TestButton_Tapped"/>
+            
+        </CommandBar>
+    </RelativePanel>
+</Page>

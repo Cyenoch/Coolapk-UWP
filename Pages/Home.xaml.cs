@@ -36,6 +36,7 @@ namespace Coolapk_UWP.Pages {
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             AppTitleBar.Height = coreTitleBar.Height;
+            App.AppViewModel.AppBarHeight = coreTitleBar.Height;
 
             var currentView = SystemNavigationManager.GetForCurrentView();
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
@@ -59,27 +60,36 @@ namespace Coolapk_UWP.Pages {
 
         private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args) {
             HomeNavigationView = sender;
-            var item = args.SelectedItem as HomeMenuItem;
-            var frame = sender.Content as Frame;
-            if (item ==null && ((NavigationViewItem)args.SelectedItem) != null) {
-                var content = ((NavigationViewItem)args.SelectedItem).Content;
-                switch(content) {
-                    case "设置":
-                        break;
-                }
-                return;
-            }
-            MainInitTabConfig target;
-            if (item.Children != null && item.Children.Count > 0) {
-                target = item.DefaultConfig ?? item.Children[0].Config;
-                _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                    sender.SelectedItem = item.Children.First(child => child.Config == target);
-                });
-            } else { // 最终目标tab
-                target = item.Config;
-                if (CurrentMenuItem != item)
-                    frame.Navigate(typeof(DataListWrapper), item);
-                CurrentMenuItem = item;
+            switch(args.SelectedItem) {
+                case SpecialHomeMenuItem specialItem:
+                    switch(specialItem.Tag) {
+                        case "发布动态":
+                            App.AppViewModel.HomeContentFrame.Navigate(typeof(Pages.CreateFeed));
+                            break;
+                    }
+                    CurrentMenuItem = specialItem;
+                    break;
+                case NavigationViewItem viewItem:
+                    switch (viewItem.Content) {
+                        case "设置":
+                            break;
+                    }
+                    break;
+                case HomeMenuItem menuItem:
+                    var frame = sender.Content as Frame;
+                    MainInitTabConfig target;
+                    if (menuItem.Children != null && menuItem.Children.Count > 0) {
+                        target = menuItem.DefaultConfig ?? menuItem.Children[0].Config;
+                        _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                            sender.SelectedItem = menuItem.Children.First(child => child.Config == target);
+                        });
+                    } else { // 最终目标tab
+                        target = menuItem.Config;
+                        if (CurrentMenuItem != menuItem)
+                            frame.Navigate(typeof(DataListWrapper), menuItem);
+                        CurrentMenuItem = menuItem;
+                    }
+                    break;
             }
         }
 
@@ -99,6 +109,7 @@ namespace Coolapk_UWP.Pages {
 
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args) {
             AppTitleBar.Height = sender.Height;
+            App.AppViewModel.AppBarHeight = sender.Height;
         }
 
         // 细品
