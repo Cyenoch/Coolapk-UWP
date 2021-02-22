@@ -33,7 +33,7 @@ namespace Coolapk_UWP.Pages {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var param = e.Parameter as HomeMenuItem;
-            if (param != null && PrePage != param) {
+            if (param != null && PrePage != param && e.NavigationMode != NavigationMode.Back) {
                 PrePage = param;
                 DataList = new DataList();
                 DataList.SetValue(DataList.titleProperty, param.Config.Title);

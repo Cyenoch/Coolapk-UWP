@@ -136,6 +136,7 @@
     <Compile Include="Models\Results.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\CoolapkApi.FeedApi.cs" />
+    <Compile Include="Network\CoolapkApi.Helper.cs" />
     <Compile Include="Network\CoolapkApi.MainApi.cs" />
     <Compile Include="Network\TokenHeaderHandler.cs" />
     <Compile Include="Other\AppUtil.cs" />

@@ -12,6 +12,7 @@
     xmlns:templates="using:Coolapk_UWP.DataTemplates"
     xmlns:models="using:Coolapk_UWP.Models"
     xmlns:Triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
+    NavigationCacheMode="Required"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>

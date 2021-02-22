@@ -9,6 +9,7 @@
     xmlns:models="using:Coolapk_UWP.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Coolapk_UWP.Controls"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
     <Page.DataContext>
         <viewmodels:HomeViewModel x:Name="ViewModel" />

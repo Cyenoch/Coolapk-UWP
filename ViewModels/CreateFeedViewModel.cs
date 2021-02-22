@@ -10,7 +10,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Coolapk_UWP.ViewModels {
     public class CreateFeedViewModel : NotifyPropertyBase {
-        public BitmapImage Cover { get; set; }
+        public BitmapSource _cover;
+        public BitmapSource Cover { get => _cover; set => Set(ref _cover, value); }
+        public StorageFile CoverSourceFile { get; set; }
         public bool ShowCoverHint { get => Cover == null; }
         public bool HideCoverHint { get => !ShowCoverHint; }
         public Thickness AppBarHeight { get => new Thickness { Top = App.AppViewModel.AppBarHeight }; }

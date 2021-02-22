@@ -53,6 +53,11 @@ namespace Coolapk_UWP.Network {
             string result = sBuilder.ToString();
             return result;
         }
+
+        // override object.Equals
+        public override bool Equals(object obj) {
+            return obj is UploadFileFragment && Md5.Equals((obj as UploadFileFragment).Md5);
+        }
     }
 
     public class OssUploadPicturePrepareBody {
@@ -76,6 +81,7 @@ namespace Coolapk_UWP.Network {
     }
 
     public partial interface ICoolapkApis {
+
         [Post("/v6/upload/ossUploadPrepare")]
         Task<Resp<OssUploadPicturePrepareResult>> OssUploadPicturePrepare(
             [Body(BodySerializationMethod.UrlEncoded)] OssUploadPicturePrepareBody body
@@ -103,5 +109,4 @@ namespace Coolapk_UWP.Network {
         [Post("/v6/feed/unlike")]
         Task<Resp<LikeActionResult>> DoUnLike(uint id);
     }
-
 }

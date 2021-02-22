@@ -9,6 +9,7 @@
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewmodels="using:Coolapk_UWP.ViewModels"
     mc:Ignorable="d"
+    NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
         <viewmodels:CreateFeedViewModel x:Name="ViewModel" />
@@ -22,14 +23,26 @@
             RelativePanel.AlignBottomWithPanel="True"
             HorizontalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-                    <RelativePanel>
+                <Border Tapped="CoverButton_Tapped" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                    <RelativePanel x:Name="CoverPanel">
                         <Viewbox Stretch="Uniform" >
-                            <controls1:ImageEx Width="720" Height="324" Stretch="UniformToFill" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="{x:Bind ViewModel.AppBarHeight}" Visibility="{x:Bind ViewModel.ShowCoverHint, Mode=OneWay}"/>
+                            <controls1:ImageEx Source="{x:Bind ViewModel.Cover, Mode=OneWay}" Width="720" Height="324" Stretch="UniformToFill" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="{x:Bind ViewModel.AppBarHeight}" Visibility="{x:Bind ViewModel.ShowCoverHint, Mode=OneWay}"/>
                         </Viewbox>
                         <TextBlock Foreground="{ThemeResource SystemChromeGrayColor}" Style="{ThemeResource TitleTextBlockStyle}" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
-                            点击添加题图
+                            点击添加或更改题图
                         </TextBlock>
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout Placement="Full">
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="660"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <controls1:ImageCropper AspectRatio="2.2222222" x:Name="CoverCropper" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"/>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" x:Name="SaveCoverCropperBtnPanel"/>
+                                </Grid>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
                     </RelativePanel>
                 </Border>
 
@@ -49,5 +62,7 @@
                 Label="测试" Icon="Send" Tapped="TestButton_Tapped"/>
             
         </CommandBar>
+        
+        
     </RelativePanel>
 </Page>

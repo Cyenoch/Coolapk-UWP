@@ -23,6 +23,7 @@ using Aliyun.OSS.Util;
 using Aliyun.OSS;
 using Newtonsoft.Json;
 using Aliyun.OSS.Common;
+using Windows.UI.Core;
 
 namespace Coolapk_UWP.Controls {
     public sealed partial class PicTextEditor : UserControl {
@@ -34,7 +35,7 @@ namespace Coolapk_UWP.Controls {
         private StackPanel panel;
         public PicTextEditor() {
             NodeList = new MessageNodeList(ReLayout);
-            NodeList.Add(new TextNode(NodeList, "test"));
+            NodeList.Add(new TextNode(NodeList, "酷安 UWP 图文编辑器"));
         }
         /// <summary>
         /// 上传图片和生成结构体
@@ -46,7 +47,9 @@ namespace Coolapk_UWP.Controls {
             var waitForUpload = NodeList.Where(node => node is ImageNode).Where(node => !UploadedImg.ContainsKey((node as ImageNode).HashMd5)).Select(node => node as ImageNode).ToList();
             // 生成上传所需的信息
             var fragments = new List<UploadFileFragment>();
+
             foreach (var node in waitForUpload) {
+                if (fragments.Any(_n => _n.Md5.Equals(node.HashMd5))) break;
                 var img = await BitmapDecoder.CreateAsync(await node.File.OpenAsync(FileAccessMode.Read));
                 fragments.Add(new UploadFileFragment {
                     Resolution = $"{img.PixelWidth}x{img.PixelHeight}",
@@ -55,52 +58,61 @@ namespace Coolapk_UWP.Controls {
                 });
             }
 
-            try {
-                // 从酷安获取STS
-                var r = await App.AppViewModel.CoolapkApis.OssUploadPicturePrepare(new OssUploadPicturePrepareBody {
-                    UploadFileFragmentsSource = fragments
-                });
-                var data = r.Data;
-                var oss = new Aliyun.OSS.OssClient(
-                        data.UploadPrepareInfo.EndPoint.Replace("https://", ""),
-                        data.UploadPrepareInfo.AccessKeyId,
-                        data.UploadPrepareInfo.AccessKeySecret,
-                        data.UploadPrepareInfo.SecurityToken
-                    );
-                // 对每个需要上传的文件执行真正的上传操作
-                foreach (var info in r.Data.FileInfo) {
-                    var imgNode = waitForUpload.Find(node => node.HashMd5 == info.Md5);
-                    using (var fs = await imgNode.File.OpenStreamForReadAsync()) {
-                        var callback = "eyJjYWxsYmFja0JvZHlUeXBlIjoiYXBwbGljYXRpb25cL2pzb24iLCJjYWxsYmFja0hvc3QiOiJhcGkuY29vbGFway5jb20iLCJjYWxsYmFja1VybCI6Imh0dHBzOlwvXC9hcGkuY29vbGFway5jb21cL3Y2XC9jYWxsYmFja1wvbW9iaWxlT3NzVXBsb2FkU3VjY2Vzc0NhbGxiYWNrP2NoZWNrQXJ0aWNsZUNvdmVyUmVzb2x1dGlvbj0wJnZlcnNpb25Db2RlPTIxMDIwMzEiLCJjYWxsYmFja0JvZHkiOiJ7XCJidWNrZXRcIjoke2J1Y2tldH0sXCJvYmplY3RcIjoke29iamVjdH0sXCJoYXNQcm9jZXNzXCI6JHt4OnZhcjF9fSJ9";
-                        var callbackVar = "eyJ4OnZhcjEiOiJmYWxzZSJ9";
-                        var metadata = new ObjectMetadata {
-                            ContentMd5 = OssUtils.ComputeContentMd5(fs, fs.Length),
-                            ContentType = imgNode.File.ContentType
-                        };
-                        metadata.AddHeader(HttpHeaders.Callback, callback);
-                        metadata.AddHeader(HttpHeaders.CallbackVar, callbackVar);
+            if (fragments.Count > 0) {
 
-                        var request = new PutObjectRequest(
-                            data.UploadPrepareInfo.Bucket,
-                            info.UploadFileName,
-                            fs,
-                            metadata);
-                        request.StreamTransferProgress += (object sender, StreamTransferProgressArgs args) => {
-                            // 某个文件上传进度回调
-                        };
-                        var putResult = oss.PutObject(request);
+                var dialog = new ContentDialog() {
+                    Title = "正在上传..."
+                };
+                _ = dialog.ShowAsync();
+                try {
 
-                        // 相应数据
-                        var response = GetCallbackResponse(putResult);
-                        var jsonObj = JsonConvert.DeserializeObject<Resp<OssUploadPictureResponse>>(response);
-                        // 添加到已上传的图片的列表防止重复上传
-                        UploadedImg.Add(imgNode.HashMd5, jsonObj.Data.Url);
-                    }
+                    // 从酷安获取STS
+                    var r = await App.AppViewModel.CoolapkApis.OssUploadPicturePrepare(new OssUploadPicturePrepareBody {
+                        UploadFileFragmentsSource = fragments
+                    });
+                    var data = r.Data;
+                    // 对每个需要上传的文件执行真正的上传操作
+
+                    dialog.Content = "正在生成上传任务...";
+
+
+
+                    // 生成tasks
+                    var tasks = data.FileInfo.Select(async info => {
+                        var imgNode = waitForUpload.Find(node => node.HashMd5 == info.Md5);
+                        using (var fs = await imgNode.File.OpenStreamForReadAsync()) {
+                            var response = CoolapkApiHelper.OssUpload(data.UploadPrepareInfo, info, fs, imgNode.File.ContentType,
+                                (OssUploadPicturePrepareResultFileInfo fileInfo, object sender, StreamTransferProgressArgs args) => {
+                                    _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                                        dialog.Content = $"{data.FileInfo.IndexOf(info) + 1}/{data.FileInfo.Count} 上传进度 {args.PercentDone}%";
+                                    });
+                                });
+                            // 添加到已上传的图片的列表防止重复上传
+                            UploadedImg.Add(imgNode.HashMd5, response.Data.Url);
+                            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                                dialog.Content = $"{data.FileInfo.IndexOf(info) + 1}/{data.FileInfo.Count} 上传完成!";
+                            });
+                        }
+                    }).ToArray();
+
+                    // 逐个执行
+                    await Task.WhenAll(tasks);
+                    _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                        dialog.Title = "上传完成";
+                        dialog.Content = "所有上传任务完成";
+                        dialog.Hide();
+                    });
+                } catch (OssException err) {
+                    //throw new Exception($"某张图片上传失败: {err.HResult}:{err.ErrorCode} -> {err.Message}");
+                    dialog.Title = "上传失败";
+                    dialog.Content = ($"某张图片上传失败: {err.HResult}:{err.ErrorCode} -> {err.Message}");
+                } catch (Exception err) {
+                    //throw new Exception("上传图片上传失败: " + err.Message);
+                    dialog.Title = "上传失败";
+                    dialog.Content = ("上传图片上传失败: " + err.Message);
+                } finally {
+                    dialog.PrimaryButtonText = "关闭";
                 }
-            } catch (OssException err) {
-                throw new Exception($"某张图片上传失败: {err.HResult}:{err.ErrorCode} -> {err.Message}");
-            } catch (Exception err) {
-                throw new Exception("上传图片上传失败: " + err.Message);
             }
 
             // 遍历NodeList生成RawStruct
@@ -115,19 +127,9 @@ namespace Coolapk_UWP.Controls {
                         list.Add(new MessageRawStructImage { Type = "image", Description = imageNode.IntroText, Url = uploadedUrl });
                         break;
                 }
+
             }
             return list;
-        }
-       
-        // 读取上传回调返回的消息内容。
-        private static string GetCallbackResponse(PutObjectResult putObjectResult) {
-            string callbackResponse = null;
-            using (var stream = putObjectResult.ResponseStream) {
-                var buffer = new byte[4 * 1024];
-                var bytesRead = stream.Read(buffer, 0, buffer.Length);
-                callbackResponse = Encoding.Default.GetString(buffer, 0, bytesRead);
-            }
-            return callbackResponse;
         }
 
         public void ReLayout() {
@@ -146,14 +148,6 @@ namespace Coolapk_UWP.Controls {
                 foreach (var node in NodeList) {
                     if (node.Element != null) panel.Children.Add(node.Element);
                 }
-                //var relp = new RelativePanel();
-                //var scrollView = new ScrollViewer() {
-                //    HorizontalAlignment = HorizontalAlignment.Stretch,
-                //};
-                //scrollView.Content = panel;
-                //relp.Children.Add(scrollView);
-                //RelativePanel.SetAlignLeftWithPanel(scrollView, true);
-                //RelativePanel.SetAlignRightWithPanel(scrollView, true);
                 Content = panel;
             }
         }
