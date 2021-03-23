@@ -27,7 +27,7 @@ namespace Coolapk_UWP.Pages {
             if (param == null) {
                 ViewModel.ErrorMessage = "请传入正确的参数";
                 return;
-            } else if (ViewModel.Data == null || previewFeedId == null && (uint)param != previewFeedId) {
+            } else if (ViewModel.Data == null || previewFeedId == null || (uint)param != previewFeedId) {
                 ViewModel.FeedId = (uint)param;
                 ViewModel.Reload();
                 previewFeedId = (uint)param;
