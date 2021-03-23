@@ -97,7 +97,11 @@ namespace Coolapk_UWP.Models {
                             return Cast<TitleCard>();
                         case "apkImageCard":
                             return Cast<IgnoreCard>();
+                        case "sponsorCard":
+                            return Cast<IgnoreCard>(); // 广告..
                         case "imageTextScrollCard":
+                            return Cast<ImageTextScrollCard>();
+                        case "feedGroupListCard":
                             return Cast<ImageTextScrollCard>();
                     }
                     break;
