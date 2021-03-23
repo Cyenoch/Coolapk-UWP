@@ -8,6 +8,7 @@
     xmlns:muxc="using:Windows.UI.Xaml.Controls"
     xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc1="using:Microsoft.UI.Xaml.Controls"
+    NavigationCacheMode="Required"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     xmlns:templates="using:Coolapk_UWP.DataTemplates">

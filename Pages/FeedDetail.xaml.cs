@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Coolapk_UWP.Pages {
     public sealed partial class FeedDetail : Page {
         public FeedDetailViewModel ViewModel => DataContext as FeedDetailViewModel;
+        public uint? previewFeedId;
         public FeedDetail() {
             this.InitializeComponent();
         }
@@ -26,9 +27,10 @@ namespace Coolapk_UWP.Pages {
             if (param == null) {
                 ViewModel.ErrorMessage = "请传入正确的参数";
                 return;
-            } else if (ViewModel.Data == null) {
+            } else if (ViewModel.Data == null || previewFeedId == null && (uint)param != previewFeedId) {
                 ViewModel.FeedId = (uint)param;
                 ViewModel.Reload();
+                previewFeedId = (uint)param;
             }
         }
 

@@ -19,19 +19,25 @@ namespace Coolapk_UWP.Pages {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
-            var parameters = e.Parameter;
-            if (parameters != null) {
-                switch(parameters)
-                {
-                    case int uid:
-                        ViewModel.Uid = (uint)uid;
+            var parameter = e.Parameter;
+            if (parameter != null) {
+                switch (parameter) {
+                    case uint _uintUid:
+                    case int _intUid:
+                        var uid = (uint)parameter;
+                        if (uid != ViewModel.Uid) {
+                            ViewModel.Uid = uid;
+                            ViewModel.Reload();
+                        }
                         break;
                     case string username:
-                        ViewModel.Username = username;
+                        if (username != ViewModel.Username) {
+                            ViewModel.Username = username;
+                            ViewModel.Reload();
+                        }
                         break;
                 }
             }
-            ViewModel.Reload();
         }
 
         private void RetryButton_Click(object sender, RoutedEventArgs e) {
