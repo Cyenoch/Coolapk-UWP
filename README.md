@@ -6,6 +6,24 @@
 
 > **仅供个人用于学习、研究;不得用于商业用途;**
 
+### 预览效果
+
+#### 首页响应式布局效果
+
+![主页显示效果1](https://imgtu.com/i/cyQQK0)
+
+![主页显示效果2](https://imgtu.com/i/cyQKvq)
+
+![主页显示效果3](https://imgtu.com/i/cyQu2n)
+
+#### 图文动态显示
+
+![图文动态显示效果](https://imgtu.com/i/cyQax1)
+
+#### 图文编辑器
+
+![图文编辑器效果](https://imgtu.com/i/cyQ2RA)
+
 ### 适配酷安的URI SCHEME
   - 打开动态
     > coolmarket://feed/ + feed id
