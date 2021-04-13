@@ -1,60 +1,59 @@
 # Coolapk-UWP
 
-**ÕâÊÇÒ»¸öĞËÈ¤Ê¹È»µÄÏîÄ¿£¬Ö÷ÒªÄ¿µÄÓÃÓÚÑ§Ï°UWPÓ¦ÓÃ¿ª·¢£¬ÒÔ¼°C#ÓïÑÔ**
+**è¿™æ˜¯ä¸€ä¸ªå…´è¶£ä½¿ç„¶çš„é¡¹ç›®ï¼Œä¸»è¦ç›®çš„ç”¨äºå­¦ä¹  UWP åº”ç”¨å¼€å‘ï¼Œä»¥åŠ C#è¯­è¨€**
 
-Æä´Î£¬ÎªÁË·½±ãÔÚWindows10(°üÀ¨Î´À´µÄWindows X) ÉÏË¢¿á°²
+å…¶æ¬¡ï¼Œä¸ºäº†æ–¹ä¾¿åœ¨ Windows10(åŒ…æ‹¬æœªæ¥çš„ Windows X) ä¸Šåˆ·é…·å®‰
 
-> **½ö¹©¸öÈËÓÃÓÚÑ§Ï°¡¢ÑĞ¾¿;²»µÃÓÃÓÚÉÌÒµÓÃÍ¾;**
+> **ä»…ä¾›ä¸ªäººç”¨äºå­¦ä¹ ã€ç ”ç©¶;ä¸å¾—ç”¨äºå•†ä¸šç”¨é€”;**
 
-### Ô¤ÀÀĞ§¹û
+### é¢„è§ˆæ•ˆæœ
 
-#### Ê×Ò³ÏìÓ¦Ê½²¼¾ÖĞ§¹û
+#### é¦–é¡µå“åº”å¼å¸ƒå±€æ•ˆæœ
 
-![Ö÷Ò³ÏÔÊ¾Ğ§¹û1](https://imgtu.com/i/cyQQK0)
+[![ä¸»é¡µæ˜¾ç¤ºæ•ˆæœ1](https://z3.ax1x.com/2021/04/13/cylYef.png)](https://imgtu.com/i/cylYef)
+[![ä¸»é¡µæ˜¾ç¤ºæ•ˆæœ2](https://z3.ax1x.com/2021/04/13/cyltw8.md.png)](https://imgtu.com/i/cyltw8)
+[![ä¸»é¡µæ˜¾ç¤ºæ•ˆæœ3](https://z3.ax1x.com/2021/04/13/cylNTS.md.png)](https://imgtu.com/i/cylNTS)
 
-![Ö÷Ò³ÏÔÊ¾Ğ§¹û2](https://imgtu.com/i/cyQKvq)
+#### å›¾æ–‡åŠ¨æ€æ˜¾ç¤º
 
-![Ö÷Ò³ÏÔÊ¾Ğ§¹û3](https://imgtu.com/i/cyQu2n)
+[![å›¾æ–‡åŠ¨æ€æ˜¾ç¤ºæ•ˆæœ](https://z3.ax1x.com/2021/04/13/cyQax1.md.png)](https://imgtu.com/i/cyQax1)
 
-#### Í¼ÎÄ¶¯Ì¬ÏÔÊ¾
+#### å›¾æ–‡ç¼–è¾‘å™¨
 
-![Í¼ÎÄ¶¯Ì¬ÏÔÊ¾Ğ§¹û](https://imgtu.com/i/cyQax1)
+[![å›¾æ–‡ç¼–è¾‘å™¨æ•ˆæœ](https://z3.ax1x.com/2021/04/13/cyQ2RA.md.png)](https://imgtu.com/i/cyQ2RA)
 
-#### Í¼ÎÄ±à¼­Æ÷
+### é€‚é…é…·å®‰çš„ URI SCHEME
 
-![Í¼ÎÄ±à¼­Æ÷Ğ§¹û](https://imgtu.com/i/cyQ2RA)
+- æ‰“å¼€åŠ¨æ€
+  > coolmarket://feed/ + feed id
 
-### ÊÊÅä¿á°²µÄURI SCHEME
-  - ´ò¿ª¶¯Ì¬
-    > coolmarket://feed/ + feed id
+### ç®€è¦è¯´æ˜å„ç›®å½•åŠæ–‡ä»¶ä½œç”¨:
 
-### ¼òÒªËµÃ÷¸÷Ä¿Â¼¼°ÎÄ¼ş×÷ÓÃ:
-
- - Assets ×ÊÔ´ÎÄ¼ş
- - Controls ¿Ø¼ş
-   - AsyncLoadStateControl.xaml Õë¶ÔÒ»²¨»ñÈ¡µÄÒ³ÃæÌá¹©ÈıÖÖ×´Ì¬
-   - DataList.xaml Êı¾İÁĞ±í
-   - MyRichTextBlock.xaml ¸»ÎÄ±¾±à¼­Æ÷ÊµÏÖ
-   - PicArrBox.xaml ¹¬¸ñÍ¼Æ¬
-   - ReplyList.xaml »Ø¸´ÁĞ±í
- - DataTemplates Ä£°å
-   - EntityListItemDataTemplate.xaml Ìá¹©Ò»¸öTemplateSelectorºÍ¼òµ¥µÄÄ£°åÓÃÓÚ¶¯Ì¬ÁĞ±í
-   - FeedCardTemplates.xaml ºÍ¶¯Ì¬ÓĞ¹ØµÄItemµÄÄ£°å
-   - FeedReplyTemplate.xaml ºÍÆÀÂÛÓĞ¹ØµÄItemÄ£°åÒÔ¼°Selector
-   - IconScrollCardTemplates.xaml
-   - ImageTextScrollCardTemplate.xaml
-   - PicTextMixTemplates.xaml Í¼ÎÄÄ£°å
- - Models Êı¾İÄ£ĞÍ
-   - Entity.cs °üÀ¨ËùÓĞÊı¾İÄ£ĞÍµÄ»ùÀà
- - Network ÍøÂçÏà¹Ø
-   - CoolapkApi.*.cs ¿á°²Api
-   - TokenHeaderHandler.cs TokenÉú³ÉµÈ
- - Other ÆäËû¹¤¾ß
-   - AppUtil.cs
-   - IncrementLoadingCollection.cs
-   - NotifyPropertyBase.cs
- - Pages ¸÷¸öÒ³Ãæ
- - Themes ...
- - ViewModels ÊÓÍ¼Ä£ĞÍ
-   - BaseViewModel.cs ÊÓÍ¼Ä£ĞÍ»ùÀà
- - App.xaml
+- Assets èµ„æºæ–‡ä»¶
+- Controls æ§ä»¶
+  - AsyncLoadStateControl.xaml é’ˆå¯¹ä¸€æ³¢è·å–çš„é¡µé¢æä¾›ä¸‰ç§çŠ¶æ€
+  - DataList.xaml æ•°æ®åˆ—è¡¨
+  - MyRichTextBlock.xaml å¯Œæ–‡æœ¬ç¼–è¾‘å™¨å®ç°
+  - PicArrBox.xaml å®«æ ¼å›¾ç‰‡
+  - ReplyList.xaml å›å¤åˆ—è¡¨
+- DataTemplates æ¨¡æ¿
+  - EntityListItemDataTemplate.xaml æä¾›ä¸€ä¸ª TemplateSelector å’Œç®€å•çš„æ¨¡æ¿ç”¨äºåŠ¨æ€åˆ—è¡¨
+  - FeedCardTemplates.xaml å’ŒåŠ¨æ€æœ‰å…³çš„ Item çš„æ¨¡æ¿
+  - FeedReplyTemplate.xaml å’Œè¯„è®ºæœ‰å…³çš„ Item æ¨¡æ¿ä»¥åŠ Selector
+  - IconScrollCardTemplates.xaml
+  - ImageTextScrollCardTemplate.xaml
+  - PicTextMixTemplates.xaml å›¾æ–‡æ¨¡æ¿
+- Models æ•°æ®æ¨¡å‹
+  - Entity.cs åŒ…æ‹¬æ‰€æœ‰æ•°æ®æ¨¡å‹çš„åŸºç±»
+- Network ç½‘ç»œç›¸å…³
+  - CoolapkApi.\*.cs é…·å®‰ Api
+  - TokenHeaderHandler.cs Token ç”Ÿæˆç­‰
+- Other å…¶ä»–å·¥å…·
+  - AppUtil.cs
+  - IncrementLoadingCollection.cs
+  - NotifyPropertyBase.cs
+- Pages å„ä¸ªé¡µé¢
+- Themes ...
+- ViewModels è§†å›¾æ¨¡å‹
+  - BaseViewModel.cs è§†å›¾æ¨¡å‹åŸºç±»
+- App.xaml
