@@ -10,20 +10,45 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
 
-namespace Coolapk_UWP.Models {
-    public enum FeedType {
+namespace Coolapk_UWP.Models
+{
+    public enum FeedType
+    {
         Unknow = -1,
         Default = 0,
         HtmlArticle = 12,
     }
 
-    public class Feed : ActionEntity {
+    public class Feed : ActionEntity
+    {
+
         public User UserInfo { get; set; }
 
         [JsonIgnore]
-        public string MessageWithUserSpaceLink {
-            get {
+        public string MessageWithUserSpaceLink
+        {
+            get
+            {
                 return $"<a href=\"/u/{UserInfo.Uid}\">@{UserInfo.Username}:</a>" + Message;
+            }
+        }
+        [JsonIgnore]
+        public string _cachedMessageWithEmojiJoined = "";
+        [JsonIgnore]
+        public string MessageWithEmoji
+        {
+            get
+            {
+                if (_cachedMessageWithEmojiJoined.Equals(String.Empty))
+                {
+                    var msg = Message;
+                    EmojisUtil.Emojis.ForEach(emoji =>
+                    {
+                        msg = msg.Replace(emoji, "<emoji src=\"" + EmojisUtil.GetEmojiUriFor(emoji) + "\" />");
+                    });
+                    return msg;
+                }
+                return _cachedMessageWithEmojiJoined;
             }
         }
         public string Message { get; set; }
@@ -54,9 +79,11 @@ namespace Coolapk_UWP.Models {
         [JsonIgnore]
         public IList<string> SmallPicArr { get { return _smallPicArr; } }
 
-        public IList<string> PicArr {
+        public IList<string> PicArr
+        {
             get { return _picArr; }
-            set {
+            set
+            {
                 // 酷安有时候会有一个 [""] 这样的坑壁操作
                 _picArr = value.Where((pic) => pic.Length > 8).ToList();
                 _smallPicArr = _picArr.Select(pic => pic.EndsWith(".gif") ? pic : (pic + ".s.jpg")).ToList();
@@ -64,8 +91,10 @@ namespace Coolapk_UWP.Models {
         }
 
         [JsonIgnore]
-        public bool HasPics {
-            get {
+        public bool HasPics
+        {
+            get
+            {
                 return PicArr != null && PicArr.Count > 0;
             }
         }
@@ -90,10 +119,12 @@ namespace Coolapk_UWP.Models {
         public IList<RelationRow> RelationRows { get; set; }
     }
 
-    public class FeedCover : Feed {
+    public class FeedCover : Feed
+    {
     }
 
-    public class FeedDetail : Feed {
+    public class FeedDetail : Feed
+    {
         /// <summary>
         /// 仅FeedCover该字段才不是null
         /// </summary>
@@ -105,7 +136,8 @@ namespace Coolapk_UWP.Models {
         public string Cover { get; set; }
     }
 
-    public class FeedReply : ActionEntity {
+    public class FeedReply : ActionEntity
+    {
         public User UserInfo { get; set; }
         public uint ReplyRowsCount { get; set; }
         public bool IsFeedAuthor { get; set; }
@@ -155,7 +187,8 @@ namespace Coolapk_UWP.Models {
     /// </summary>
     public class RelationRow : Entity { }
 
-    public class UserAction : NotifyPropertyBase {
+    public class UserAction : NotifyPropertyBase
+    {
         public bool _like = false;
         public bool _favorite = false;
         public bool _follow = false;
@@ -173,8 +206,10 @@ namespace Coolapk_UWP.Models {
         [JsonConverter(typeof(JsonIntToBoolConverter))]
         public bool Collect { get { return _collect; } set { Set(ref _collect, value); } }
 
-        public Windows.UI.Xaml.Media.SolidColorBrush LikeButtonColor {
-            get {
+        public Windows.UI.Xaml.Media.SolidColorBrush LikeButtonColor
+        {
+            get
+            {
                 return ((Windows.UI.Xaml.Media.SolidColorBrush)App.Current.Resources[Like ? "SystemColorControlAccentBrush" : "SystemColorGrayTextBrush"]);
             }
         }

@@ -8,7 +8,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <BitmapImage x:Key="DefaultImage" UriSource="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
+            <BitmapImage x:Key="DefaultImage" UriSource="ms-appx:///Assets/Square150x150Logo.scale-200.png" />
 
             <other:IsNotEmptyToTrueConverter x:Key="IsNotEmptyToTrueConverter" />
             <other:IsEmptyToTrueConverter x:Key="IsEmptyToTrueConverter" />

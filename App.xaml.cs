@@ -20,6 +20,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI;
 using System.Threading.Tasks;
+using Coolapk_UWP.Other;
 
 namespace Coolapk_UWP {
     sealed partial class App : Application {
@@ -27,6 +28,7 @@ namespace Coolapk_UWP {
 
         public App() {
             this.InitializeComponent();
+            EmojisUtil.LoadEmojisResw();
             this.Suspending += OnSuspending;
             App.AppViewModel = new AppViewModel();
         }

@@ -14,7 +14,7 @@
         UnsupportTemplate="{StaticResource MessageRawStructUnsupportTemplate}"/>
 
     <DataTemplate x:Key="MessageRawStructTextTemplate" x:DataType="models:MessageRawStructText">
-        <controls:MyRichTextBlock Text="{x:Bind Message}" HorizontalAlignment="Stretch"/>
+        <controls:MyRichTextBlock Text="{x:Bind MessageWithEmoji}" HorizontalAlignment="Stretch"/>
     </DataTemplate>
 
     <DataTemplate x:Key="MessageRawStructImageTemplate" x:DataType="models:MessageRawStructImage">

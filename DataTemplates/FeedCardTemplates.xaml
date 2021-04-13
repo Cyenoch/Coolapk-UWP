@@ -55,7 +55,7 @@
                            Margin="0,4,0,2"/>
                 
                 <controls:MyRichTextBlock 
-                    Text="{x:Bind Message}" 
+                    Text="{x:Bind MessageWithEmoji}" 
                     Wrap="True"
                     Margin="0,6"/>
 

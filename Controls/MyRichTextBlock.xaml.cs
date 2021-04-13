@@ -16,11 +16,13 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-namespace Coolapk_UWP.Controls {
+namespace Coolapk_UWP.Controls
+{
     /// <summary>
     /// 酷安风格的富文本TextBlock
     /// </summary>
-    public sealed partial class MyRichTextBlock : UserControl {
+    public sealed partial class MyRichTextBlock : UserControl
+    {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text",
             typeof(string),
@@ -56,44 +58,54 @@ namespace Coolapk_UWP.Controls {
             null
         );
 
-        public string Text {
+        public string Text
+        {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-        public bool Wrap {
+        public bool Wrap
+        {
             get { return (bool)GetValue(WrapProperty); }
             set { SetValue(WrapProperty, value); }
         }
-        public bool IsTextSelectionEnabled {
+        public bool IsTextSelectionEnabled
+        {
             get { return (bool)GetValue(IsTextSelectionEnabledProperty); }
             set { SetValue(IsTextSelectionEnabledProperty, value); }
         }
-        public int LineHeight {
+        public int LineHeight
+        {
             get { return (int)GetValue(LineHeightProperty); }
             set { SetValue(LineHeightProperty, value); }
         }
 
-        public MyRichTextBlock() {
+        public MyRichTextBlock()
+        {
             this.InitializeComponent();
-            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
                 LoadContent();
             });
         }
 
-        public void LoadContent() {
+        public void LoadContent()
+        {
             // 用来存储子控件
             Paragraph paragraph = new Paragraph();
-
+            paragraph.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             // 去掉换行并加载html字符
             if (!Wrap) doc.LoadHtml(Text.Replace("\n", " "));
             else doc.LoadHtml(Text);
             // 获取所有节点
             var nodes = doc.DocumentNode.ChildNodes;
-            foreach (var node in nodes) {
-                switch (node.NodeType) {
+            foreach (var node in nodes)
+            {
+                switch (node.NodeType)
+                {
                     case HtmlAgilityPack.HtmlNodeType.Text: // 如果是文本节点，创建Run并添加到paragraph
-                        Run run = new Run() {
+                        Run run = new Run()
+                        {
                             Text =
                             node.InnerText
                             .Replace("&gt;", ">")
@@ -105,13 +117,35 @@ namespace Coolapk_UWP.Controls {
                         paragraph.Inlines.Add(run);
                         break;
                     case HtmlAgilityPack.HtmlNodeType.Element: // 如果是element
-                        if (node.OriginalName == "a") { // 如果是a标签，则是用来跳转的
-                            // a标签
+                        if (node.OriginalName == "emoji")
+                        {// 如果是表情
+                            var src = node.GetAttributeValue("src", "");
+                            if (!src.Equals(String.Empty))
+                            {
+                                BitmapImage bitmapImage = new BitmapImage(new Uri(src));
+                                var img = new Image
+                                {
+                                    Width = paragraph.FontSize + 4,
+                                    Height = Width,
+                                    Source = bitmapImage,
+
+                                };
+                                var container = new InlineUIContainer
+                                {
+                                    Child = img
+                                };
+                                paragraph.Inlines.Add(container);
+                            }
+                        }
+                        else if (node.OriginalName == "a")
+                        { // 如果是a标签，则是用来跳转的
+                          // a标签
                             var href = node.GetAttributeValue("href", "");
                             Hyperlink link = new Hyperlink();
-                            Run linkRun = new Run {
+                            Run linkRun = new Run
+                            {
                                 //Text = "{" + node.InnerText + "|" + href + "}"
-                                Text = node.InnerText
+                                Text = node.InnerText,
                             };
                             link.Click += OnHref;
                             link.SetValue(HrefClickParam, href); // 使link携带参数，在OnHref中可获取href地址
@@ -124,20 +158,24 @@ namespace Coolapk_UWP.Controls {
                         break;
                 }
             }
-            RichTextBlock root = new RichTextBlock() {
+            RichTextBlock root = new RichTextBlock()
+            {
                 IsTextSelectionEnabled = IsTextSelectionEnabled,
                 LineStackingStrategy = LineStackingStrategy.BlockLineHeight, // 行高
                 LineHeight = LineHeight, // 行高
                 HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Center
             };
+            paragraph.LineHeight = LineHeight;
             root.Blocks.Add(paragraph);
             Content = root;
             HorizontalAlignment = HorizontalAlignment.Stretch;
         }
 
-        public void OnHref(Hyperlink sender, HyperlinkClickEventArgs e) {
+        public void OnHref(Hyperlink sender, HyperlinkClickEventArgs e)
+        {
             var value = sender.GetValue(HrefClickParam);
-            switch(value)
+            switch (value)
             {
                 case string strValue:
                     if (strValue.StartsWith("/u/"))
@@ -149,7 +187,8 @@ namespace Coolapk_UWP.Controls {
             // TODO: fuck
         }
 
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
             MyRichTextBlock rtb = d as MyRichTextBlock;
             rtb.LoadContent();
         }
