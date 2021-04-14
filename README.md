@@ -44,13 +44,13 @@
   - ImageTextScrollCardTemplate.xaml
   - PicTextMixTemplates.xaml 图文模板
 - Models 数据模型
-  - Entity.cs 包括所有数据模型的基类
+  - Entity.cs 包括所有数据模型的基类 实现了根据EntityType和EntityTemplate进行AutoCast
 - Network 网络相关
   - CoolapkApi.\*.cs 酷安 Api
   - TokenHeaderHandler.cs Token 生成等
 - Other 其他工具
   - AppUtil.cs
-  - IncrementLoadingCollection.cs
+  - IncrementLoadingCollection.cs 实现了IncrementalLoadingEntityCollection
   - NotifyPropertyBase.cs
 - Pages 各个页面
 - Themes ...
@@ -61,24 +61,5 @@
 
 ### 动态列表实现思路
 
-```flow
-st=>start: 开始
-qqjk=>operation: 请求接口,获取到CollectionResp<Entity>
-jxsj=>operation: 存储到 IncrementalLoadingEntityCollection
-fg=>operation: 覆盖 
-IncrementalLoadingEntityCollection.InsertItem 
-方法,实际插入调用被插入的entity的AutoCast的结果
-cast=>operation: AutoCast: 
-根据entityType&entityTemplate重新生成实例
-view=>operation: View层列表的EntityListItemTemplateSelector通过
-switch(实例) case 类型: 来返回不同的模板
-cond=>condition: 触发
-IncrementalLoadingEntityCollection
-.LoadMoreItemsAsync
-时
-e=>end: 显示列表
+[![大致意思](https://z3.ax1x.com/2021/04/14/cyb6Rx.md.png)](https://imgtu.com/i/cyb6Rx)
 
-st->qqjk->jxsj->fg->cast->view->cond
-cond(no)->e
-cond(yes)->qqjk
-```
