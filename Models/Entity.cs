@@ -8,8 +8,10 @@ using Coolapk_UWP.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Coolapk_UWP.Models {
-    public class Entity : NotifyPropertyBase {
+namespace Coolapk_UWP.Models
+{
+    public class Entity : NotifyPropertyBase
+    {
         [JsonExtensionData]
         public IDictionary<string, JToken> OtherField { get; set; }
 
@@ -35,16 +37,19 @@ namespace Coolapk_UWP.Models {
 
         virtual public IList<Entity> Entities { get; set; } = new List<Entity>();
 
-        public T Cast<T>() where T : Entity {
+        public T Cast<T>() where T : Entity
+        {
             // 根据目标类型重新解析实体，OtherField包含了Entity未解析的字段
             var _s = JsonConvert.SerializeObject(this);
             var entity = JsonConvert.DeserializeObject<T>(_s);
             // 遍历Entities然后转换类型 重新解析
-            if (entity.Entities != null && entity.Entities.Count > 0) {
+            if (entity.Entities != null && entity.Entities.Count > 0)
+            {
                 var temp = new Entity[entity.Entities.Count()];
                 entity.Entities.CopyTo(temp, 0);
                 entity.Entities.Clear();
-                foreach (var child in temp.OfType<Entity>()) {
+                foreach (var child in temp.OfType<Entity>())
+                {
                     entity.Entities.Add(child.AutoCast() as Entity);
                 }
             }
@@ -52,21 +57,26 @@ namespace Coolapk_UWP.Models {
         }
 
         [JsonIgnore]
-        public string JsonString {
-            get {
+        public string JsonString
+        {
+            get
+            {
                 return JsonConvert.SerializeObject(this, Formatting.Indented);
             }
         }
 
         [JsonIgnore]
-        public string HumanReadableDateString {
+        public string HumanReadableDateString
+        {
             get { return AppUtil.GetReadDateString(Lastupdate); }
         }
 
         public void Cast<T>(out T entity) where T : Entity => entity = Cast<T>();
 
-        public object AutoCast() {
-            switch (EntityType) {
+        public object AutoCast()
+        {
+            switch (EntityType)
+            {
                 case "user":
                     return Cast<User>();
                 case "product":
@@ -76,7 +86,8 @@ namespace Coolapk_UWP.Models {
                 case "apk":
                     return Cast<Apk>();
                 case "feed":
-                    switch (EntityTemplate) {
+                    switch (EntityTemplate)
+                    {
                         case "feed":
                             return Cast<Feed>();
                         case "feedCover":
@@ -84,7 +95,8 @@ namespace Coolapk_UWP.Models {
                     }
                     break;
                 case "card":
-                    switch (EntityTemplate) {
+                    switch (EntityTemplate)
+                    {
                         case "iconLinkGridCard":
                             return Cast<IconLinkGridCard>();
                         case "configCard":
@@ -106,7 +118,8 @@ namespace Coolapk_UWP.Models {
                     }
                     break;
                 case "album":
-                    switch (EntityTemplate) {
+                    switch (EntityTemplate)
+                    {
                         case "albumExpandCardTopCover": // 应用集
                             return Cast<IgnoreCard>();
                     }
@@ -116,7 +129,8 @@ namespace Coolapk_UWP.Models {
         }
     }
 
-    public class ActionEntity : Entity {
+    public class ActionEntity : Entity
+    {
         [JsonProperty("likenum")]
         public uint _likenum;
 
@@ -126,23 +140,30 @@ namespace Coolapk_UWP.Models {
         [JsonIgnore]
         public uint Likenum { get { return _likenum; } set { Set(ref _likenum, value); } }
 
-        public UserAction UserAction { get; set; }
+        public UserAction UserAction { get; set; } = new UserAction { Like = false }; // TODO:不知道会不会覆盖
 
-        public async Task<Resp<LikeActionResult>> ToggleLike() {
+        public async Task<Resp<LikeActionResult>> ToggleLike()
+        {
             Resp<LikeActionResult> resp;
-            var old = UserAction.Like;
-            try {
-                if (UserAction.Like) {
+            var old = UserAction?.Like ?? false;
+            try
+            {
+                if (UserAction.Like)
+                {
                     UserAction.Like = false;
                     resp = await App.AppViewModel.CoolapkApis.DoUnLike(this.EntityID);
-                } else {
+                }
+                else
+                {
                     UserAction.Like = true;
                     resp = await App.AppViewModel.CoolapkApis.DoLike(this.EntityID);
                 }
                 if (resp.Message != null) throw new Exception(resp.Message);
                 Likenum = resp.Data.Count;
                 return resp;
-            } catch (Exception err) {
+            }
+            catch (Exception err)
+            {
                 UserAction.Like = old;
                 throw err;
             }
@@ -150,7 +171,8 @@ namespace Coolapk_UWP.Models {
     }
 
     // 比如 新鲜图文
-    public class ImageTextScrollCard : Entity {
+    public class ImageTextScrollCard : Entity
+    {
         // href to datalist => URL + Title
     }
 
@@ -173,13 +195,15 @@ namespace Coolapk_UWP.Models {
 
     public class Product : Entity { }
 
-    public class MainInit {
+    public class MainInit
+    {
         public string Title;
         public string Icon;
         [JsonProperty("entities")]
         public IList<MainInitTabConfig> Tabs;
     }
-    public class MainInitTabConfig {
+    public class MainInitTabConfig
+    {
         public string Title;
         [JsonProperty("page_name")]
         public string PageName;

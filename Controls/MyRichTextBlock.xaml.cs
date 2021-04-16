@@ -128,7 +128,7 @@ namespace Coolapk_UWP.Controls
                                     Width = paragraph.FontSize + 4,
                                     Height = Width,
                                     Source = bitmapImage,
-
+                                    Margin = new Thickness { Bottom = -4 }
                                 };
                                 var container = new InlineUIContainer
                                 {

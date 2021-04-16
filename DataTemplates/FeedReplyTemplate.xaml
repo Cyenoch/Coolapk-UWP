@@ -19,7 +19,7 @@
                     <Run Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind ReplyToUsername}"/>
                     <Run Text=":&#x0a;"/>
                     <InlineUIContainer>
-                        <controls:MyRichTextBlock Wrap="False" VerticalAlignment="Center" Text="{x:Bind Message}"/>
+                        <controls:MyRichTextBlock Wrap="False" VerticalAlignment="Center" Text="{x:Bind MessageWithEmoji}"/>
                     </InlineUIContainer>
                 </Paragraph>
             </RichTextBlock>
@@ -54,7 +54,7 @@
                 <TextBlock 
                     Text="{x:Bind UserInfo.Username}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
                 <controls:MyRichTextBlock 
-                    Text="{x:Bind Message}" 
+                    Text="{x:Bind MessageWithEmoji}" 
                     Wrap="True"/>
                 <cmui:ImageEx x:Name="__" x:Load="{x:Bind HasPic}" Source="{x:Bind Pic}"/>
 

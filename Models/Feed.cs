@@ -180,6 +180,25 @@ namespace Coolapk_UWP.Models
 
         public IList<RelationRow> RelationRows { get; set; }
 
+        [JsonIgnore]
+        public string _cachedMessageWithEmojiJoined = "";
+        [JsonIgnore]
+        public string MessageWithEmoji
+        {
+            get
+            {
+                if (_cachedMessageWithEmojiJoined.Equals(String.Empty))
+                {
+                    var msg = Message;
+                    EmojisUtil.Emojis.ForEach(emoji =>
+                    {
+                        msg = msg.Replace(emoji, "<emoji src=\"" + EmojisUtil.GetEmojiUriFor(emoji) + "\" />");
+                    });
+                    return msg;
+                }
+                return _cachedMessageWithEmojiJoined;
+            }
+        }
     }
 
     /// <summary>
