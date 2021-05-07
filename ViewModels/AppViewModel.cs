@@ -17,8 +17,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 
-namespace Coolapk_UWP.ViewModels {
-    public class AppViewModel : NotifyPropertyBase {
+namespace Coolapk_UWP.ViewModels
+{
+    public class AppViewModel : NotifyPropertyBase
+    {
 
         public delegate void HomeContentFrameLoadedHandler(Frame HomeContentFrame);
         public event HomeContentFrameLoadedHandler HomeContentFrameLoadedEvent;
@@ -27,70 +29,91 @@ namespace Coolapk_UWP.ViewModels {
         public Frame AppRootFrame { get; set; }
 
         private Frame _homeContentFrame;
-        public Frame HomeContentFrame {
+        public Frame HomeContentFrame
+        {
             get { return _homeContentFrame; }
-            set {
+            set
+            {
                 if (_homeContentFrame == null) HomeContentFrameLoadedEvent?.Invoke(value);
                 _homeContentFrame = value;
             }
         }
 
         private double _appBarHeight;
-        public double AppBarHeight {
+        public double AppBarHeight
+        {
             get => _appBarHeight;
             set => Set(ref _appBarHeight, value);
         }
 
         private UserProfile _currentUser;
-        public UserProfile CurrentUser {
+        public UserProfile CurrentUser
+        {
             get { return _currentUser; }
             set { Set(ref _currentUser, value); }
         }
-        public bool IsLogged {
+        public bool IsLogged
+        {
             get { return _currentUser != null; }
         }
 
         public ICoolapkApis CoolapkApis;
-        public AppViewModel() {
+        public AppViewModel()
+        {
 
             App.AppViewModel = this;
 
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings() {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
+            {
                 Converters = { new StringEnumConverter() }
             };
             var httpClient = new System.Net.Http.HttpClient(new TokenHeaderHandler(
-                    new HttpClientHandler {
+                    new HttpClientHandler
+                    {
                     }
-                )) {
+                ))
+            {
                 BaseAddress = new Uri("https://api.coolapk.com"),
             };
 
-            CoolapkApis = RestService.For<ICoolapkApis>(httpClient, new RefitSettings {
-                ContentSerializer = new NewtonsoftJsonContentSerializer(),
+            CoolapkApis = RestService.For<ICoolapkApis>(httpClient, new RefitSettings
+            {
+                ContentSerializer = new NewtonsoftJsonContentSerializer(
+                    new JsonSerializerSettings
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    }),
             });
 
             InitLoginState();
         }
 
-        private async void InitLoginState() {
-            try {
+        private async void InitLoginState()
+        {
+            try
+            {
                 await LoadLoginState();
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 // ignore
             }
         }
 
-        public void Logout() {
+        public void Logout()
+        {
             var cookieManager = GetCookieManager();
             var cookies = GetCookies();
-            cookies.All((cookie) => {
+            cookies.All((cookie) =>
+            {
                 cookieManager.DeleteCookie(cookie);
                 return true;
             });
             CurrentUser = null;
         }
 
-        public async Task LoadLoginState() {
+        public async Task LoadLoginState()
+        {
             var uid = GetCookies().FirstOrDefault((cookie) => cookie.Name == "uid")?.Value;
             if (uid == null) return;
             var profile = await CoolapkApis.GetUserProfile((uint)int.Parse(uid.ToString()), AppUtil.DateToTimeStamp(DateTime.Now));
@@ -101,13 +124,15 @@ namespace Coolapk_UWP.ViewModels {
             return;
         }
 
-        public IList<HttpCookie> GetCookies() {
+        public IList<HttpCookie> GetCookies()
+        {
             var cookieManager = GetCookieManager();
             var cookieCollection = cookieManager.GetCookies(new Uri("https://coolapk.com/"));
             return cookieCollection.ToList();
         }
 
-        public HttpCookieManager GetCookieManager() {
+        public HttpCookieManager GetCookieManager()
+        {
             var httpBaseProtocolFilter = new HttpBaseProtocolFilter();
             return httpBaseProtocolFilter.CookieManager;
         }

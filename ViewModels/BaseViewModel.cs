@@ -10,16 +10,20 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
-namespace Coolapk_UWP.ViewModels {
-    public class BaseViewModel : INotifyPropertyChanged {
+namespace Coolapk_UWP.ViewModels
+{
+    public class BaseViewModel : INotifyPropertyChanged
+    {
         public AppViewModel AppViewModel => App.AppViewModel;
         public ICoolapkApis CoolapkApis => AppViewModel.CoolapkApis;
         public ApplicationDataContainer LocalSettings => AppViewModel.LocalSettings;
-        public Frame AppRootFrame {
+        public Frame AppRootFrame
+        {
             get { return AppViewModel.AppRootFrame; }
             set { AppViewModel.AppRootFrame = value; }
         }
-        public Frame HomeContentFrame {
+        public Frame HomeContentFrame
+        {
             get { return AppViewModel.HomeContentFrame; }
             set { AppViewModel.HomeContentFrame = value; }
         }
@@ -28,32 +32,49 @@ namespace Coolapk_UWP.ViewModels {
 
         public void NotifyChanged([CallerMemberName] string propertyName = null)
             => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        protected void Set<T>(ref T storage, T value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            if (Equals(storage, value))
+            {
+                return;
+            }
+            storage = value;
+            NotifyChanged(propertyName);
+        }
     }
 
 
-    public interface IAsyncLoadViewModel<T> {
+    public interface IAsyncLoadViewModel<T>
+    {
         Task<RespBase<T>> OnLoadAsync();
         string[] NotifyChangedProperties();
     }
 
-    public abstract class AsyncLoadViewModel<T> : BaseViewModel, IAsyncLoadViewModel<T> {
+    public abstract class AsyncLoadViewModel<T> : BaseViewModel, IAsyncLoadViewModel<T>
+    {
         public bool _busy = false;
-        public bool Busy {
+        public bool Busy
+        {
             get { return _busy; }
             set { _busy = value; NotifyChanged(); }
         }
 
         public string _errMsg;
-        public string ErrorMessage {
+        public string ErrorMessage
+        {
             get { return _errMsg; }
             set { _errMsg = value; NotifyChanged(); }
         }
 
         public T _data;
-        public T Data {
+        public T Data
+        {
             get { return _data; }
-            set {
-                _data = value; NotifyChanged(); foreach (var prop in NotifyChangedProperties()) {
+            set
+            {
+                _data = value; NotifyChanged(); foreach (var prop in NotifyChangedProperties())
+                {
                     NotifyChanged(prop);
                 }
             }
@@ -63,20 +84,27 @@ namespace Coolapk_UWP.ViewModels {
         //    _doOnLoad();
         //}
 
-        private async void _doOnLoad() {
+        private async void _doOnLoad()
+        {
             Busy = true;
             Data = default;
             ErrorMessage = null;
-            try {
+            try
+            {
                 Data = (await OnLoadAsync()).Data;
-            } catch (Exception exception) {
+            }
+            catch (Exception exception)
+            {
                 ErrorMessage = exception.Message;
-            } finally {
+            }
+            finally
+            {
                 Busy = false;
             }
         }
 
-        public virtual void Reload() {
+        public virtual void Reload()
+        {
             _doOnLoad();
         }
 

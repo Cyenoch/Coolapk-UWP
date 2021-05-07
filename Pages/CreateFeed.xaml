@@ -46,7 +46,7 @@
                     </RelativePanel>
                 </Border>
 
-                <TextBox Margin="0,12,0,12" PlaceholderText="标题" HorizontalAlignment="Center" Width="600"/>
+                <TextBox Margin="0,12,0,12" x:Name="TitleBox" PlaceholderText="标题" HorizontalAlignment="Center" Width="600"/>
                 <Border HorizontalAlignment="Stretch" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
                 <controls:PicTextEditor x:Name="MPicTextEditor"/>
             </StackPanel>

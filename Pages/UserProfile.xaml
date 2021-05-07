@@ -102,7 +102,7 @@
                                         <muxc:HyperlinkButton
                                             Padding="0"
                                             FontWeight="Bold"
-                                            Foreground="{ThemeResource SystemAccentColor}"
+                                            Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                             FontSize="18"
                                             Content="{x:Bind ViewModel.User.GotLike, Mode=OneWay}"/>
                                         <muxc:TextBlock
@@ -114,7 +114,7 @@
                                         <muxc:HyperlinkButton
                                             Padding="0"
                                             FontWeight="Bold"
-                                            Foreground="{ThemeResource SystemAccentColor}"
+                                            Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                             FontSize="18"
                                             Content="{x:Bind ViewModel.User.Follow, Mode=OneWay}"/>
                                         <muxc:TextBlock
@@ -126,7 +126,7 @@
                                         <muxc:HyperlinkButton
                                             Padding="0"
                                             FontWeight="Bold"
-                                            Foreground="{ThemeResource SystemAccentColor}"
+                                            Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                             FontSize="18"
                                             Content="{x:Bind ViewModel.User.Fans, Mode=OneWay}"/>
                                         <muxc:TextBlock

@@ -10,6 +10,11 @@ using Newtonsoft.Json.Linq;
 
 namespace Coolapk_UWP.Models
 {
+    public class Unknow
+    {
+        [JsonExtensionData]
+        public IDictionary<string, JToken> OtherField { get; set; }
+    }
     public class Entity : NotifyPropertyBase
     {
         [JsonExtensionData]

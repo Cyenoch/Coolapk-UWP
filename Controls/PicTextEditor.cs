@@ -102,6 +102,8 @@ namespace Coolapk_UWP.Controls {
                         dialog.Content = "所有上传任务完成";
                         dialog.Hide();
                     });
+
+                    //
                 } catch (OssException err) {
                     //throw new Exception($"某张图片上传失败: {err.HResult}:{err.ErrorCode} -> {err.Message}");
                     dialog.Title = "上传失败";

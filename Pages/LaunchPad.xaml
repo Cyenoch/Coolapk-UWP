@@ -25,7 +25,7 @@
                 Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"/>
             <TextBlock
                 Style="{ThemeResource SubtitleTextBlockStyle}"
-                Foreground="{ThemeResource SystemColorGrayTextColor}"
+                Foreground="{ThemeResource SystemControlHighlightAltBaseLowBrush}"
                 Text="这是一个启动页，很高兴您能在没有任何报错的情况下正常进入到这个页面O(∩_∩)O"/>
 
             <ListView 
