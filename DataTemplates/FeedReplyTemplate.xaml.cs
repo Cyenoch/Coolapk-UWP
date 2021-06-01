@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace Coolapk_UWP.DataTemplates {
@@ -23,6 +24,14 @@ namespace Coolapk_UWP.DataTemplates {
         private void LikeButton_Click(object sender, RoutedEventArgs e) {
             var model = (FeedReply)((FrameworkElement)sender).DataContext;
             model.Likenum += 1;
+        }
+
+        private void ___Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (e.OriginalSource is Image img && img.Source is BitmapImage bi && bi.UriSource != null)
+            {
+                Pages.PhotoGralley.Navigate(new List<string>() { bi.UriSource.AbsoluteUri });
+            }
         }
     }
 }

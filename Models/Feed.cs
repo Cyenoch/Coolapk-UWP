@@ -132,6 +132,9 @@ namespace Coolapk_UWP.Models
         [JsonConverter(typeof(MessageRawConverter))]
         public ICollection<MessageRawStructBase> MessageRaw { get; set; }
 
+        [JsonIgnore]
+        public ICollection<MessageRawStructBase> MessageRawWithFeed { get => MessageRaw.Select(r => { r.ParentFeed = this; return r; }).ToArray(); }
+
         [JsonProperty("message_cover")]
         public string Cover { get; set; }
     }

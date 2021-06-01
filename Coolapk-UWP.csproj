@@ -162,6 +162,9 @@
     <Compile Include="Pages\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PhotoGralley.xaml.cs">
+      <DependentUpon>PhotoGralley.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\UserProfile.xaml.cs">
       <DependentUpon>UserProfile.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CreateFeedViewModel.cs" />
     <Compile Include="ViewModels\FeedDetailViewModel.cs" />
+    <Compile Include="ViewModels\GralleyViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
   </ItemGroup>
@@ -808,6 +812,10 @@
     <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PhotoGralley.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\UserProfile.xaml">
       <SubType>Designer</SubType>

@@ -88,7 +88,7 @@
                 <ListView
                     x:Name="HtmlArticleFeedContent"
                     x:Load="{x:Bind Data.IsHtmlArticle}"
-                    ItemsSource="{x:Bind Data.MessageRaw}"
+                    ItemsSource="{x:Bind Data.MessageRawWithFeed}"
                     SelectionMode="None"
                     IsItemClickEnabled="False"
                     Padding="0,0,0,130"

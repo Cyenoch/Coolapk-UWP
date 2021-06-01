@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
@@ -45,6 +46,7 @@ namespace Coolapk_UWP.ViewModels
             get => _appBarHeight;
             set => Set(ref _appBarHeight, value);
         }
+        public GridLength AppBarHeightGridLength => new GridLength(_appBarHeight);
 
         private UserProfile _currentUser;
         public UserProfile CurrentUser

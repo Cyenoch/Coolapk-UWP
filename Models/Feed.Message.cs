@@ -11,6 +11,10 @@ namespace Coolapk_UWP.Models
 {
     public class MessageRawStructBase
     {
+        // 可能为空
+        [JsonIgnore]
+        public Feed ParentFeed { get; set; }
+
         [JsonExtensionData]
         public IDictionary<string, JToken> OtherField { get; set; }
         public string Type { get; set; }

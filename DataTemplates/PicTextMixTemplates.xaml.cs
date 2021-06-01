@@ -13,15 +13,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Coolapk_UWP.Models;
+using Coolapk_UWP.Pages;
 
-
-namespace Coolapk_UWP.DataTemplates {
-    public class PicTextMixTemplateSelector : DataTemplateSelector {
+namespace Coolapk_UWP.DataTemplates
+{
+    public class PicTextMixTemplateSelector : DataTemplateSelector
+    {
         public DataTemplate TextTemplate { get; set; }
         public DataTemplate ImageTempalte { get; set; }
         public DataTemplate UnsupportTemplate { get; set; }
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container) {
-            switch (item) {
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
+            switch (item)
+            {
                 case MessageRawStructText _:
                     return TextTemplate;
                 case MessageRawStructImage _:
@@ -33,9 +37,19 @@ namespace Coolapk_UWP.DataTemplates {
         }
     }
 
-    public sealed partial class PicTextMixTemplates : ResourceDictionary {
-        public PicTextMixTemplates() {
+    public sealed partial class PicTextMixTemplates : ResourceDictionary
+    {
+        public PicTextMixTemplates()
+        {
             this.InitializeComponent();
+        }
+
+        private void ImageEx_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (e.OriginalSource is Image ele && ele.DataContext is MessageRawStructBase mrsb && mrsb.ParentFeed != null)
+            {
+                PhotoGralley.Navigate(mrsb.ParentFeed.PicArr);
+            }
         }
     }
 }

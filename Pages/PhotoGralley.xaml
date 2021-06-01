@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="Coolapk_UWP.Pages.PhotoGralley"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk_UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Coolapk_UWP.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.DataContext>
+        <viewmodels:GralleyViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{x:Bind ViewModel.AppViewModel.AppBarHeightGridLength}"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <FlipView x:Name="PhotosFlip" Grid.RowSpan="3" ItemsSource="{x:Bind ViewModel.Photos, Mode=OneWay}">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                  ZoomMode="Enabled" IsScrollInertiaEnabled="True">
+                        <controls:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding}"/>
+                    </ScrollViewer>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+        <Border Grid.Row="0" Grid.Column="0" Height="{x:Bind ViewModel.AppViewModel.AppBarHeight}" x:Name="AppTitleBar" Background="Transparent" Margin="40,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+        </Border>
+
+        <Button Click="Back_Button_Click">
+            <SymbolIcon Symbol="Back"/>
+        </Button>
+
+        <CommandBar HorizontalAlignment="Right" Background="{ThemeResource SystemControlBaseMediumLowAcrylicElementMediumBrush}" Grid.Row="2">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Save" x:Name="Save" Click="Save_Click" Label="保存">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="S" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Save" x:Name="SaveAll" Click="SaveAll_Click" Label="保存所有">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Shift" Key="S" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Grid>
+</Page>

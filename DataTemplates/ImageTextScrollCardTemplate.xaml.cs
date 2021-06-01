@@ -16,15 +16,20 @@ using Windows.UI.Xaml.Navigation;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
-namespace Coolapk_UWP.DataTemplates {
-    public sealed partial class ImageTextScrollCardTemplate : ResourceDictionary {
-        public ImageTextScrollCardTemplate() {
+namespace Coolapk_UWP.DataTemplates
+{
+    public sealed partial class ImageTextScrollCardTemplate : ResourceDictionary
+    {
+        public ImageTextScrollCardTemplate()
+        {
             this.InitializeComponent();
         }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
             var entity = e.ClickedItem as Coolapk_UWP.Models.Entity;
-            if (entity is Coolapk_UWP.Models.Feed) {
+            if (entity is Coolapk_UWP.Models.Feed)
+            {
                 App.AppViewModel.HomeContentFrame.Navigate(typeof(FeedDetail), entity.EntityID);
             }
         }

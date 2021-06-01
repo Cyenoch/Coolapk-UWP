@@ -56,7 +56,7 @@
                 <controls:MyRichTextBlock 
                     Text="{x:Bind MessageWithEmoji}" 
                     Wrap="True"/>
-                <cmui:ImageEx x:Name="__" x:Load="{x:Bind HasPic}" Source="{x:Bind Pic}"/>
+                <cmui:ImageEx Tapped="___Tapped" x:Name="__" x:Load="{x:Bind HasPic}" Source="{x:Bind Pic}"/>
 
                 <RelativePanel
                     Margin="0,8,0,0">

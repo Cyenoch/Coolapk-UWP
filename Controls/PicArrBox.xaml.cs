@@ -1,4 +1,5 @@
 ﻿using Coolapk_UWP.Models;
+using Coolapk_UWP.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,8 +79,15 @@ namespace Coolapk_UWP.Controls
             {
                 var ele = (FrameworkElement)(FeedPicArrBoxTemplateSelector.SelectTemplate(PicArr, this)?.LoadContent());
                 ele.SetValue(FrameworkElement.DataContextProperty, this);
+                ele.Tapped += Ele_Tapped;
                 Content = ele;
             }
+        }
+
+        private void Ele_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PhotoGralley.Navigate(PicArr);
+            e.Handled = true;
         }
 
         private static void OnPicArrChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
