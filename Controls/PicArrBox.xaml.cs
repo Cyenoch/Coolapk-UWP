@@ -16,8 +16,10 @@ using Windows.UI.Xaml.Navigation;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
-namespace Coolapk_UWP.Controls {
-    public class FeedPicArrBoxTemplateSelector : DataTemplateSelector {
+namespace Coolapk_UWP.Controls
+{
+    public class FeedPicArrBoxTemplateSelector : DataTemplateSelector
+    {
         public DataTemplate NonePicTemplate { get; set; }
         public DataTemplate OnePicTemplate { get; set; }
         public DataTemplate TwoColumnTemplate { get; set; }
@@ -26,7 +28,8 @@ namespace Coolapk_UWP.Controls {
         public DataTemplate SixGridTemplate { get; set; }
         public DataTemplate NineGridTemplate { get; set; }
 
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container) {
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
             var picArr = (IList<string>)item;
             if (picArr.Count == 1) return OnePicTemplate;
             else if (picArr.Count == 2) return TwoColumnTemplate;
@@ -38,30 +41,51 @@ namespace Coolapk_UWP.Controls {
         }
     }
 
-    public sealed partial class PicArrBox : UserControl {
+    public sealed partial class PicArrBox : UserControl
+    {
         public FeedPicArrBoxTemplateSelector FeedPicArrBoxTemplateSelector { get; set; }
-        public static DependencyProperty PicArrProperty = DependencyProperty.Register("PicArr", typeof(IList<string>), typeof(PicArrBox), new PropertyMetadata(new List<string>()));
-        public IList<string> PicArr {
-            get {
+        public static DependencyProperty PicArrProperty = DependencyProperty.Register(
+            "PicArr",
+            typeof(IList<string>),
+            typeof(PicArrBox),
+            new PropertyMetadata(
+                new List<string>(),
+                new PropertyChangedCallback(OnPicArrChanged)));
+
+        public IList<string> PicArr
+        {
+            get
+            {
                 return (IList<string>)GetValue(PicArrProperty);
             }
-            set {
+            set
+            {
                 SetValue(PicArrProperty, value);
             }
         }
-        public PicArrBox() {
+        public PicArrBox()
+        {
             this.InitializeComponent();
-            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
                 LoadContent();
             });
         }
-        public void LoadContent() {
+        public void LoadContent()
+        {
             if (FeedPicArrBoxTemplateSelector == null) FeedPicArrBoxTemplateSelector = (FeedPicArrBoxTemplateSelector)Resources["FeedPicArrBoxTemplateSelector"];
-            if (PicArr != null && PicArr.Count > 0 && FeedPicArrBoxTemplateSelector != null) {
+            if (PicArr != null && PicArr.Count > 0 && FeedPicArrBoxTemplateSelector != null)
+            {
                 var ele = (FrameworkElement)(FeedPicArrBoxTemplateSelector.SelectTemplate(PicArr, this)?.LoadContent());
                 ele.SetValue(FrameworkElement.DataContextProperty, this);
                 Content = ele;
             }
+        }
+
+        private static void OnPicArrChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var b = d as PicArrBox;
+            b.LoadContent();
         }
     }
 }
