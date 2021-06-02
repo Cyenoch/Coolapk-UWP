@@ -63,7 +63,10 @@ namespace Coolapk_UWP.ViewModels
         public UserProfile CurrentUser
         {
             get { return _currentUser; }
-            set { Set(ref _currentUser, value); }
+            set { 
+                Tiles.TilesUtil.SetupWideTile(value.Avatar, value.Username, value.Fans); 
+                Set(ref _currentUser, value);
+            }
         }
         public bool IsLogged
         {

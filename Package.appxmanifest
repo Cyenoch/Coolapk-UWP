@@ -9,7 +9,7 @@
   <Identity
     Name="9924836e-d7cf-493b-82f1-df238f8fb7c7"
     Publisher="CN=Cyenoch"
-    Version="1.0.0.0" />
+    Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9924836e-d7cf-493b-82f1-df238f8fb7c7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="Coolapk_UWP.App">
       <uap:VisualElements
-        DisplayName="Coolapk_UWP"
+        DisplayName="酷安UWP"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Coolapk 第三方 UWP 版本"
