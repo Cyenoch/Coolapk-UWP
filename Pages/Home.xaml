@@ -79,6 +79,9 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups >
+                <muxc:NavigationView.AutoSuggestBox>
+                    <AutoSuggestBox PlaceholderText="搜索" x:Name="SearchInput" QuerySubmitted="SearchInput_QuerySubmitted" QueryIcon="Find" AutomationProperties.Name="Search Input"/>
+                </muxc:NavigationView.AutoSuggestBox>
                 <Frame 
                     CacheMode="BitmapCache"
                     Navigated="ContentFrame_Navigated"

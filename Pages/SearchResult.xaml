@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="Coolapk_UWP.Pages.SearchResult"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk_UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:Coolapk_UWP.ViewModels"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <!--NavigationView PaneDisplayMode="Top"
+                        ItemInvoked="NavigationView_ItemInvoked"
+                        MenuItemsSource="{x:Bind MenuItems"
+                        SelectionFollowsFocus="Enabled"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False">
+            <Frame x:Name="contentFrame"/>
+        </NavigationView-->
+        <controls:TabView x:Name="tabView">
+        </controls:TabView>
+    </Grid>
+</Page>

@@ -19,8 +19,6 @@ using Windows.UI.Xaml.Controls;
 using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 using Windows.UI.Xaml.Navigation;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace Coolapk_UWP.Pages
 {
     public sealed partial class Home : Page
@@ -161,6 +159,12 @@ namespace Coolapk_UWP.Pages
         private void AppRootFrame_Navigated(object sender, NavigationEventArgs e)
         {
             HomeNavigationView.IsBackEnabled = ((Frame)sender).CanGoBack;
+        }
+
+        private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            //args.QueryText
+            App.AppViewModel.HomeContentFrame.Navigate(typeof(SearchResult), args.QueryText);
         }
     }
 }

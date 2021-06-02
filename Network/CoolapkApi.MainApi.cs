@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coolapk_UWP.Network {
-    public partial interface ICoolapkApis {
+namespace Coolapk_UWP.Network
+{
+    public partial interface ICoolapkApis
+    {
         // 已知页面:
         //  用户点评 url	/feed/nodeRatingList?targetType=all&parseRatingToFeed=1&uid={uid}
         //  用户酷图 url	/feed/userCoolPictureFeedList?fragmentTemplate=flex&uid={uid}
@@ -20,5 +22,8 @@ namespace Coolapk_UWP.Network {
 
         [Get("/v6/main/init")]
         Task<CollectionResp<MainInit>> GetMainInit();
+
+        [Get("/v6/search")]
+        Task<CollectionResp<Entity>> Search(string searchValue, uint page = 1, uint? lastItem = null, string sort = null, string feedType = null, string type = "all", int showAnonymous = -1);
     }
 }

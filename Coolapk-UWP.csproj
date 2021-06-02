@@ -165,6 +165,9 @@
     <Compile Include="Pages\PhotoGralley.xaml.cs">
       <DependentUpon>PhotoGralley.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SearchResult.xaml.cs">
+      <DependentUpon>SearchResult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\UserProfile.xaml.cs">
       <DependentUpon>UserProfile.xaml</DependentUpon>
     </Compile>
@@ -816,6 +819,10 @@
     <Page Include="Pages\PhotoGralley.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SearchResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\UserProfile.xaml">
       <SubType>Designer</SubType>
