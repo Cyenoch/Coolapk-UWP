@@ -25,5 +25,11 @@ namespace Coolapk_UWP.Network
 
         [Get("/v6/search")]
         Task<CollectionResp<Entity>> Search(string searchValue, uint page = 1, uint? lastItem = null, string sort = null, string feedType = null, string type = "all", int showAnonymous = -1);
+
+        [Get("/v6/notification/checkCount")]
+        Task<Resp<CheckNotificationCount>> CheckNotificationCount();
+
+        [Get("/v6/notification/list")]
+        Task<NotificationList> GetNotificationList(uint page = 1);
     }
 }

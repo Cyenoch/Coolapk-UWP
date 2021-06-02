@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coolapk_UWP.Models {
-    public class RespBase<T> {
+namespace Coolapk_UWP.Models
+{
+    public class RespBase<T>
+    {
         public int Status { get; set; }
         public string Error { get; set; }
         public string Message { get; set; } // 一般错误信息
@@ -17,5 +19,23 @@ namespace Coolapk_UWP.Models {
 
     public class Resp<T> : RespBase<T> { }
 
-    public class CollectionResp<T> : RespBase<IList<T>> {}
+    public class CollectionResp<T> : RespBase<IList<T>> { }
+
+    public class NotificationList : CollectionResp<Entity>
+    {
+        public NotificationList()
+        {
+            if (this.Data != null)
+            {
+                var tmp = new List<object>();
+                foreach (var entity in this.Data)
+                {
+                    entity.AutoCast();
+                    this.Data.Remove(entity);
+                    tmp.Add(entity.AutoCast());
+                }
+                this.Data = (IList<Entity>)tmp;
+            }
+        }
+    }
 }
