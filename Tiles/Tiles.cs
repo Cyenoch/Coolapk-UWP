@@ -10,7 +10,7 @@ namespace Coolapk_UWP.Tiles
 {
     public partial class TilesUtil
     {
-        public static void SetupWideTile(string avatarUrl, string userName, uint fans)
+        public static void SetupWideTile(string backgroundImageUrl, string avatarUrl, string userName, uint fans)
         {
             var content = new TileContent();
             var tileContent = new TileContent()
@@ -22,6 +22,9 @@ namespace Coolapk_UWP.Tiles
                     {
                         Content = new TileBindingContentAdaptive()
                         {
+                            BackgroundImage = new TileBackgroundImage {
+                                Source = backgroundImageUrl,
+                            },
                             Children =
                             {
                                 new AdaptiveGroup()
@@ -47,12 +50,12 @@ namespace Coolapk_UWP.Tiles
                                                 new AdaptiveText()
                                                 {
                                                     Text = "Hi,",
-                                                    HintStyle = AdaptiveTextStyle.Subtitle
+                                                    HintStyle = AdaptiveTextStyle.SubtitleSubtle
                                                 },
                                                 new AdaptiveText()
                                                 {
                                                     Text = userName,
-                                                    HintStyle = AdaptiveTextStyle.SubtitleSubtle
+                                                    HintStyle = AdaptiveTextStyle.Subtitle
                                                 },
                                                 new AdaptiveText()
                                                 {

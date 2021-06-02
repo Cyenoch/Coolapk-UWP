@@ -63,8 +63,9 @@ namespace Coolapk_UWP.ViewModels
         public UserProfile CurrentUser
         {
             get { return _currentUser; }
-            set { 
-                Tiles.TilesUtil.SetupWideTile(value.Avatar, value.Username, value.Fans); 
+            set
+            {
+                Tiles.TilesUtil.SetupWideTile(value.Cover, value.Avatar, value.Username, value.Fans);
                 Set(ref _currentUser, value);
             }
         }
