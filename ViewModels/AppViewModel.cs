@@ -76,7 +76,6 @@ namespace Coolapk_UWP.ViewModels
         public ICoolapkApis CoolapkApis;
         public AppViewModel()
         {
-
             App.AppViewModel = this;
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
@@ -102,6 +101,8 @@ namespace Coolapk_UWP.ViewModels
             });
 
             InitLoginState();
+
+
         }
 
         private async void InitLoginState()

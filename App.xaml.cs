@@ -21,27 +21,34 @@ using Windows.UI.ViewManagement;
 using Windows.UI;
 using System.Threading.Tasks;
 using Coolapk_UWP.Other;
+using Windows.ApplicationModel.Background;
 
-namespace Coolapk_UWP {
-    sealed partial class App : Application {
+namespace Coolapk_UWP
+{
+    sealed partial class App : Application
+    {
         public static AppViewModel AppViewModel;
 
-        public App() {
+        public App()
+        {
             this.InitializeComponent();
             EmojisUtil.LoadEmojisResw();
             this.Suspending += OnSuspending;
             App.AppViewModel = new AppViewModel();
         }
 
-        private void HandleActivation(IActivatedEventArgs e) {
+        private void HandleActivation(IActivatedEventArgs e)
+        {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            if (rootFrame == null) {
+            if (rootFrame == null)
+            {
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
                     //TODO: Load state from previously suspended application
                 }
 
@@ -49,46 +56,68 @@ namespace Coolapk_UWP {
             }
 
             var launch = e as LaunchActivatedEventArgs;
-            if (launch != null && launch.PrelaunchActivated == false) {
-                if (rootFrame.Content == null) {
+            if (launch != null && launch.PrelaunchActivated == false)
+            {
+                if (rootFrame.Content == null)
+                {
                     rootFrame.Navigate(typeof(Home), launch.Arguments);
                 }
                 Window.Current.Activate();
-            } else {
-                if (rootFrame.Content == null) {
+            }
+            else
+            {
+                if (rootFrame.Content == null)
+                {
                     rootFrame.Navigate(typeof(Home));
                 }
                 Window.Current.Activate();
             }
+
+            BackgroundTask.RegisterBackgroundTask(typeof(BackgroundTask), "msgNotify", new TimeTrigger(15, false), null).ContinueWith((r) =>
+            {
+                if (r.Status == TaskStatus.RanToCompletion)
+                {
+                    // TODO sth
+                }
+            });
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs e) {
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        {
             HandleActivation(e);
         }
 
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
-        private void OnSuspending(object sender, SuspendingEventArgs e) {
+        private void OnSuspending(object sender, SuspendingEventArgs e)
+        {
             var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
         }
 
-        protected override void OnActivated(IActivatedEventArgs args) {
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
             base.OnActivated(args);
             HandleActivation(args);
 
             if (args.Kind == ActivationKind.Protocol)
-                switch (args) {
+                switch (args)
+                {
                     case ProtocolActivatedEventArgs args1:
-                        if (args1.Uri.Scheme == "coolmarket") {
-                            switch (args1.Uri.Host) {
+                        if (args1.Uri.Scheme == "coolmarket")
+                        {
+                            switch (args1.Uri.Host)
+                            {
                                 case "feed": // 动态
                                     var feedId = args1.Uri.Segments[1];
-                                    if (feedId != null) {
+                                    if (feedId != null)
+                                    {
                                         // 跳转到动态
-                                        if (AppViewModel.HomeContentFrame == null) App.AppViewModel.HomeContentFrameLoadedEvent += new AppViewModel.HomeContentFrameLoadedHandler(async homeContentFrame => {
+                                        if (AppViewModel.HomeContentFrame == null) App.AppViewModel.HomeContentFrameLoadedEvent += new AppViewModel.HomeContentFrameLoadedHandler(async homeContentFrame =>
+                                        {
                                             await Task.Delay(200);
                                             homeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), uint.Parse(feedId));
                                         });

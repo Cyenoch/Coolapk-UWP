@@ -105,6 +105,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackgroundTask.cs" />
     <Compile Include="Controls\AsyncLoadStateControl.xaml.cs">
       <DependentUpon>AsyncLoadStateControl.xaml</DependentUpon>
     </Compile>
