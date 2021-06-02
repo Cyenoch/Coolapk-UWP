@@ -30,7 +30,14 @@ namespace Coolapk_UWP.Pages
             this.InitializeComponent();
             var coreTitleBar = Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-            tabView.Resources["TabViewHeaderPadding"] = new Thickness { Top = coreTitleBar.Height };
+            App.AppViewModel.PaneDisplayModeChanged += AppViewModel_PaneDisplayModeChanged;
+            AppViewModel_PaneDisplayModeChanged(App.AppViewModel.PaneDisplayMode);
+        }
+
+        private void AppViewModel_PaneDisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode mode)
+        {
+            // useless...
+            tabView.Resources["TabViewHeaderPadding"] = new Thickness { Top = mode == Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top ? 0 : Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.Height };
         }
 
         private void CoreTitleBar_LayoutMetricsChanged(Windows.ApplicationModel.Core.CoreApplicationViewTitleBar sender, object args)

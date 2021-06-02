@@ -13,10 +13,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace Coolapk_UWP.ViewModels
 {
@@ -28,6 +30,15 @@ namespace Coolapk_UWP.ViewModels
 
         public ApplicationDataContainer LocalSettings => ApplicationData.Current.LocalSettings;
         public Frame AppRootFrame { get; set; }
+
+        public Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.LeftCompact;
+        public event PaneDisplayModeChangedHandle PaneDisplayModeChanged;
+        public delegate void PaneDisplayModeChangedHandle(Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode mode);
+
+        public void FirePaneDisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode mode)
+        {
+            App.AppViewModel.PaneDisplayModeChanged?.Invoke(mode);
+        }
 
         private Frame _homeContentFrame;
         public Frame HomeContentFrame

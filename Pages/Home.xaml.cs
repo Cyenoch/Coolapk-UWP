@@ -129,10 +129,12 @@ namespace Coolapk_UWP.Pages
         // 细品
         private void HomeNavigationView_DisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs args)
         {
+            App.AppViewModel.PaneDisplayMode = sender.PaneDisplayMode;
+            App.AppViewModel.FirePaneDisplayModeChanged(sender.PaneDisplayMode);
             if (sender.PaneDisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top)
             {
                 AppRootFrame.Padding = new Thickness { Top = AppTitleBar.Height };
-                AppTitleBar.Margin = new Thickness { Left = 0 };
+                AppTitleBar.Margin = new Thickness { Left = sender.CompactPaneLength };
             }
             else
             {
