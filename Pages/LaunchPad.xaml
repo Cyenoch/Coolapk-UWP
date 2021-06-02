@@ -11,7 +11,7 @@
     <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}"
             Padding="24">
         <StackPanel
-            MaxWidth="500"
+            MaxWidth="600"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
             <TextBlock
@@ -28,7 +28,7 @@
                 Foreground="{ThemeResource SystemControlHighlightAltBaseLowBrush}"
                 Text="这是一个启动页，很高兴您能在没有任何报错的情况下正常进入到这个页面O(∩_∩)O"/>
 
-            <ListView 
+            <ListView
                 x:Name="LaunchPadListView"
                 Margin="0,24,0,0"
                 SelectionMode="None"
@@ -62,6 +62,12 @@
                         <SymbolIcon HorizontalAlignment="Right" Margin="0,20,0,0" Symbol="Forward"/>
                     </StackPanel>
                 </ListViewItem>
+                <!--ListViewItem>
+                    <StackPanel Name="FollowDeveloper" Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <TextBlock Text="关注作者" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <SymbolIcon HorizontalAlignment="Right" Margin="0,114,0,0" Symbol="Forward"/>
+                    </StackPanel>
+                </ListViewItem-->
                 <ListViewItem>
                     <StackPanel Name="GoToQQGroup" Orientation="Vertical" HorizontalAlignment="Stretch">
                         <TextBlock Text="进群聊天" Style="{ThemeResource SubtitleTextBlockStyle}"/>
