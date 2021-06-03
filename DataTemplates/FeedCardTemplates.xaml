@@ -60,7 +60,7 @@
                     Margin="0,6"/>
 
 
-                <controls:PicArrBox Visibility="{x:Bind HasPics, Mode=OneWay}" Margin="0,6,0,6" PicArr="{x:Bind SmallPicArr}" />
+                <controls:PicArrBox Visibility="{x:Bind HasPics, Mode=OneWay}" Margin="0,6,0,6" SourcePicArr="{x:Bind PicArr}"  PicArr="{x:Bind SmallPicArr}" />
 
                 <Border Tapped="ForwardFeedBlock_Tapped" Padding="8,0" Margin="0,6,0,6" x:Name="ForwardFeedBlock" x:Load="{x:Bind HasForwardFeed}" CornerRadius="8" Background="{ThemeResource SystemControlAcrylicElementBrush}">
                     <StackPanel Orientation="Vertical">

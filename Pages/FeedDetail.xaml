@@ -82,7 +82,7 @@
                             Text="{x:Bind Data.Message}"/>
                     </ListViewItem>
                     <ListViewItem x:Name="_____" x:Load="{x:Bind Data.HasPics}">
-                        <controls:PicArrBox Margin="0,6" PicArr="{x:Bind Data.SmallPicArr}" />
+                        <controls:PicArrBox Margin="0,6" SourcePicArr="{x:Bind Data.PicArr}"  PicArr="{x:Bind Data.SmallPicArr}" />
                     </ListViewItem>
                 </ListView>
                 <!--上面是非图文的样子-->

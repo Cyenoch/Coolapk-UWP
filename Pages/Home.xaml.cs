@@ -135,11 +135,13 @@ namespace Coolapk_UWP.Pages
             {
                 AppRootFrame.Padding = new Thickness { Top = AppTitleBar.Height };
                 AppTitleBar.Margin = new Thickness { Left = sender.CompactPaneLength };
+                AppTitleBar.HorizontalAlignment = HorizontalAlignment.Stretch;
             }
             else
             {
                 AppRootFrame.Padding = new Thickness { Top = 0 };
                 AppTitleBar.Margin = new Thickness { Left = sender.CompactPaneLength };
+                AppTitleBar.HorizontalAlignment = HorizontalAlignment.Stretch;
             }
         }
 

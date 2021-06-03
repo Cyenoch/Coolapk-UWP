@@ -31,7 +31,7 @@ namespace Coolapk_UWP.Controls
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            var picArr = (IList<string>)item;
+            IList<string> picArr = (IList<string>)item;
             if (picArr.Count == 1) return OnePicTemplate;
             else if (picArr.Count == 2) return TwoColumnTemplate;
             else if (picArr.Count == 3) return ThreeColumnTemplate;
@@ -53,20 +53,27 @@ namespace Coolapk_UWP.Controls
                 new List<string>(),
                 new PropertyChangedCallback(OnPicArrChanged)));
 
+        public static DependencyProperty SourcePicArrProperty = DependencyProperty.Register(
+            "SourcePicArr",
+            typeof(IList<string>),
+            typeof(PicArrBox),
+            new PropertyMetadata(
+                new List<string>(),
+                new PropertyChangedCallback(OnSourcePicArrChanged)));
+
         public IList<string> PicArr
         {
-            get
-            {
-                return (IList<string>)GetValue(PicArrProperty);
-            }
-            set
-            {
-                SetValue(PicArrProperty, value);
-            }
+            get => (IList<string>)GetValue(PicArrProperty);
+            set => SetValue(PicArrProperty, value);
+        }
+        public IList<string> SourcePicArr
+        {
+            get => (IList<string>)GetValue(SourcePicArrProperty);
+            set => SetValue(SourcePicArrProperty, value);
         }
         public PicArrBox()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 LoadContent();
@@ -74,10 +81,14 @@ namespace Coolapk_UWP.Controls
         }
         public void LoadContent()
         {
-            if (FeedPicArrBoxTemplateSelector == null) FeedPicArrBoxTemplateSelector = (FeedPicArrBoxTemplateSelector)Resources["FeedPicArrBoxTemplateSelector"];
+            if (FeedPicArrBoxTemplateSelector == null)
+            {
+                FeedPicArrBoxTemplateSelector = (FeedPicArrBoxTemplateSelector)Resources["FeedPicArrBoxTemplateSelector"];
+            }
+
             if (PicArr != null && PicArr.Count > 0 && FeedPicArrBoxTemplateSelector != null)
             {
-                var ele = (FrameworkElement)(FeedPicArrBoxTemplateSelector.SelectTemplate(PicArr, this)?.LoadContent());
+                FrameworkElement ele = (FrameworkElement)(FeedPicArrBoxTemplateSelector.SelectTemplate(PicArr, this)?.LoadContent());
                 ele.SetValue(FrameworkElement.DataContextProperty, this);
                 ele.Tapped += Ele_Tapped;
                 Content = ele;
@@ -86,14 +97,20 @@ namespace Coolapk_UWP.Controls
 
         private void Ele_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            PhotoGralley.Navigate(PicArr);
+            PhotoGralley.Navigate(SourcePicArr ?? PicArr);
             e.Handled = true;
         }
 
         private static void OnPicArrChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var b = d as PicArrBox;
+            PicArrBox b = d as PicArrBox;
             b.LoadContent();
+        }
+
+        private static void OnSourcePicArrChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //var b = d as PicArrBox;
+            //b.LoadContent();
         }
     }
 }
