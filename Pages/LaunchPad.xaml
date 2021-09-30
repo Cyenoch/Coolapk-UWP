@@ -6,10 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
-    <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}"
-            Padding="24">
+    <Border Padding="24">
         <StackPanel
             MaxWidth="600"
             HorizontalAlignment="Center"
@@ -36,7 +36,10 @@
                 IsItemClickEnabled="True">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                        <Setter Property="CornerRadius" Value="8"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+                        <Setter Property="Background" Value="{ThemeResource LayerFillColorDefaultBrush}"/>
                         <Setter Property="Margin" Value="0,0,12,0"/>
                         <Setter Property="Padding" Value="12"/>
                         <Setter Property="Width" Value="140"/>

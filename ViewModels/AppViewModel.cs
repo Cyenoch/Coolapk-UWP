@@ -32,15 +32,6 @@ namespace Coolapk_UWP.ViewModels
         public ApplicationDataContainer LocalSettings => ApplicationData.Current.LocalSettings;
         public Frame AppRootFrame { get; set; }
 
-        public Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.LeftCompact;
-        public event PaneDisplayModeChangedHandle PaneDisplayModeChanged;
-        public delegate void PaneDisplayModeChangedHandle(Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode mode);
-
-        public void FirePaneDisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode mode)
-        {
-            App.AppViewModel.PaneDisplayModeChanged?.Invoke(mode);
-        }
-
         private Frame _homeContentFrame;
         public Frame HomeContentFrame
         {
@@ -141,7 +132,7 @@ namespace Coolapk_UWP.ViewModels
             {
                 await LoadLoginState(); // 会重置NotificationList
                 await FetchNotificationCount();
-                await NotificationList.LoadMoreItemsAsync(10);
+                await NotificationList?.LoadMoreItemsAsync(10);
                 UpdateWideTile();
             }
             catch (Exception _) { }

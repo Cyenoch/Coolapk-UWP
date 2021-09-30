@@ -23,36 +23,52 @@ namespace Coolapk_UWP.Pages
 {
     public sealed partial class Home : Page
     {
-
-        HomeMenuItem CurrentMenuItem;
+        private HomeMenuItem CurrentMenuItem;
         Microsoft.UI.Xaml.Controls.NavigationView HomeNavigationView;
 
         public Home()
         {
             this.InitializeComponent();
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-
             ((HomeViewModel)DataContext).Reload();
+
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-            AppTitleBar.Height = coreTitleBar.Height;
-            App.AppViewModel.AppBarHeight = coreTitleBar.Height;
-
-            var currentView = SystemNavigationManager.GetForCurrentView();
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-
-            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(40, 0, 0, 0);
-            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(90, 0, 0, 0);
-            viewTitleBar.ButtonForegroundColor = ((SolidColorBrush)Resources["ISystemBaseHighColor"]).Color;
-
-            DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
-            displayInformation.DpiChanged += DisplayProperties_DpiChanged;
+            UpdateTitleBarLayout(coreTitleBar);
 
             Window.Current.SetTitleBar(AppTitleBar);
+
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+
+            Window.Current.Activated += Current_Activated;
+        }
+
+        private void Current_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            SolidColorBrush defaultForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+            SolidColorBrush inactiveForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorDisabledBrush"];
+            AppTitle.Foreground = e.WindowActivationState == CoreWindowActivationState.Deactivated ? inactiveForegroundBrush : defaultForegroundBrush;
+        }
+
+        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            AppTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            UpdateTitleBarLayout(sender);
+        }
+
+        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
+        {
+            AppTitleBar.Height = coreTitleBar.Height;
+            Thickness currMargin = AppTitleBar.Margin;
+            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
         }
 
         public void AsyncLoadStateControl_Retry(object sender, RoutedEventArgs a)
@@ -60,9 +76,50 @@ namespace Coolapk_UWP.Pages
             ((HomeViewModel)DataContext).Reload();
         }
 
-        private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        private void NavigationViewControl_DisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs args)
         {
-            HomeNavigationView = sender;
+            const int topIndent = 16;
+            const int expandedIndent = 48;
+            int minimalIndent = 104;
+            // 如果返回按钮未显示，则削减TitleBar的空间
+            if (HomeNavigationView == null) return;
+            if (HomeNavigationView.IsBackButtonVisible.Equals(Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed))
+            {
+                minimalIndent = 48;
+            }
+
+            Thickness currMargin = AppTitleBar.Margin;
+
+            if (sender.PaneDisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top)
+            {
+                // 如果是Top Mode
+                AppTitleBar.Margin = new Thickness(topIndent, currMargin.Top, currMargin.Left, currMargin.Right);
+            }
+            else if (sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+            {
+                // 如果是 minimal
+                AppTitleBar.Margin = new Thickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+            }
+            else
+            {
+                AppTitleBar.Margin = new Thickness(expandedIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+            }
+        }
+
+        private void ContentFrameControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.AppViewModel.HomeContentFrame = sender as Frame;
+            if ((sender as Frame).BackStackDepth == 0) App.AppViewModel.HomeContentFrame.Navigate(typeof(LaunchPad));
+
+        }
+
+        private void NavigationViewControl_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        {
+            if (App.AppViewModel.HomeContentFrame.CanGoBack) App.AppViewModel.HomeContentFrame.GoBack();
+        }
+
+        private void NavigationViewControl_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
             switch (args.SelectedItem)
             {
                 case SpecialHomeMenuItem specialItem:
@@ -82,14 +139,16 @@ namespace Coolapk_UWP.Pages
                     }
                     break;
                 case HomeMenuItem menuItem:
-                    var frame = sender.Content as Frame;
+                    var frame = App.AppViewModel.HomeContentFrame;
                     MainInitTabConfig target;
-                    if (menuItem.Children != null && menuItem.Children.Count > 0)
+                    if (menuItem.Children != null && menuItem.Children.Count > 0 && CurrentMenuItem == null)
                     {
                         target = menuItem.DefaultConfig ?? menuItem.Children[0].Config;
-                        _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        var targetItem = menuItem.Children.First(child => child.Config == target);
+                        if (targetItem == null) return;
+                        _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            sender.SelectedItem = menuItem.Children.First(child => child.Config == target);
+                            sender.SelectedItem = targetItem;
                         });
                     }
                     else
@@ -103,72 +162,9 @@ namespace Coolapk_UWP.Pages
             }
         }
 
-        private void AppRootFrame_Loaded(object sender, RoutedEventArgs e)
-        {
-            App.AppViewModel.AppRootFrame = sender as Frame;
-        }
-
-        private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
-        {
-            App.AppViewModel.HomeContentFrame = sender as Frame;
-            if (App.AppViewModel.HomeContentFrame.BackStackDepth == 0) App.AppViewModel.HomeContentFrame.Navigate(typeof(LaunchPad));
-        }
-
-        private void HomeNavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
-        {
-            if (App.AppViewModel.AppRootFrame.CanGoBack) App.AppViewModel.AppRootFrame.GoBack();
-            else if (App.AppViewModel.HomeContentFrame.CanGoBack) App.AppViewModel.HomeContentFrame.GoBack();
-        }
-
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            AppTitleBar.Height = sender.Height;
-            App.AppViewModel.AppBarHeight = sender.Height;
-        }
-
-        // 细品
-        private void HomeNavigationView_DisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs args)
-        {
-            App.AppViewModel.PaneDisplayMode = sender.PaneDisplayMode;
-            App.AppViewModel.FirePaneDisplayModeChanged(sender.PaneDisplayMode);
-            if (sender.PaneDisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top)
-            {
-                AppRootFrame.Padding = new Thickness { Top = AppTitleBar.Height };
-                AppTitleBar.Margin = new Thickness { Left = sender.CompactPaneLength };
-                AppTitleBar.HorizontalAlignment = HorizontalAlignment.Stretch;
-            }
-            else
-            {
-                AppRootFrame.Padding = new Thickness { Top = 0 };
-                AppTitleBar.Margin = new Thickness { Left = sender.CompactPaneLength };
-                AppTitleBar.HorizontalAlignment = HorizontalAlignment.Stretch;
-            }
-        }
-
-        private void HomeNavigationView_Loaded(object sender, RoutedEventArgs e)
+        private void NavigationViewControl_Loaded(object sender, RoutedEventArgs e)
         {
             HomeNavigationView = sender as Microsoft.UI.Xaml.Controls.NavigationView;
-        }
-
-        private void DisplayProperties_DpiChanged(DisplayInformation info, object o)
-        {
-
-        }
-
-        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            HomeNavigationView.IsBackEnabled = ((Frame)sender).CanGoBack;
-        }
-
-        private void AppRootFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            HomeNavigationView.IsBackEnabled = ((Frame)sender).CanGoBack;
-        }
-
-        private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            //args.QueryText
-            App.AppViewModel.HomeContentFrame.Navigate(typeof(SearchResult), args.QueryText);
         }
     }
 }

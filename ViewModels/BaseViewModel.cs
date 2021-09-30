@@ -73,7 +73,7 @@ namespace Coolapk_UWP.ViewModels
             get { return _data; }
             set
             {
-                _data = value; NotifyChanged(); foreach (var prop in NotifyChangedProperties())
+                _data = value; NotifyChanged(); foreach (string prop in NotifyChangedProperties())
                 {
                     NotifyChanged(prop);
                 }

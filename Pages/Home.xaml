@@ -10,13 +10,17 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Coolapk_UWP.Controls"
     NavigationCacheMode="Required"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
     <Page.DataContext>
         <viewmodels:HomeViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ISystemBaseHighColor" Color="{ThemeResource SystemBaseHighColor}"/>
+        <Thickness x:Key="NavigationViewContentMargin">0,0,0,0</Thickness>
+        <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
+        <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+
 
         <viewmodels:HomeNavigationViewMenuTemplateSelector
             x:Key="HomeNavigationViewMenuTemplateSelector"
@@ -24,10 +28,12 @@
             LogoTemplate="{StaticResource NavigationViewMenuItemLogo}"
             IconTemplate="{StaticResource NavigationViewMenuItem}"/>
 
+        <!--子Item-->
         <DataTemplate x:Key="NavigationViewMenuSubItem" x:DataType="viewmodels:HomeMenuItem" >
             <muxc:NavigationViewItem Content="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind Name}" Tag="{x:Bind Name}" MenuItemsSource="{x:Bind Children}"/>
         </DataTemplate>
 
+        <!--SymbolIcon Item-->
         <DataTemplate x:Key="NavigationViewMenuItem" x:DataType="viewmodels:HomeMenuItem" >
             <muxc:NavigationViewItem Content="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind Name}" Tag="{x:Bind Name}"  MenuItemsSource="{x:Bind Children}">
                 <muxc:NavigationViewItem.Icon>
@@ -36,6 +42,7 @@
             </muxc:NavigationViewItem>
         </DataTemplate>
 
+        <!--Image Item-->
         <DataTemplate x:Key="NavigationViewMenuItemLogo" x:DataType="viewmodels:HomeMenuItem" >
             <muxc:NavigationViewItem Content="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind Name}" Tag="{x:Bind Name}"  MenuItemsSource="{x:Bind Children}">
                 <muxc:NavigationViewItem.Icon>
@@ -45,28 +52,25 @@
         </DataTemplate>
 
         <DataTemplate x:Key="HomeTemplate"  x:DataType="viewmodels:HomeViewModel">
-            <muxc:NavigationView
-                x:Name="HomeNavigationView"
-                PaneDisplayMode="Auto"
-                IsBackButtonVisible="Visible"
-                AlwaysShowHeader="False"
-                BackRequested="HomeNavigationView_BackRequested"
-                PaneTitle="酷安 UWP"
-                IsTitleBarAutoPaddingEnabled="False"
-                MenuItemsSource="{x:Bind Tabs}"
-                DisplayModeChanged="HomeNavigationView_DisplayModeChanged"
-                Loaded="HomeNavigationView_Loaded"
-                MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
-                SelectionChanged="NavigationView_SelectionChanged"
-                FooterMenuItemsSource="{x:Bind BottomItems}">
-                <VisualStateManager.VisualStateGroups>
+            <muxc:NavigationView x:Name="NavigationViewControl"
+                             Loaded="NavigationViewControl_Loaded"
+                             IsTitleBarAutoPaddingEnabled="False"
+                             IsBackButtonVisible="Visible"
+                             MenuItemsSource="{x:Bind Tabs}"
+                             MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
+                             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+                             BackRequested="NavigationViewControl_BackRequested"
+                             SelectionChanged="NavigationViewControl_SelectionChanged"
+                             IsBackEnabled="{x:Bind HomeContentFrame.CanGoBack, Mode=OneWay}"
+                             Canvas.ZIndex="0">
+                <!--VisualStateManager.VisualStateGroups>
                     <VisualStateGroup>
                         <VisualState>
                             <VisualState.StateTriggers>
                                 <AdaptiveTrigger MinWindowWidth="641" />
                             </VisualState.StateTriggers>
                             <VisualState.Setters>
-                                <Setter Target="HomeNavigationView.PaneDisplayMode" Value="Auto" />
+                                <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Auto" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState>
@@ -74,42 +78,52 @@
                                 <AdaptiveTrigger MinWindowWidth="0" />
                             </VisualState.StateTriggers>
                             <VisualState.Setters>
-                                <Setter Target="HomeNavigationView.PaneDisplayMode" Value="Top" />
+                                <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Top" /> 决定暂且不用 Top Mode
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups >
-                <muxc:NavigationView.AutoSuggestBox>
-                    <AutoSuggestBox PlaceholderText="搜索" x:Name="SearchInput" QuerySubmitted="SearchInput_QuerySubmitted" QueryIcon="Find" AutomationProperties.Name="Search Input"/>
-                </muxc:NavigationView.AutoSuggestBox>
-                <Frame 
-                    CacheMode="BitmapCache"
-                    Navigated="ContentFrame_Navigated"
-                    x:Name="ContentFrame" 
-                    Loaded="ContentFrame_Loaded" 
-                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                    
-                </Frame>
+                </VisualStateManager.VisualStateGroups-->
+                <Grid>
+                    <Frame Loaded="ContentFrameControl_Loaded" x:Name="ContentFrameControl">
+
+                    </Frame>
+                </Grid>
+
             </muxc:NavigationView>
         </DataTemplate>
+
     </Page.Resources>
 
     <Grid>
-        <Frame
-            Navigated="AppRootFrame_Navigated"
-            Padding="0,41,0,0"
-            Loaded="AppRootFrame_Loaded"
-            x:Name="AppRootFrame">
-            <controls:AsyncLoadStateControl
+        <Border x:Name="AppTitleBar"
+                IsHitTestVisible="True"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Height="40"
+                Canvas.ZIndex="1"
+                Margin="48,8,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="AppLogo"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"
+                       Width="16"
+                       Height="16"/>
+                <TextBlock x:Name="AppTitle"
+                           Text="酷安 UWP"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           Style="{StaticResource CaptionTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <controls:AsyncLoadStateControl
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 IsLoading="{x:Bind ViewModel.Busy, Mode=OneWay}"
                 ErrorMessage="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
                 Retry="AsyncLoadStateControl_Retry"
                 DataLoadedTemplate="{StaticResource HomeTemplate}"/>
-        </Frame>
-        <Border x:Name="AppTitleBar" Background="Transparent" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" >
-            <TextBlock Text="DEBUG/Cyenoch/2021-06-01" VerticalAlignment="Center"/>
-        </Border>
     </Grid>
+
 </Page>

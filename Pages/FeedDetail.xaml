@@ -14,17 +14,17 @@
     xmlns:Triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Transparent">
     <Page.DataContext>
         <viewModels:FeedDetailViewModel/>
     </Page.DataContext>
 
     <Page.Resources>
         <DataTemplate x:Key="FeedDetailTemplate" x:DataType="viewModels:FeedDetailViewModel">
-            <Grid
-                Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Grid>
                 <Grid.Resources>
                     <ResourceDictionary>
 

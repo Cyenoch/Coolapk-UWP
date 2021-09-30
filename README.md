@@ -2,31 +2,25 @@
 
 **这是一个兴趣使然的项目，主要目的用于学习 UWP 应用开发，以及 C#语言**
 
-其次，为了方便在 Windows10(包括未来的 Windows X(淦被砍掉了)) 上刷酷安
+其次，为了方便在 Windows 上刷酷安
 
 ---
 
 目前支持的设备架构: **arm, x86, x64**
 
-是的，你可以在**windows arm设备**上运行本应用!
+是的，你可以在**windows arm设备**上运行本应用! (但还没试过)
 
 > **仅供个人用于学习、研究;不得用于商业用途;**
 
-### 预览效果
+### 预览效果 （Mica!）
 
-#### 首页响应式布局效果
-
-[![主页显示效果1](https://z3.ax1x.com/2021/04/13/cylYef.png)](https://imgtu.com/i/cylYef)
-[![主页显示效果2](https://z3.ax1x.com/2021/04/13/cyltw8.md.png)](https://imgtu.com/i/cyltw8)
-[![主页显示效果3](https://z3.ax1x.com/2021/04/13/cylNTS.md.png)](https://imgtu.com/i/cylNTS)
-
-#### 图文动态显示
-
-[![图文动态显示效果](https://z3.ax1x.com/2021/04/13/cyQax1.md.png)](https://imgtu.com/i/cyQax1)
-
-#### 图文编辑器
-
-[![图文编辑器效果](https://z3.ax1x.com/2021/04/13/cyQ2RA.md.png)](https://imgtu.com/i/cyQ2RA)
+[![4Ttux1.md.png](https://z3.ax1x.com/2021/10/01/4Ttux1.md.png)](https://imgtu.com/i/4Ttux1)
+[![4TtmG9.md.png](https://z3.ax1x.com/2021/10/01/4TtmG9.md.png)](https://imgtu.com/i/4TtmG9)
+[![4TtlqK.md.png](https://z3.ax1x.com/2021/10/01/4TtlqK.md.png)](https://imgtu.com/i/4TtlqK)
+[![4TtePJ.md.png](https://z3.ax1x.com/2021/10/01/4TtePJ.md.png)](https://imgtu.com/i/4TtePJ)
+[![4Ttn2R.md.png](https://z3.ax1x.com/2021/10/01/4Ttn2R.md.png)](https://imgtu.com/i/4Ttn2R)
+[![4TtMKx.md.png](https://z3.ax1x.com/2021/10/01/4TtMKx.md.png)](https://imgtu.com/i/4TtMKx)
+[![4TtQr6.md.png](https://z3.ax1x.com/2021/10/01/4TtQr6.md.png)](https://imgtu.com/i/4TtQr6)
 
 ### 适配酷安的 URI SCHEME
 

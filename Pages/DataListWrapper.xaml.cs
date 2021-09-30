@@ -18,8 +18,6 @@ using Windows.ApplicationModel.Core;
 using Coolapk_UWP.Other;
 using System.Threading.Tasks;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace Coolapk_UWP.Pages
 {
     public sealed partial class CommonDataListWrapper : Page
@@ -30,8 +28,6 @@ namespace Coolapk_UWP.Pages
         public CommonDataListWrapper()
         {
             NavigationCacheMode = NavigationCacheMode.Enabled;
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -48,11 +44,6 @@ namespace Coolapk_UWP.Pages
                 Content = listView;
             }
         }
-
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            listView?.SetValue(PaddingProperty, new Thickness { Top = sender.Height });
-        }
     }
 
     // 为首页设计的，不周全
@@ -65,15 +56,13 @@ namespace Coolapk_UWP.Pages
         {
             //this.InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var param = e.Parameter as HomeMenuItem;
-            if (param != null && PrePage != param && e.NavigationMode != NavigationMode.Back)
+            if (param != null && PrePage != param && param.Config != null && e.NavigationMode != NavigationMode.Back)
             {
                 PrePage = param;
                 DataList = new DataList();
@@ -84,11 +73,6 @@ namespace Coolapk_UWP.Pages
                     DataList.SetValue(DataList.toutiaoMode, true);
                 Content = DataList;
             }
-        }
-
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            DataList.SetValue(DataList.PaddingProperty, new Thickness { Top = sender.Height });
         }
     }
 }

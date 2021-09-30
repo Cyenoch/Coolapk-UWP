@@ -15,11 +15,11 @@
         <Border 
             x:Name="FeedBlock"
             Tapped="FeedBlock_Tapped"
-            BorderThickness=".4" 
-            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
-            Padding="12"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-            CornerRadius="8">
+            CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            Padding="12">
             <StackPanel>
                 <Grid Tapped="UserProfileBlock_Tapped" x:Name="UserProfileBlock" Margin="0,0,0,6">
                     <Grid.ColumnDefinitions>

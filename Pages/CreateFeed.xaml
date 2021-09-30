@@ -10,7 +10,8 @@
     xmlns:viewmodels="using:Coolapk_UWP.ViewModels"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
     <Page.DataContext>
         <viewmodels:CreateFeedViewModel x:Name="ViewModel" />
     </Page.DataContext>

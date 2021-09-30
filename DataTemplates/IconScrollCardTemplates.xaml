@@ -59,7 +59,10 @@
                 Margin="0"
                 Width="100"
                 Orientation="Vertical"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
                 Padding="0,10,0,0">
                 <PersonPicture
                     HorizontalAlignment="Center"
@@ -85,7 +88,10 @@
                 Margin="0"
                 Width="100"
                 Orientation="Vertical"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
                 Padding="0,10,0,0">
                 <PersonPicture
                     HorizontalAlignment="Center"
@@ -112,7 +118,10 @@
                 Margin="0"
                 Width="100"
                 Orientation="Vertical"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
                 Padding="0,10,0,0">
                 <cmui:ImageEx
                     CornerRadius="10"

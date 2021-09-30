@@ -102,6 +102,12 @@ namespace Coolapk_UWP.Models
                 case "card":
                     switch (EntityTemplate)
                     {
+                        case "refreshCard":
+                            return Cast<RefreshCard>();
+                        case "listCard":
+                            if (Title == "😏 还有什么值得买？")
+                                return Cast<IgnoreCard>();
+                            break;
                         case "iconLinkGridCard":
                             return Cast<IconLinkGridCard>();
                         case "configCard":
@@ -199,6 +205,8 @@ namespace Coolapk_UWP.Models
     public class Apk : Entity { }
 
     public class Product : Entity { }
+
+    public class RefreshCard : Entity { }
 
     public class MainInit
     {

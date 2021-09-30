@@ -55,13 +55,17 @@
         FeedCardTemplateSelector="{StaticResource FeedCardTemplateSelector}"
         FeedReplyTemplate="{StaticResource FeedReplyTemplate}"
         IconLinkGridCardTemplate="{StaticResource IconLinkGridCardTemplate}"
-        ImageTextScrollCardTemplate="{StaticResource ImageTextScrollCardTemplate}"/>
+        ImageTextScrollCardTemplate="{StaticResource ImageTextScrollCardTemplate}"
+        RefreshCardTemplate="{StaticResource RefreshCardTemplate}"/>
 
     <!--默认模板-->
     <DataTemplate x:Key="DefaultEntityTemplate" x:DataType="models:Entity">
         <StackPanel
             HorizontalAlignment="Stretch"
-            Background="{ThemeResource SystemControlAcrylicElementBrush}">
+            CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Background="{ThemeResource LayerFillColorDefaultBrush}">
             <TextBlock Text="{x:Bind EntityID}"/>
             <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind EntityType}"/>
             <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind EntityTemplate}"/>
@@ -115,6 +119,12 @@
         </Viewbox>
     </DataTemplate>
 
+    <DataTemplate x:Key="RefreshCardTemplate" x:DataType="models:RefreshCard">
+        <Border HorizontalAlignment="Center" Padding="12">
+            <Button Content="{x:Bind Title, Mode=OneTime}" Click="RefreshButton_Click"/>
+        </Border>
+    </DataTemplate>
+
     <!--IconLinkGridCard-->
     <DataTemplate x:Key="IconLinkGridCardTemplate" x:DataType="models:IconLinkGridCard">
         <ListView
@@ -129,8 +139,12 @@
             ItemsSource="{x:Bind Entities}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Entity">
-                    <Border Margin="0,8" CornerRadius="8" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                        <StackPanel Padding="8" Orientation="Vertical">
+                    <Border Margin="0,8"
+                        CornerRadius="8"
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        Background="{ThemeResource LayerFillColorDefaultBrush}">
+                        <StackPanel Padding="8" Orientation="Vertical" >
                             <cmui:ImageEx CornerRadius="8" IsCacheEnabled="True" Height="56" Width="56" HorizontalAlignment="Stretch" Stretch="Uniform" Source="{x:Bind Pic}" />
                             <TextBlock Margin="0,6,0,0" HorizontalAlignment="Center" Text="{x:Bind Title}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                         </StackPanel>

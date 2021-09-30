@@ -31,6 +31,7 @@ namespace Coolapk_UWP
 
         public App()
         {
+
             this.InitializeComponent();
             EmojisUtil.LoadEmojisResw();
             this.Suspending += OnSuspending;

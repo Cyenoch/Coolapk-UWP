@@ -9,11 +9,16 @@
 
     <!-- 横向滚动 上图下文字的卡片... -->
     <DataTemplate x:Key="ImageTextScrollCardTemplate" x:DataType="models:ImageTextScrollCard">
-        <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="0,12" Orientation="Vertical">
-            <TextBlock Margin="0,0,0,12" Text="{x:Bind Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+        <StackPanel Padding="0,12" Orientation="Vertical" 
+            CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" 
+            Background="{ThemeResource LayerFillColorDefaultBrush}">
+            <TextBlock Margin="12,0,0,12" Text="{x:Bind Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
             <ListView
                 ItemsSource="{x:Bind Entities}"
                 SelectionMode="None"
+                Padding="12,0"
                 IsItemClickEnabled="True"
                 ItemClick="ListView_ItemClick"
                 ScrollViewer.HorizontalScrollMode="Enabled"
@@ -33,7 +38,11 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Entity">
-                        <Border BorderThickness="1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
+                        <Border
+                            CornerRadius="8"
+                            BorderThickness="1"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            Background="{ThemeResource LayerFillColorDefaultBrush}">
                             <Viewbox Stretch="Uniform">
                                 <RelativePanel Width="350" Height="200">
                                     <mtui:ImageEx HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{x:Bind Pic}"/>
