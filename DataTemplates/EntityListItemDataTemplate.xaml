@@ -26,7 +26,7 @@
     <Style x:Key="WidthLimitedFeedContainerStyle" TargetType="ListViewItem">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="MaxWidth" Value="600"/>
+        <Setter Property="MaxWidth" Value="640"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Margin" Value="12,0,12,12"/>
 
@@ -35,7 +35,7 @@
     <Style x:Key="WidthLimitedContainerStyle" TargetType="ListViewItem">
         <Setter Property="Margin" Value="0,0,0,12"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="MaxWidth" Value="600"/>
+        <Setter Property="MaxWidth" Value="640"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         
         <Setter Property="Template" Value="{StaticResource DataListViewItemControlTemplate}"/>
@@ -129,8 +129,8 @@
     </DataTemplate>
 
     <DataTemplate x:Key="RefreshCardTemplate" x:DataType="models:RefreshCard">
-        <Border HorizontalAlignment="Center" Padding="12">
-            <Button Content="{x:Bind Title, Mode=OneTime}" Click="RefreshButton_Click"/>
+        <Border HorizontalAlignment="Stretch" Padding="6">
+            <Button Content="{x:Bind Title, Mode=OneTime}" HorizontalAlignment="Stretch" IsHitTestVisible="False" />
         </Border>
     </DataTemplate>
 

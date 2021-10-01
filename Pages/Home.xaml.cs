@@ -166,5 +166,10 @@ namespace Coolapk_UWP.Pages
         {
             HomeNavigationView = sender as Microsoft.UI.Xaml.Controls.NavigationView;
         }
+
+        private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            App.AppViewModel.HomeContentFrame.Navigate(typeof(SearchResult), args.QueryText);
+        }
     }
 }

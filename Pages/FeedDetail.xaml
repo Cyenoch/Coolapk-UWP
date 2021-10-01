@@ -79,7 +79,7 @@
                     <ListViewItem>
                         <controls:MyRichTextBlock
                             HorizontalAlignment="Stretch"
-                            Text="{x:Bind Data.Message}"/>
+                            Text="{x:Bind Data.MessageWithEmoji}"/>
                     </ListViewItem>
                     <ListViewItem x:Name="_____" x:Load="{x:Bind Data.HasPics}">
                         <controls:PicArrBox Margin="0,6" SourcePicArr="{x:Bind Data.PicArr}"  PicArr="{x:Bind Data.SmallPicArr}" />

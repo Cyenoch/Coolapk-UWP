@@ -39,7 +39,7 @@ namespace Coolapk_UWP.Models
         {
             get
             {
-                if (_cachedMessageWithEmojiJoined.Equals(String.Empty))
+                if (_cachedMessageWithEmojiJoined.Equals(string.Empty))
                 {
                     var msg = Message;
                     EmojisUtil.Emojis.ForEach(emoji =>

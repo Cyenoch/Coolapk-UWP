@@ -45,7 +45,6 @@
                         RowSpacing="5"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-        <ListView />
         </GridView -->
         <muxc:RefreshContainer 
                 RelativePanel.AlignBottomWithPanel="True" 
@@ -67,7 +66,7 @@
                 ItemContainerStyleSelector="{StaticResource DataListItemContainerStyleSelector}"
                 ItemsSource="{x:Bind Entities, Mode=OneWay}"/>
         </muxc:RefreshContainer>
-        <Border 
+        <Border
             Margin="16"
             CornerRadius="8"
             Padding="8"

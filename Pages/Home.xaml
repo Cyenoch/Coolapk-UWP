@@ -83,6 +83,14 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups-->
+                <muxc:NavigationView.AutoSuggestBox>
+                    <AutoSuggestBox QueryIcon="Find"
+                                    AutomationProperties.Name="Search" 
+                                    PlaceholderText="搜索"
+                                    x:Name="SearchInput" 
+                                    QuerySubmitted="SearchInput_QuerySubmitted"/>
+                </muxc:NavigationView.AutoSuggestBox>
+
                 <Grid>
                     <Frame Loaded="ContentFrameControl_Loaded" x:Name="ContentFrameControl">
 

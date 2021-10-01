@@ -120,19 +120,18 @@ namespace Coolapk_UWP.Controls
                         if (node.OriginalName == "emoji")
                         {// 如果是表情
                             var src = node.GetAttributeValue("src", "");
-                            if (!src.Equals(String.Empty))
+                            if (!src.Equals(string.Empty))
                             {
                                 BitmapImage bitmapImage = new BitmapImage(new Uri(src));
-                                var img = new Image
-                                {
-                                    Width = paragraph.FontSize + 4,
-                                    Height = Width,
-                                    Source = bitmapImage,
-                                    Margin = new Thickness { Bottom = -4 }
-                                };
                                 var container = new InlineUIContainer
                                 {
-                                    Child = img
+                                    Child = new Image
+                                    {
+                                        Width = paragraph.FontSize + 4,
+                                        Height = Width,
+                                        Source = bitmapImage,
+                                        Margin = new Thickness { Bottom = -4 }
+                                    }
                                 };
                                 paragraph.Inlines.Add(container);
                             }

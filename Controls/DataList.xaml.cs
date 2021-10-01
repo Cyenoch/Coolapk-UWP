@@ -127,6 +127,10 @@ namespace Coolapk_UWP.Controls
                 //var feed = entity as Feed;
                 //App.AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), feed.EntityID);
             }
+            if (entity is RefreshCard)
+            {
+                Entities.Reload();
+            }
         }
 
         private void RefreshContainer_RefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)

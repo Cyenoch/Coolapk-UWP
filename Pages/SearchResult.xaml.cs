@@ -30,6 +30,7 @@ namespace Coolapk_UWP.Pages
             this.InitializeComponent();
             var coreTitleBar = Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            tabView.Resources["TabViewHeaderPadding"] = new Thickness { Top = coreTitleBar.Height };
         }
 
         private void CoreTitleBar_LayoutMetricsChanged(Windows.ApplicationModel.Core.CoreApplicationViewTitleBar sender, object args)
@@ -122,6 +123,7 @@ namespace Coolapk_UWP.Pages
                     }
                 })
                 {
+                    item.Padding = new Thickness { Top = 20 };
                     tabView.TabItems.Add(item);
                 }
 

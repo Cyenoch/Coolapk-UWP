@@ -75,13 +75,8 @@ namespace Coolapk_UWP.DataTemplates {
             this.InitializeComponent();
         }
 
-        private void GoToMore_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        private void GoToMore_Click(object sender, RoutedEventArgs e)
         {
-            
         }
     }
 }
