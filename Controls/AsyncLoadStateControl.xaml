@@ -5,13 +5,14 @@
     xmlns:local="using:Coolapk_UWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <UserControl.Resources>
         <DataTemplate x:Key="DefaultLoadingTemplate">
-            <ProgressRing IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <muxc:ProgressRing IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </DataTemplate>
         <DataTemplate x:Key="DefaultLoadedTemplate">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="加载完毕，这是一个默认模板"/>

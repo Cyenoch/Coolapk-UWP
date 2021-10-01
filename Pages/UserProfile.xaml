@@ -80,7 +80,7 @@
                     <behaviors:QuickReturnHeaderBehavior />
                 </interactivity:Interaction.Behaviors>
                 <ListView.Header>
-                    <Border Padding="12, 0" Background="{ThemeResource SystemControlAltLowAcrylicElementBrush}">
+                    <Border Padding="12, 12" Background="{ThemeResource SystemControlAltLowAcrylicElementBrush}">
                         <RelativePanel>
                             <!-- 用户信息 -->
                             <muxc:StackPanel
@@ -155,6 +155,7 @@
                             <Pivot x:Name="Pivot"
                                    PivotItemLoaded="Pivot_PivotItemLoaded" 
                                    RelativePanel.AlignBottomWithPanel="True"
+                                   RelativePanel.AlignHorizontalCenterWithPanel="True"
                                    ItemsSource="{x:Bind ViewModel.Pivots, Mode=OneWay}">
                                 <Pivot.HeaderTemplate>
                                     <DataTemplate>
@@ -179,9 +180,9 @@
                 RelativePanel.AlignBottomWithPanel="True" 
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True">
-                <ProgressRing IsActive="{x:Bind ViewModel.Entities.Loading, Mode=OneWay}"/>
+                <muxc:ProgressRing IsActive="{x:Bind ViewModel.Entities.Loading, Mode=OneWay}"/>
             </Border>
-            <ProgressRing IsActive="{x:Bind ViewModel.Busy, Mode=OneWay}"
+            <muxc:ProgressRing IsActive="{x:Bind ViewModel.Busy, Mode=OneWay}"
                           RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
         </RelativePanel>
     </Grid>

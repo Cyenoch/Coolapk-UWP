@@ -62,11 +62,11 @@ namespace Coolapk_UWP.Other {
 
         bool ISupportIncrementalLoading.HasMoreItems => HasMoreItems && Error == null;
 
-        public async void Reload() {
+        public async Task<LoadMoreItemsResult> Reload() {
             Error = null;
             Clear();
             Page = 1;
-            await LoadMoreItemsAsync(Size);
+            return await LoadMoreItemsAsync(Size);
         }
 
         // 重写InsertItem使它在插入得时候根据EntityType和EntityTemplate分配正确的Model

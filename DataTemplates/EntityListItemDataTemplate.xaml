@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:cmui="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     xmlns:templates="using:Coolapk_UWP.DataTemplates"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:models="using:Coolapk_UWP.Models">
 
     <ResourceDictionary.MergedDictionaries>
@@ -18,6 +19,8 @@
 
         <!--ImageTextScrollCardTemplate-->
         <templates:ImageTextScrollCardTemplate />
+        
+        <ResourceDictionary Source="ControlTemplates.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <Style x:Key="WidthLimitedFeedContainerStyle" TargetType="ListViewItem">
@@ -25,19 +28,25 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="MaxWidth" Value="600"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="12,12"/>
+        <Setter Property="Margin" Value="12,0,12,12"/>
+
+        <Setter Property="Template" Value="{StaticResource DataListViewItemControlTemplate}"/>
     </Style>
     <Style x:Key="WidthLimitedContainerStyle" TargetType="ListViewItem">
-        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,12"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="MaxWidth" Value="600"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        
+        <Setter Property="Template" Value="{StaticResource DataListViewItemControlTemplate}"/>
     </Style>
 
     <Style x:Key="WidthNoLimitedContainerStyle" TargetType="ListViewItem">
-        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,12"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        
+        <Setter Property="Template" Value="{StaticResource DataListViewItemControlTemplate}"/>
     </Style>
 
     <templates:DataListItemContainerStyleSelector 

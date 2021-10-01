@@ -5,7 +5,11 @@
     xmlns:models="using:Coolapk_UWP.Models"
     xmlns:controls="using:Coolapk_UWP.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
     xmlns:mtui="using:Microsoft.Toolkit.Uwp.UI.Controls">
+
+    <media:AttachedCardShadow x:Key="CommonShadow" Offset="4"/>
 
     <templates:FeedCardTemplateSelector 
         x:Key="FeedCardTemplateSelector"
@@ -13,6 +17,7 @@
 
     <DataTemplate x:Key="DefaultFeedCardTemplate" x:DataType="models:Feed">
         <Border 
+            ui:FrameworkElementExtensions.Cursor="Hand"
             x:Name="FeedBlock"
             Tapped="FeedBlock_Tapped"
             CornerRadius="8"

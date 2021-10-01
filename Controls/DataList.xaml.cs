@@ -128,5 +128,23 @@ namespace Coolapk_UWP.Controls
                 //App.AppViewModel.HomeContentFrame.Navigate(typeof(Coolapk_UWP.Pages.FeedDetail), feed.EntityID);
             }
         }
+
+        private void RefreshContainer_RefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
+        {
+            var work = Entities.Reload();
+            work.ContinueWith(action => { 
+                if (action.Status == TaskStatus.RanToCompletion)
+                {
+                    _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                        args.GetDeferral().Complete();
+                    });
+                }
+            });
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Entities.Reload();
+        }
     }
 }

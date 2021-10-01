@@ -15,7 +15,12 @@
 
     <!--带标题 横向滚动的-->
     <DataTemplate x:Key="IconScrollCardTemplate" x:DataType="models:IconScrollCard">
-        <StackPanel Margin="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+        <StackPanel Margin="0" Orientation="Vertical" HorizontalAlignment="Stretch" 
+            CornerRadius="8"
+            BorderThickness="1"
+            Padding="0,0,0,12"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Background="{ThemeResource LayerFillColorDefaultBrush}">
             <StackPanel MaxWidth="600" HorizontalAlignment="Stretch" Margin="20,10,0,10" Orientation="Horizontal">
                 <TextBlock Text="{x:Bind Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
                 <HyperlinkButton HorizontalAlignment="Right" x:Name="GoToMore" Margin="10,0,0,0" Click="GoToMore_Click">

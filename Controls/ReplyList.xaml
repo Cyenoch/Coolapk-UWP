@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:templates="using:Coolapk_UWP.DataTemplates">
 
     <UserControl.Resources>
@@ -49,7 +50,7 @@
             RelativePanel.AlignBottomWithPanel="True" 
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True">
-            <ProgressRing IsActive="{x:Bind Entities.Loading, Mode=OneWay}"/>
+            <muxc:ProgressRing IsActive="{x:Bind Entities.Loading, Mode=OneWay}"/>
         </Border>
     </RelativePanel>
 
