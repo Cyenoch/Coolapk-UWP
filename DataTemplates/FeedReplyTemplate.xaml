@@ -14,12 +14,25 @@
             HorizontalAlignment="Stretch">
             <RichTextBlock IsTextSelectionEnabled="True">
                 <Paragraph>
-                    <Run Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind UserInfo.Username}"/>
-                    <Run Foreground="{ThemeResource SystemColorGrayTextColor}" Text="{x:Bind InfoHtml}"/>
-                    <Run Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind ReplyToUsername}"/>
-                    <Run Text=":&#x0a;"/>
+                    <Run Text="{x:Bind UserInfo.Username}">
+                        <Run.Foreground>
+                            <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
+                        </Run.Foreground>
+                    </Run>
+                    <Run Text="{x:Bind InfoHtml}">
+                        <Run.Foreground>
+                            <SolidColorBrush Color="{ThemeResource SystemColorGrayTextColor}" />
+                        </Run.Foreground>
+                    </Run>
+                    <Run Text="{x:Bind ReplyToUsername}">
+                        <Run.Foreground>
+                            <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
+                        </Run.Foreground>
+                    </Run>
+                    <Run Text=":&#x0a;" />
                     <InlineUIContainer>
-                        <controls:MyRichTextBlock Wrap="False" VerticalAlignment="Center" Text="{x:Bind MessageWithEmoji}"/>
+                        <controls:MyRichTextBlock Wrap="False" VerticalAlignment="Center"
+                                                  Text="{x:Bind MessageWithEmoji}" />
                     </InlineUIContainer>
                 </Paragraph>
             </RichTextBlock>
@@ -30,11 +43,11 @@
         <Grid
             HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <cmui:ImageEx
@@ -44,43 +57,55 @@
                 Height="50"
                 VerticalAlignment="Top"
                 Source="{x:Bind UserInfo.SmallAvatar}"
-                CornerRadius="100"/>
+                CornerRadius="100" />
 
-            <StackPanel 
+            <StackPanel
                 Margin="10,0,0,0"
                 Grid.Row="0"
                 Grid.Column="1"
                 Orientation="Vertical">
-                <TextBlock 
-                    Text="{x:Bind UserInfo.Username}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
-                <controls:MyRichTextBlock 
-                    Text="{x:Bind MessageWithEmoji}" 
-                    Wrap="True"/>
-                <cmui:ImageEx Tapped="___Tapped" x:Name="__" x:Load="{x:Bind HasPic}" Source="{x:Bind Pic}"/>
+                <TextBlock
+                    Text="{x:Bind UserInfo.Username}" Style="{ThemeResource BodyTextBlockStyle}">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
+                    </TextBlock.Foreground>
+                </TextBlock>
+                <controls:MyRichTextBlock
+                    Text="{x:Bind MessageWithEmoji}"
+                    Wrap="True" />
+                <cmui:ImageEx Tapped="___Tapped" x:Name="__" x:Load="{x:Bind HasPic}" Source="{x:Bind Pic}" />
 
                 <RelativePanel
                     Margin="0,8,0,0">
-                    <TextBlock 
+                    <TextBlock
                         RelativePanel.AlignLeftWithPanel="True"
-                        Text="{x:Bind HumanReadableDateString}" 
-                        Style="{ThemeResource CaptionTextBlockStyle}" 
-                        Foreground="{ThemeResource SystemColorGrayTextColor}"/>
-                    <Button x:Name="LikeButton" Click="LikeButton_Click" Style="{ThemeResource EllipsisButtonRevealStyle}" RelativePanel.LeftOf="ReplyButton">
+                        Text="{x:Bind HumanReadableDateString}"
+                        Style="{ThemeResource CaptionTextBlockStyle}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{ThemeResource SystemColorGrayTextColor}" />
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <Button x:Name="LikeButton" Click="LikeButton_Click"
+                            Style="{ThemeResource EllipsisButtonRevealStyle}" RelativePanel.LeftOf="ReplyButton">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xE8E1;"/>
-                            <TextBlock Margin="8,0,0,0" Text="{x:Bind Likenum, Mode=OneWay}"/>
+                            <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       Text="&#xE8E1;" />
+                            <TextBlock Margin="8,0,0,0" Text="{x:Bind Likenum, Mode=OneWay}" />
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="ReplyButton" Style="{ThemeResource EllipsisButtonRevealStyle}" RelativePanel.AlignRightWithPanel="True">
+                    <Button x:Name="ReplyButton" Style="{ThemeResource EllipsisButtonRevealStyle}"
+                            RelativePanel.AlignRightWithPanel="True">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xE90A;"/>
-                            <TextBlock Margin="8,0,0,0" Text="{x:Bind ReplyRowsCount, Mode=OneWay}"/>
+                            <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       Text="&#xE90A;" />
+                            <TextBlock Margin="8,0,0,0" Text="{x:Bind ReplyRowsCount, Mode=OneWay}" />
                         </StackPanel>
                     </Button>
                 </RelativePanel>
 
-                <Border x:Name="___" x:Load="{x:Bind HasSubreply, Mode=OneWay}" Margin="0,8,0,0" Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="8,4" CornerRadius="8">
+                <Border x:Name="___" x:Load="{x:Bind HasSubreply, Mode=OneWay}" Margin="0,8,0,0"
+                        Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="8,4" CornerRadius="8">
                     <ListView
                         HorizontalAlignment="Stretch"
                         SelectionMode="None"
@@ -89,10 +114,10 @@
                         ItemsSource="{x:Bind ReplyRows, Mode=OneWay}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Padding" Value="0,4"/>
-                                <Setter Property="MinHeight" Value="0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Padding" Value="0,4" />
+                                <Setter Property="MinHeight" Value="0" />
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
