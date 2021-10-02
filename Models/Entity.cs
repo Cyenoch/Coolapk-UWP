@@ -7,6 +7,8 @@ using Newtonsoft.Json.Converters;
 using Coolapk_UWP.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Coolapk.Common.JsonConverters;
+using Coolapk.Common;
 
 namespace Coolapk_UWP.Models
 {
@@ -73,7 +75,7 @@ namespace Coolapk_UWP.Models
         [JsonIgnore]
         public string HumanReadableDateString
         {
-            get { return AppUtil.GetReadDateString(Lastupdate); }
+            get { return Utils.GetReadDateString(Lastupdate); }
         }
 
         public void Cast<T>(out T entity) where T : Entity => entity = Cast<T>();
