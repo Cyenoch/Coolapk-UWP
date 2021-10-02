@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# IDE0008: Use explicit type
+dotnet_diagnostic.IDE0008.severity = none
+
+# IDE0003: Remove qualification
+dotnet_diagnostic.IDE0003.severity = silent

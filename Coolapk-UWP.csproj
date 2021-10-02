@@ -198,6 +198,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Compile Include="Network\CoolapkApi.UserApi.cs" />
+    <None Include=".editorconfig" />
     <None Include="Assets\emojimap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -770,7 +771,12 @@
       <Version>6.0.94</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="src\Coolapk.Common\Coolapk.Common.csproj">
+      <Project>{DD1DA9C1-8AFC-49FA-9F9C-57AF078C4333}</Project>
+      <Name>Coolapk.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\AsyncLoadStateControl.xaml">
       <SubType>Designer</SubType>
