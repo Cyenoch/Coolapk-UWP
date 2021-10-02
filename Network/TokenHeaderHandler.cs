@@ -1,5 +1,4 @@
-﻿using Coolapk.Common;
-using Coolapk_UWP.Other;
+﻿using Coolapk_UWP.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +13,11 @@ namespace Coolapk_UWP.Network {
         private static readonly string guid = Guid.NewGuid().ToString();
         public string Token {
             get {
-                var t = Utils.DateTimeToUnixTimeStamp(DateTime.Now);
+                var t = AppUtil.DateTimeToUnixTimeStamp(DateTime.Now);
                 var hexT = "0x" + Convert.ToString((int)t, 16);
-                var md5T = Utils.GetMD5($"{t}");
+                var md5T = AppUtil.GetMD5($"{t}");
                 var a = $"token://com.coolapk.market/c67ef5943784d09750dcfbb31020f0ab?{md5T}${guid}&com.coolapk.market";
-                var md5A = Utils.GetMD5(Convert.ToBase64String(Encoding.UTF8.GetBytes(a)));
+                var md5A = AppUtil.GetMD5(Convert.ToBase64String(Encoding.UTF8.GetBytes(a)));
                 var token = md5A + guid + hexT;
                 return token;
             }
@@ -36,7 +35,7 @@ namespace Coolapk_UWP.Network {
             request.Headers.Add("X-App-Version", "11.0");
             request.Headers.Add("X-App-Code", "2101202");
             request.Headers.Add("X-Api-Version", "11");
-            request.Headers.Add("X-App-Device", Utils.GetMD5(guid));
+            request.Headers.Add("X-App-Device", AppUtil.GetMD5(guid));
 
             var httpBaseProtocolFilter = new HttpBaseProtocolFilter();
             var cookieManager = httpBaseProtocolFilter.CookieManager;
