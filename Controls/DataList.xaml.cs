@@ -1,5 +1,4 @@
-﻿using Coolapk.Common;
-using Coolapk_UWP.Models;
+﻿using Coolapk_UWP.Models;
 using Coolapk_UWP.Other;
 using System;
 using System.Collections.Generic;
@@ -63,7 +62,7 @@ namespace Coolapk_UWP.Controls
 
         public IncrementalLoadingEntityCollection<Entity> Entities;
 
-        public uint installTime = (uint)Utils.DateToTimeStamp(DateTime.Now);
+        public uint installTime = (uint)AppUtil.DateToTimeStamp(DateTime.Now);
 
         public DataList()
         {

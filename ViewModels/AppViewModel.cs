@@ -20,7 +20,6 @@ using Windows.Web.Http.Filters;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using System.Collections.ObjectModel;
-using Coolapk.Common;
 
 namespace Coolapk_UWP.ViewModels
 {
@@ -168,7 +167,7 @@ namespace Coolapk_UWP.ViewModels
         {
             var uid = GetCookies().FirstOrDefault((cookie) => cookie.Name == "uid")?.Value;
             if (uid == null) return;
-            var profile = await CoolapkApis.GetUserProfile((uint)int.Parse(uid.ToString()), Utils.DateToTimeStamp(DateTime.Now));
+            var profile = await CoolapkApis.GetUserProfile((uint)int.Parse(uid.ToString()), AppUtil.DateToTimeStamp(DateTime.Now));
             if (profile.Data == null || profile.Error != null) throw new Exception(profile.Error);
             if (profile.Data.OtherField?.ContainsKey("mobilestatus") == true)
                 App.AppViewModel.CurrentUser = profile.Data;
