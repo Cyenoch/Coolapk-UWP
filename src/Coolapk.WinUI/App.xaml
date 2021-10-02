@@ -1,0 +1,23 @@
+﻿<Application
+    x:Class="Coolapk.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:other="using:Coolapk.WinUI"
+    xmlns:valueConverters="using:Coolapk.WinUI.Converters"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="DefaultImage" UriSource="ms-appx:///Assets/Square150x150Logo.scale-200.png" />
+
+            <valueConverters:NegateConverter x:Key="NegateConverter" />
+            <valueConverters:TrueIfNotEmptyConverter x:Key="TrueIfNotEmptyConverter" />
+            <valueConverters:VisibileIfTrueConverter x:Key="VisibileIfTrueConverter" />
+
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>
