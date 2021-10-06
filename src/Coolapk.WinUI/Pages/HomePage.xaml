@@ -5,15 +5,96 @@
     xmlns:local="using:Coolapk.WinUI.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Coolapk.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:home="using:Coolapk.ViewModels.Home"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="xxx"/>
-            <TextBlock x:Name="TitleBlock"/>
+    <Page.Resources>
+        <Thickness x:Key="NavigationViewContentMargin">0,40,0,0</Thickness>
+        <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
 
-            <Button x:Name="ChangeTitleButton" Content="Change"/>
-        </StackPanel>
+        <DataTemplate x:Key="SymbolIconMenuItemTemplate" x:DataType="home:SelectableItem" >
+            <muxc:NavigationViewItem Content="{x:Bind Title}" ToolTipService.ToolTip="{x:Bind Title}" Tag="{x:Bind Title}">
+                <muxc:NavigationViewItem.Icon>
+                    <SymbolIcon Symbol="{x:Bind FallbackLogo}"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </DataTemplate>
+        <DataTemplate x:Key="ImageMenuItemTemplate" x:DataType="home:SelectableItem" >
+            <muxc:NavigationViewItem Content="{x:Bind Title}" ToolTipService.ToolTip="{x:Bind Title}" Tag="{x:Bind Title}">
+                <muxc:NavigationViewItem.Icon>
+                    <muxc:ImageIcon Source="{x:Bind Logo}"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </DataTemplate>
+        <DataTemplate x:Key="MultiChildItemTemplate" x:DataType="home:MultiChildItem" >
+            <muxc:NavigationViewItem  Content="{x:Bind Title}" ToolTipService.ToolTip="{x:Bind Title}" Tag="{x:Bind Title}" MenuItemsSource="{x:Bind SubItem}">
+                <muxc:NavigationViewItem.Icon>
+                    <SymbolIcon Symbol="{x:Bind Icon}"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </DataTemplate>
+        <DataTemplate x:Key="DividerMenuItemTemplate" x:DataType="home:DividerItem" >
+            <muxc:NavigationViewItemSeparator />
+        </DataTemplate>
+
+        <local:HomeNavigationViewMenuTemplateSelector x:Key="HomeNavigationViewMenuTemplateSelector"
+                                                      ImageMenuItemTemplate="{StaticResource ImageMenuItemTemplate}"
+                                                      DividerMenuItemTemplate="{StaticResource DividerMenuItemTemplate}"
+                                                      MultiChildMenuItemTemplate="{StaticResource MultiChildItemTemplate}"
+                                                      SymbolIconMenuItemTemplate="{StaticResource SymbolIconMenuItemTemplate}"
+                                                      />
+    </Page.Resources>
+
+    <Grid>
+        <Border x:Name="AppTitleBar"
+                IsHitTestVisible="True"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Height="40"
+                Canvas.ZIndex="1"
+                Margin="48,8,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="AppLogo"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"
+                       Width="16"
+                       Height="16"/>
+                <TextBlock x:Name="AppTitle"
+                           Text="酷安 UWP"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           Style="{StaticResource CaptionTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <muxc:NavigationView x:Name="NavigationViewControl"
+                             IsTitleBarAutoPaddingEnabled="False"
+                             IsBackButtonVisible="Visible"
+                             PaneTitle=""
+                             MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
+                             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+                             BackRequested="NavigationViewControl_BackRequested"
+                             SelectionChanged="NavigationViewControl_SelectionChanged"
+                             IsBackEnabled="{x:Bind ContentFrameControl.CanGoBack, Mode=OneWay}"
+                             Canvas.ZIndex="0">
+            <muxc:NavigationView.AutoSuggestBox>
+                <AutoSuggestBox QueryIcon="Find"
+                                    AutomationProperties.Name="Search" 
+                                    PlaceholderText="搜索"
+                                    x:Name="SearchInput" 
+                                    QuerySubmitted="SearchInput_QuerySubmitted"/>
+            </muxc:NavigationView.AutoSuggestBox>
+
+            <Grid>
+                <Frame x:Name="ContentFrameControl">
+
+                </Frame>
+            </Grid>
+
+        </muxc:NavigationView>
     </Grid>
 </Page>

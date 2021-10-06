@@ -128,6 +128,7 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CookieHandler.cs" />
     <Compile Include="Utils\Emojis.cs" />
   </ItemGroup>
   <ItemGroup>

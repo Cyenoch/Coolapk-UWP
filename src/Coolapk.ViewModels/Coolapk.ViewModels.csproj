@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ViewModelBase.cs" />
     <Compile Include="Home\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Coolapk.ViewModels.rd.xml" />
@@ -134,6 +135,12 @@
     <PackageReference Include="ReactiveUI.Fody">
       <Version>16.2.6</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coolapk.Api\Coolapk.Api.csproj">
+      <Project>{52D1A410-38AB-4514-B110-A128AD54230E}</Project>
+      <Name>Coolapk.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
