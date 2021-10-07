@@ -17,7 +17,7 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
+        <Thickness x:Key="NavigationViewContentMargin">0,0,0,0</Thickness>
         <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
         <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
 
