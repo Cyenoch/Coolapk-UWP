@@ -52,19 +52,19 @@ namespace Coolapk.WinUI.Pages
 
         public HomePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             ViewModel = new HomeViewModel();
-            this.WhenActivated(disposable =>
-            {
-                this.OneWayBind(ViewModel, vm => vm.MenuItems, v => v.NavigationViewControl.MenuItemsSource)
-                    .DisposeWith(disposable);
+            _ = this.WhenActivated(disposable =>
+              {
+                  _ = this.OneWayBind(ViewModel, vm => vm.MenuItems, v => v.NavigationViewControl.MenuItemsSource)
+                      .DisposeWith(disposable);
 
                 //this.BindCommand(ViewModel, vm => vm.ChangeTitleCommand, v => v.ChangeTitleButton)
                 //    .DisposeWith(disposable);
 
                 if (!ViewModel.MenuItems.Any()) _ = ViewModel.InitializeRequestAsync();
 
-            });
+              });
 
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -149,7 +149,10 @@ namespace Coolapk.WinUI.Pages
 
         private void NavigationViewControl_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
-            //throw new NotImplementedException();
+            if (args.IsSettingsSelected)
+            {
+                ContentFrameControl.Navigate(typeof(SettingsPage));
+            }
         }
 
         private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)

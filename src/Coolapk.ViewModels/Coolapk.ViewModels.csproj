@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\AdaptiveEntityListViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Home\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
