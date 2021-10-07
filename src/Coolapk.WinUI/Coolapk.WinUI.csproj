@@ -134,6 +134,7 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateSelectors\HomeNavigationViewMenuItemTemplateSelector.cs" />
     <Compile Include="Utils\CookieHandler.cs" />
     <Compile Include="Utils\Emojis.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />

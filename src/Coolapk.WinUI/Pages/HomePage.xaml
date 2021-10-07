@@ -8,8 +8,9 @@
     xmlns:controls="using:Coolapk.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:home="using:Coolapk.ViewModels.Home"
+    xmlns:tmplSelectors="using:Coolapk.WinUI.TemplateSelectors"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
     <Page.Resources>
         <Thickness x:Key="NavigationViewContentMargin">0,40,0,0</Thickness>
@@ -40,7 +41,7 @@
             <muxc:NavigationViewItemSeparator />
         </DataTemplate>
 
-        <local:HomeNavigationViewMenuTemplateSelector x:Key="HomeNavigationViewMenuTemplateSelector"
+        <tmplSelectors:HomeNavigationViewMenuItemTemplateSelector x:Key="HomeNavigationViewMenuItemTemplateSelector"
                                                       ImageMenuItemTemplate="{StaticResource ImageMenuItemTemplate}"
                                                       DividerMenuItemTemplate="{StaticResource DividerMenuItemTemplate}"
                                                       MultiChildMenuItemTemplate="{StaticResource MultiChildItemTemplate}"
@@ -53,9 +54,9 @@
                 IsHitTestVisible="True"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                Height="40"
+                Height="48"
                 Canvas.ZIndex="1"
-                Margin="48,8,0,0">
+                Margin="48,0,0,0">
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="AppLogo"
                        HorizontalAlignment="Left"
@@ -75,7 +76,7 @@
                              IsTitleBarAutoPaddingEnabled="False"
                              IsBackButtonVisible="Visible"
                              PaneTitle=""
-                             MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
+                             MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuItemTemplateSelector}"
                              DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
                              BackRequested="NavigationViewControl_BackRequested"
                              SelectionChanged="NavigationViewControl_SelectionChanged"

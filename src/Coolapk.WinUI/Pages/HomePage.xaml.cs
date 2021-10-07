@@ -22,29 +22,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Coolapk.WinUI.Pages
 {
-    public sealed class HomeNavigationViewMenuTemplateSelector : DataTemplateSelector
-    {
-        public DataTemplate DividerMenuItemTemplate { get; set; }
-        public DataTemplate MultiChildMenuItemTemplate { get; set; }
-        public DataTemplate ImageMenuItemTemplate { get; set; }
-        public DataTemplate SymbolIconMenuItemTemplate { get; set; }
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
-        {
-            switch (item)
-            {
-                case DividerItem _:
-                    return DividerMenuItemTemplate;
-                case SelectableItem selectableItem:
-                    if (selectableItem.FallbackLogo == default) return ImageMenuItemTemplate;
-                    else return SymbolIconMenuItemTemplate;
-                case MultiChildItem _:
-                    return MultiChildMenuItemTemplate;
-                default:
-                    throw new Exception("no navigation menu item template found");
-            }
-        }
-    }
-
     public sealed partial class HomePage : Page, IViewFor<HomeViewModel>
     {
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty
@@ -59,13 +36,45 @@ namespace Coolapk.WinUI.Pages
                   _ = this.OneWayBind(ViewModel, vm => vm.MenuItems, v => v.NavigationViewControl.MenuItemsSource)
                       .DisposeWith(disposable);
 
-                //this.BindCommand(ViewModel, vm => vm.ChangeTitleCommand, v => v.ChangeTitleButton)
-                //    .DisposeWith(disposable);
+                  //this.BindCommand(ViewModel, vm => vm.ChangeTitleCommand, v => v.ChangeTitleButton)
+                  //    .DisposeWith(disposable);
 
-                if (!ViewModel.MenuItems.Any()) _ = ViewModel.InitializeRequestAsync();
+                  if (!ViewModel.MenuItems.Any()) _ = ViewModel.InitializeRequestAsync();
 
               });
 
+            SetupTitleBar();
+        }
+
+        public HomeViewModel ViewModel { get => (HomeViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
+        object IViewFor.ViewModel
+        {
+            get => ViewModel; set => ViewModel = (HomeViewModel)value;
+        }
+
+        private void NavigationViewControl_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        {
+            if (ContentFrameControl.CanGoBack) ContentFrameControl.GoBack();
+        }
+
+        private void NavigationViewControl_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+                ContentFrameControl.Navigate(typeof(SettingsPage));
+            }
+        }
+
+        private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class HomePage
+    {
+        private void SetupTitleBar()
+        {
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
@@ -80,36 +89,6 @@ namespace Coolapk.WinUI.Pages
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
 
             Window.Current.Activated += Current_Activated;
-        }
-
-        private void Current_Activated(object sender, WindowActivatedEventArgs e)
-        {
-            SolidColorBrush defaultForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
-            SolidColorBrush inactiveForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorDisabledBrush"];
-            AppTitle.Foreground = e.WindowActivationState == CoreWindowActivationState.Deactivated ? inactiveForegroundBrush : defaultForegroundBrush;
-        }
-
-        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            AppTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            UpdateTitleBarLayout(sender);
-        }
-
-        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
-        {
-            AppTitleBar.Height = coreTitleBar.Height;
-            Thickness currMargin = AppTitleBar.Margin;
-            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
-        }
-
-        public HomeViewModel ViewModel { get => (HomeViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
-        object IViewFor.ViewModel
-        {
-            get => ViewModel; set => ViewModel = (HomeViewModel)value;
         }
 
         private void NavigationViewControl_DisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs args)
@@ -142,22 +121,28 @@ namespace Coolapk.WinUI.Pages
             }
         }
 
-        private void NavigationViewControl_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        private void Current_Activated(object sender, WindowActivatedEventArgs e)
         {
-            if (ContentFrameControl.CanGoBack) ContentFrameControl.GoBack();
+            SolidColorBrush defaultForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+            SolidColorBrush inactiveForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorDisabledBrush"];
+            AppTitle.Foreground = e.WindowActivationState == CoreWindowActivationState.Deactivated ? inactiveForegroundBrush : defaultForegroundBrush;
         }
 
-        private void NavigationViewControl_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            if (args.IsSettingsSelected)
-            {
-                ContentFrameControl.Navigate(typeof(SettingsPage));
-            }
+            AppTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            throw new NotImplementedException();
+            UpdateTitleBarLayout(sender);
+        }
+
+        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
+        {
+            //AppTitleBar.Height = coreTitleBar.Height;
+            Thickness currMargin = AppTitleBar.Margin;
+            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
         }
     }
 }

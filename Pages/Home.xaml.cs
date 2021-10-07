@@ -66,7 +66,7 @@ namespace Coolapk_UWP.Pages
 
         private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
         {
-            AppTitleBar.Height = coreTitleBar.Height;
+            //AppTitleBar.Height = coreTitleBar.Height;
             Thickness currMargin = AppTitleBar.Margin;
             AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
         }

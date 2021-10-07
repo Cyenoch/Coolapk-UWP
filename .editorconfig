@@ -5,3 +5,6 @@ dotnet_diagnostic.IDE0008.severity = none
 
 # IDE0003: Remove qualification
 dotnet_diagnostic.IDE0003.severity = silent
+
+# IDE0011: Add braces
+csharp_prefer_braces = when_multiline
