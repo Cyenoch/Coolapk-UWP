@@ -13,7 +13,18 @@ using Windows.UI.Xaml.Data;
 
 namespace Coolapk.WinUI.Controls.AdaptiveEntityList
 {
-    public class IncrementalEntityDataCollection : ObservableCollection<Entity>, ISupportIncrementalLoading
+    public class EntityDataWrapper
+    {
+        public Entity Unwrapped { get; set; }
+        public AdaptiveEntityListViewModel ViewModel { get; protected set; }
+        public EntityDataWrapper(Entity entity, AdaptiveEntityListViewModel vm)
+        {
+            ViewModel = vm;
+            Unwrapped = entity.AutoCast();
+        }
+    }
+
+    public class IncrementalEntityDataCollection : ObservableCollection<EntityDataWrapper>, ISupportIncrementalLoading
     {
         private AdaptiveEntityListViewModel ViewModel { get; set; }
 
@@ -26,8 +37,9 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
         {
             return AsyncInfo.Run(async cancelToken =>
             {
+                
                 var countBeforeLoad = ViewModel.Data.Count;
-                await ViewModel.DeltaRequestDataAsync();
+                await ViewModel.NextPage();
                 var countAfterLoaded = ViewModel.Data.Count;
                 var loadCount = countAfterLoaded - countBeforeLoad;
                 return new LoadMoreItemsResult()
@@ -37,17 +49,7 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
             });
         }
 
-        /// <summary>
-        /// 重写InsertItem，在插入item时自动转换类型
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="item"></param>
-        protected override void InsertItem(int index, Entity item)
-        {
-            base.InsertItem(index, item.AutoCast());
-        }
-
-        public bool HasMoreItems => ViewModel.IsFinished;
+        public bool HasMoreItems => !ViewModel.IsFinished;
     }
 
     public class AdaptiveEntityListViewModel : ApiRequestViewModelBase, IDeltaRequestViewModel
@@ -89,7 +91,7 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
                 var resp = await Fetcher(this);
                 if (resp.Count == 0)
                     IsFinished = true;
-                resp.ToList().ForEach(Data.Add);
+                resp.ToList().ForEach(item => Data.Add(new EntityDataWrapper(item, this)));
             }
             catch (Exception ex)
             {
@@ -117,7 +119,7 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
                 if (resp == null) return;
                 if (resp.Count == 0)
                     IsFinished = true;
-                resp.ToList().ForEach(Data.Add);
+                resp.ToList().ForEach(item => Data.Add(new EntityDataWrapper(item, this)));
             }
             catch (Exception ex)
             {

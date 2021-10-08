@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:Coolapk.Models" xmlns:adaptiveentitylist="using:Coolapk.WinUI.Controls.AdaptiveEntityList"
+    x:Class="Coolapk.WinUI.Controls.AdaptiveEntityList.DataTemplates.AdaptiveItemTemplates">
+
+    <DataTemplate x:Key="NoAdapterCaseTmpl" x:DataType="adaptiveentitylist:EntityDataWrapper">
+        <Button Click="Button_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="50">
+            <StackPanel>
+                <TextBlock Text="{x:Bind Unwrapped.EntityTemplate}"/>
+                <TextBlock Text="{x:Bind Unwrapped.EntityType}"/>
+                <TextBlock Text="{x:Bind Unwrapped.EntityID}"/>
+            </StackPanel>
+        </Button>
+    </DataTemplate>
+</ResourceDictionary>

@@ -133,7 +133,7 @@ namespace Coolapk.WinUI.Pages
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //
             }

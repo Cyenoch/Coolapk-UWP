@@ -4,21 +4,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Coolapk.WinUI.Controls.AdaptiveEntityList"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:Coolapk.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:datatemplates="using:Coolapk.WinUI.Controls.AdaptiveEntityList.DataTemplates"
     mc:Ignorable="d"
     DataContext="Coolapk.WinUI.Controls.AdaptiveEntityList.AdaptiveEntityListControl"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <datatemplates:AdaptiveItemTemplates />
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:AdaptiveItemTemplateSelector
+                x:Key="AdaptiveEntityListItemTemplateSelector"
+                NoAdapterCaseTmpl="{StaticResource NoAdapterCaseTmpl}"
+                />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <TextBlock x:Name="TextA"/>
         <TextBlock x:Name="ErrorA"/>
 
-        <GridView
+        <ListView
             x:Name="DataListControl"
             IncrementalLoadingTrigger="Edge"
-            IncrementalLoadingThreshold="300">
-
-        </GridView>
+            IncrementalLoadingThreshold="1"
+            DataFetchSize="20"
+            SelectionMode="None"
+            IsItemClickEnabled="False"
+            ItemsSource="{x:Bind ViewModel.Data}"
+            ItemTemplateSelector="{StaticResource AdaptiveEntityListItemTemplateSelector}">
+        </ListView>
     </Grid>
 </UserControl>
