@@ -12,7 +12,7 @@ namespace Coolapk.WinUI.TemplateSelectors
     public sealed class HomeNavigationViewMenuItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate DividerMenuItemTemplate { get; set; }
-        public DataTemplate MultiChildMenuItemTemplate { get; set; }
+        //public DataTemplate MultiChildMenuItemTemplate { get; set; }
         public DataTemplate ImageMenuItemTemplate { get; set; }
         public DataTemplate SymbolIconMenuItemTemplate { get; set; }
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
@@ -23,8 +23,8 @@ namespace Coolapk.WinUI.TemplateSelectors
                     return DividerMenuItemTemplate;
                 case SelectableItem selectableItem:
                     return selectableItem.FallbackLogo == default ? ImageMenuItemTemplate : SymbolIconMenuItemTemplate;
-                case MultiChildItem _:
-                    return MultiChildMenuItemTemplate;
+                //case MultiChildItem _:
+                //    return MultiChildMenuItemTemplate;
                 default:
                     throw new Exception("no navigation menu item template found");
             }

@@ -79,7 +79,7 @@ namespace Coolapk.Models
 
         public void Cast<T>(out T entity) where T : Entity => entity = Cast<T>();
 
-        public object AutoCast()
+        public Entity AutoCast()
         {
             switch (EntityType)
             {

@@ -120,13 +120,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AdaptiveEntityList\AdaptiveEntityList.xaml.cs">
-      <DependentUpon>AdaptiveEntityList.xaml</DependentUpon>
+    <Compile Include="Controls\AdaptiveEntityList\AdaptiveEntityListControl.Config.cs" />
+    <Compile Include="Controls\AdaptiveEntityList\AdaptiveEntityListControl.xaml.cs">
+      <DependentUpon>AdaptiveEntityListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AsyncLoadStateControl.xaml.cs">
       <DependentUpon>AsyncLoadStateControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ValueConverters.cs" />
+    <Compile Include="Pages\AdaptiveEntityListWrapperPage.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -708,7 +710,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\AdaptiveEntityList\AdaptiveEntityList.xaml">
+    <Page Include="Controls\AdaptiveEntityList\AdaptiveEntityListControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -25,12 +25,15 @@ namespace Coolapk.ViewModels.Home
         public string Logo { get; set; }
         public MainInitTabConfig Config { get; set; }
     }
-    public class MultiChildItem : MenuItem
-    {
-        public Symbol Icon { get; set; }
-        public IEnumerable<MenuItem> SubItem { get; set; }
-        public int DefaultSelect { get; set; }
-    }
+
+    // 弃用 
+    //public class MultiChildItem : MenuItem
+    //{
+    //    public Symbol Icon { get; set; }
+    //    public IEnumerable<MenuItem> SubItem { get; set; }
+    //    public int DefaultSelect { get; set; }
+    //}
+
     public class DividerItem : MenuItem { }
 
     public partial class HomeViewModel : ApiRequestViewModelBase, IApiRequestViewModel
@@ -65,34 +68,50 @@ namespace Coolapk.ViewModels.Home
 
                 MenuItems.Add(new DividerItem());
 
-                MenuItems.Add(new MultiChildItem()
+                digitalTabs.Select(tab =>
                 {
-                    Title = "数码",
-                    Icon = Symbol.CellPhone,
-                    SubItem = digitalTabs.Select(tab =>
+                    return new SelectableItem()
                     {
-                        return new SelectableItem()
-                        {
-                            Title = tab.Title,
-                            Config = tab,
-                            Logo = tab.Logo,
-                        };
-                    }),
-                });
-                MenuItems.Add(new MultiChildItem()
+                        Title = tab.Title,
+                        Config = tab,
+                        Logo = tab.Logo,
+                    };
+                }).ToList().ForEach(MenuItems.Add);
+
+                MenuItems.Add(new DividerItem());
+
+                discoveryTabs.Select(tab =>
                 {
-                    Title = "发现",
-                    Icon = Symbol.Find,
-                    SubItem = discoveryTabs.Select(tab =>
+                    return new SelectableItem()
                     {
-                        return new SelectableItem()
-                        {
-                            Title = tab.Title,
-                            Config = tab,
-                            Logo = tab.Logo,
-                        };
-                    }),
-                });
+                        Title = tab.Title,
+                        Config = tab,
+                        Logo = tab.Logo,
+                    };
+                }).ToList().ForEach(MenuItems.Add);
+
+                //MenuItems.Add(new MultiChildItem()
+                //{
+                //    Title = "数码",
+                //    Icon = Symbol.CellPhone,
+                //    SubItem = digitalTabs.Select(tab => new SelectableItem()
+                //    {
+                //        Title = tab.Title,
+                //        Config = tab,
+                //        Logo = tab.Logo,
+                //    }).ToList(),
+                //});
+                //MenuItems.Add(new MultiChildItem()
+                //{
+                //    Title = "发现",
+                //    Icon = Symbol.Find,
+                //    SubItem = discoveryTabs.Select(tab => new SelectableItem()
+                //    {
+                //        Title = tab.Title,
+                //        Config = tab,
+                //        Logo = tab.Logo,
+                //    }).ToList(),
+                //});
             }
             catch (Exception exception)
             {

@@ -30,13 +30,13 @@
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
         </DataTemplate>
-        <DataTemplate x:Key="MultiChildItemTemplate" x:DataType="home:MultiChildItem" >
+        <!--DataTemplate x:Key="MultiChildItemTemplate" x:DataType="home:MultiChildItem" >
             <muxc:NavigationViewItem  Content="{x:Bind Title}" ToolTipService.ToolTip="{x:Bind Title}" Tag="{x:Bind Title}" MenuItemsSource="{x:Bind SubItem}">
                 <muxc:NavigationViewItem.Icon>
                     <SymbolIcon Symbol="{x:Bind Icon}"/>
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
-        </DataTemplate>
+        </DataTemplate-->
         <DataTemplate x:Key="DividerMenuItemTemplate" x:DataType="home:DividerItem" >
             <muxc:NavigationViewItemSeparator />
         </DataTemplate>
@@ -44,7 +44,7 @@
         <tmplSelectors:HomeNavigationViewMenuItemTemplateSelector x:Key="HomeNavigationViewMenuItemTemplateSelector"
                                                       ImageMenuItemTemplate="{StaticResource ImageMenuItemTemplate}"
                                                       DividerMenuItemTemplate="{StaticResource DividerMenuItemTemplate}"
-                                                      MultiChildMenuItemTemplate="{StaticResource MultiChildItemTemplate}"
+                                                      
                                                       SymbolIconMenuItemTemplate="{StaticResource SymbolIconMenuItemTemplate}"
                                                       />
     </Page.Resources>
@@ -76,10 +76,10 @@
                              IsTitleBarAutoPaddingEnabled="False"
                              IsBackButtonVisible="Visible"
                              PaneTitle=""
+                             ItemInvoked="NavigationViewControl_ItemInvoked"
                              MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuItemTemplateSelector}"
                              DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
                              BackRequested="NavigationViewControl_BackRequested"
-                             SelectionChanged="NavigationViewControl_SelectionChanged"
                              IsBackEnabled="{x:Bind ContentFrameControl.CanGoBack, Mode=OneWay}"
                              Canvas.ZIndex="0">
             <muxc:NavigationView.AutoSuggestBox>
@@ -91,7 +91,7 @@
             </muxc:NavigationView.AutoSuggestBox>
 
             <Grid>
-                <Frame x:Name="ContentFrameControl">
+                <Frame x:Name="ContentFrameControl" Navigating="ContentFrameControl_Navigating">
 
                 </Frame>
             </Grid>

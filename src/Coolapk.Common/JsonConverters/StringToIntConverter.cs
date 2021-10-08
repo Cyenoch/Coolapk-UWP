@@ -21,7 +21,14 @@ namespace Coolapk.Common.JsonConverters
                 case int intV:
                     return intV;
                 case string stringV:
-                    return uint.Parse(stringV);
+                    try
+                    {
+                        return uint.Parse(stringV);
+                    }
+                    catch (Exception _)
+                    {
+                        return default;
+                    }
                 default:
                     return value == null ? 0 : (object)uint.Parse(value.ToString());
             }

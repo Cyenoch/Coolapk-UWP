@@ -1,4 +1,6 @@
-﻿using Coolapk.ViewModels.Home;
+﻿using Coolapk.Models;
+using Coolapk.ViewModels.Home;
+using Coolapk.WinUI.Controls.AdaptiveEntityList;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -51,26 +53,94 @@ namespace Coolapk.WinUI.Pages
         {
             get => ViewModel; set => ViewModel = (HomeViewModel)value;
         }
+        // 最后导航到的item
+        private SelectableItem LastSelectedItem;
 
         private void NavigationViewControl_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
             if (ContentFrameControl.CanGoBack) ContentFrameControl.GoBack();
         }
 
-        private void NavigationViewControl_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
-        {
-            if (args.IsSettingsSelected)
-            {
-                ContentFrameControl.Navigate(typeof(SettingsPage));
-            }
-        }
-
         private void SearchInput_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             throw new NotImplementedException();
         }
+
+        private void ContentFrameControl_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                if (e.SourcePageType == typeof(SettingsPage))
+                {
+                    NavigationViewControl.SelectedItem = NavigationViewControl.SettingsItem;
+                }
+                else if (e.SourcePageType == typeof(AdaptiveEntityListWrapperPage))
+                {
+                    var target = ViewModel.MenuItems.First(item => item.Title == (e.Parameter as AdaptiveEntityListConfig).Title);
+                    NavigationViewControl.SelectedItem = target;
+                    LastSelectedItem = target as SelectableItem;
+                }
+            }
+        }
+
+        private void NavigationViewControl_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        {
+            if (!args.IsSettingsInvoked)
+            {
+                var selected = ViewModel.MenuItems.First(item => item.Title == (string)args.InvokedItem);
+                NavigationViewInvoked(selected, args.IsSettingsInvoked);
+            }
+            else
+            {
+                NavigationViewInvoked(null, true);
+            }
+        }
+
+        private void NavigationViewInvoked(MenuItem selected, bool isSettingsInvoked = false)
+        {
+            try
+            {
+                switch (selected)
+                {
+                    case SelectableItem item:
+                        // 如果最后选择的item就是当前要导航到的item则忽略
+                        if (LastSelectedItem == item) break;
+                        _ = ContentFrameControl.Navigate(typeof(AdaptiveEntityListWrapperPage), new AdaptiveEntityListConfig()
+                        {
+                            Title = item.Config.Title,
+                            Url = item.Config.Url,
+                            Fetcher = async (control, vm, config) =>
+                            {
+                                var resp = (await vm.ApiService.GetDataList(config.Url, config.Title, vm.Page));
+                                if (resp.Error != null) throw new Exception(resp.Error);
+                                return resp.Data;
+                            },
+                        });
+                        LastSelectedItem = item;
+                        break;
+                    //case MultiChildItem item:
+                    //    var targetItem = item.SubItem.ToList()[item.DefaultSelect];
+                    //    if (LastSelectedItem == targetItem) break;
+                    //    NavigationViewControl.SelectedItem = targetItem;
+                    //    //NavigationViewInvoked(targetItem);
+                    //    break;
+                    default:
+                        if (isSettingsInvoked && ContentFrameControl.CurrentSourcePageType != typeof(SettingsPage))
+                        {
+                            _ = ContentFrameControl.Navigate(typeof(SettingsPage));
+                            LastSelectedItem = null;
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                //
+            }
+        }
     }
 
+    // 为了自定义TitleBar所作的操作
     public partial class HomePage
     {
         private void SetupTitleBar()
