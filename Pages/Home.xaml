@@ -17,7 +17,7 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Thickness x:Key="NavigationViewContentMargin">0,0,0,0</Thickness>
+        <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
         <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
         <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
 
@@ -53,36 +53,31 @@
 
         <DataTemplate x:Key="HomeTemplate"  x:DataType="viewmodels:HomeViewModel">
             <muxc:NavigationView x:Name="NavigationViewControl"
-                             Loaded="NavigationViewControl_Loaded"
-                             IsTitleBarAutoPaddingEnabled="False"
-                             IsBackButtonVisible="Visible"
-                             MenuItemsSource="{x:Bind Tabs}"
-                             MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
-                             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-                             BackRequested="NavigationViewControl_BackRequested"
-                             SelectionChanged="NavigationViewControl_SelectionChanged"
-                             IsBackEnabled="{x:Bind HomeContentFrame.CanGoBack, Mode=OneWay}"
-                             Canvas.ZIndex="0">
-                <!--VisualStateManager.VisualStateGroups>
+                                 Loaded="NavigationViewControl_Loaded"
+                                 IsTitleBarAutoPaddingEnabled="False"
+                                 AlwaysShowHeader="False"
+                                 IsBackButtonVisible="Visible"
+                                 MenuItemsSource="{x:Bind Tabs}"
+                                 MenuItemTemplateSelector="{StaticResource HomeNavigationViewMenuTemplateSelector}"
+                                 DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+                                 BackRequested="NavigationViewControl_BackRequested"
+                                 SelectionChanged="NavigationViewControl_SelectionChanged"
+                                 IsBackEnabled="{x:Bind HomeContentFrame.CanGoBack, Mode=OneWay}"
+                                 Canvas.ZIndex="0">
+                
+                <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup>
                         <VisualState>
                             <VisualState.StateTriggers>
                                 <AdaptiveTrigger MinWindowWidth="641" />
                             </VisualState.StateTriggers>
                             <VisualState.Setters>
-                                <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Auto" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState>
-                            <VisualState.StateTriggers>
-                                <AdaptiveTrigger MinWindowWidth="0" />
-                            </VisualState.StateTriggers>
-                            <VisualState.Setters>
-                                <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Top" /> 决定暂且不用 Top Mode
+                                <Setter Target="ContentFrameControl.Margin" Value="0,0,0,0" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups-->
+                </VisualStateManager.VisualStateGroups>
+                
                 <muxc:NavigationView.AutoSuggestBox>
                     <AutoSuggestBox QueryIcon="Find"
                                     AutomationProperties.Name="Search" 
@@ -91,11 +86,9 @@
                                     QuerySubmitted="SearchInput_QuerySubmitted"/>
                 </muxc:NavigationView.AutoSuggestBox>
 
-                <Grid>
-                    <Frame Loaded="ContentFrameControl_Loaded" x:Name="ContentFrameControl">
-
-                    </Frame>
-                </Grid>
+                <Frame x:Name="ContentFrameControl" 
+                       Margin="{StaticResource NavigationViewContentMargin}" 
+                       Loaded="ContentFrameControl_Loaded"/>
 
             </muxc:NavigationView>
         </DataTemplate>
