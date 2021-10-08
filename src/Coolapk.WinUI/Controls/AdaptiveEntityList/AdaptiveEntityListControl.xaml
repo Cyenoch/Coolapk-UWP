@@ -13,7 +13,12 @@
     <Grid>
         <TextBlock x:Name="TextA"/>
         <TextBlock x:Name="ErrorA"/>
-        
-        
+
+        <GridView
+            x:Name="DataListControl"
+            IncrementalLoadingTrigger="Edge"
+            IncrementalLoadingThreshold="300">
+
+        </GridView>
     </Grid>
 </UserControl>

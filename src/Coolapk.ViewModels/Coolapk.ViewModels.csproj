@@ -120,7 +120,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\AdaptiveEntityListViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Home\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +141,9 @@
       <Project>{52D1A410-38AB-4514-B110-A128AD54230E}</Project>
       <Name>Coolapk.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

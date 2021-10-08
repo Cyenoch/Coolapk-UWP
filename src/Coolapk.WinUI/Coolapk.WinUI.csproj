@@ -124,6 +124,7 @@
     <Compile Include="Controls\AdaptiveEntityList\AdaptiveEntityListControl.xaml.cs">
       <DependentUpon>AdaptiveEntityListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AdaptiveEntityList\AdaptiveEntityListViewModel.cs" />
     <Compile Include="Controls\AsyncLoadStateControl.xaml.cs">
       <DependentUpon>AsyncLoadStateControl.xaml</DependentUpon>
     </Compile>

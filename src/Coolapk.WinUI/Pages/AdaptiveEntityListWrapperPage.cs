@@ -16,7 +16,7 @@ namespace Coolapk.WinUI.Pages
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
-        IDictionary<string, AdaptiveEntityListControl> cache = new Dictionary<string, AdaptiveEntityListControl>();
+        readonly IDictionary<string, AdaptiveEntityListControl> cache = new Dictionary<string, AdaptiveEntityListControl>();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

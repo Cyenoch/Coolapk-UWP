@@ -1,14 +1,55 @@
 ﻿using Coolapk.Models;
+using Coolapk.ViewModels;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.UI.Xaml.Data;
 
-namespace Coolapk.ViewModels.Controls
+namespace Coolapk.WinUI.Controls.AdaptiveEntityList
 {
+    public class IncrementalEntityDataCollection : ObservableCollection<Entity>, ISupportIncrementalLoading
+    {
+        private AdaptiveEntityListViewModel ViewModel { get; set; }
+
+        public IncrementalEntityDataCollection(AdaptiveEntityListViewModel viewModel)
+        {
+            this.ViewModel = viewModel;
+        }
+
+        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
+        {
+            return AsyncInfo.Run(async cancelToken =>
+            {
+                var countBeforeLoad = ViewModel.Data.Count;
+                await ViewModel.DeltaRequestDataAsync();
+                var countAfterLoaded = ViewModel.Data.Count;
+                var loadCount = countAfterLoaded - countBeforeLoad;
+                return new LoadMoreItemsResult()
+                {
+                    Count = (uint)loadCount
+                };
+            });
+        }
+
+        /// <summary>
+        /// 重写InsertItem，在插入item时自动转换类型
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
+        protected override void InsertItem(int index, Entity item)
+        {
+            base.InsertItem(index, item.AutoCast());
+        }
+
+        public bool HasMoreItems => ViewModel.IsFinished;
+    }
+
     public class AdaptiveEntityListViewModel : ApiRequestViewModelBase, IDeltaRequestViewModel
     {
         [Reactive]
@@ -18,19 +59,19 @@ namespace Coolapk.ViewModels.Controls
         public bool IsFinished { get; private set; }
 
         [Reactive]
-        public ObservableCollection<Entity> Data { get; private set; }
+        public IncrementalEntityDataCollection Data { get; private set; }
 
         public DataFetcher Fetcher { get; private set; }
 
         public AdaptiveEntityListViewModel(DataFetcher fetcher)
         {
+            Data = new IncrementalEntityDataCollection(this);
             Page = 1;
-            Data = new ObservableCollection<Entity>();
             IsFinished = false;
             IsFailed = false;
             IsRequested = false;
             IsInitializeLoading = true;
-            this.Fetcher = fetcher;
+            Fetcher = fetcher;
         }
 
         public Task NextPage()
@@ -48,7 +89,7 @@ namespace Coolapk.ViewModels.Controls
                 var resp = await Fetcher(this);
                 if (resp.Count == 0)
                     IsFinished = true;
-                resp.ToList().ForEach(item => Data.Add(item.AutoCast()));
+                resp.ToList().ForEach(Data.Add);
             }
             catch (Exception ex)
             {
@@ -76,7 +117,7 @@ namespace Coolapk.ViewModels.Controls
                 if (resp == null) return;
                 if (resp.Count == 0)
                     IsFinished = true;
-                resp.ToList().ForEach(item => Data.Add(item.AutoCast()));
+                resp.ToList().ForEach(Data.Add);
             }
             catch (Exception ex)
             {
@@ -92,4 +133,6 @@ namespace Coolapk.ViewModels.Controls
 
         public delegate Task<IList<Entity>> DataFetcher(AdaptiveEntityListViewModel viewModel);
     }
+
+
 }
