@@ -29,11 +29,7 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
 
                 _ = this.OneWayBind(ViewModel, vm => vm.ErrorText, v => v.ErrorA.Text)
                     .DisposeWith(disposable);
-
-                //_ = this.OneWayBind(ViewModel, vm => vm.Data, v => v.DataListControl.ItemsSource)
-                //    .DisposeWith(disposable);
             });
-            var tmplSelector = DataListControl.ItemTemplateSelector as AdaptiveItemTemplateSelector;
         }
 
         public AdaptiveEntityListConfig Config { get => (AdaptiveEntityListConfig)GetValue(ConfigProperty); set => SetValue(ConfigProperty, value); }
