@@ -28,7 +28,19 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
             var data = Entity;
             var vm = AdaptiveListViewModel;
 
-            Content = new UnAdaptedItem(Entity);
+            UIElement card;
+
+            switch (data)
+            {
+                case ImageCarouselCard icc:
+                    card = new CarouselCard(icc);
+                    break;
+                default:
+                    card = new UnAdaptedItem(Entity);
+                    break;
+            }
+
+            Content = card;
         }
 
         public AdaptiveEntityListViewModel AdaptiveListViewModel { get => (AdaptiveEntityListViewModel)GetValue(AdaptiveListViewModelProperty); set => SetValue(AdaptiveListViewModelProperty, value); }

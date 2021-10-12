@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="Coolapk.WinUI.Controls.AdaptiveEntityList.ItemControls.CarouselCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Coolapk.WinUI.Controls.AdaptiveEntityList.ItemControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Coolapk.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Viewbox Stretch="Uniform" Margin="0,0,0,0">
+        <Border CornerRadius="8" Margin="0">
+            <FlipView
+                    Width="600"
+                    Height="200"
+                    ItemsSource="{x:Bind Entity.Entities}">
+                <FlipView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Entity">
+                        <Image HorizontalAlignment="Stretch" Stretch="Uniform" Source="{x:Bind Pic}" />
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+        </Border>
+    </Viewbox>
+</UserControl>

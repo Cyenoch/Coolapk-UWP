@@ -19,9 +19,19 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
     }
     public static class DefaultFetchers
     {
-        public static AdaptiveEntityListFetcher DataListFetcher => (control, viewModel, config) =>
+        public static AdaptiveEntityListFetcher DataListFetcher => async (control, viewModel, config) =>
         {
-            return null;
+            var resp = (await viewModel.ApiService.GetDataList(config.Url, config.Title, viewModel.Page, lastItem: viewModel.LastItemID, firstItem: viewModel.FirstItemID));
+            if (resp.Error != null) throw new Exception(resp.Error);
+            return resp.Data;
         };
+
+        public static AdaptiveEntityListFetcher HomeHeadlineFetcher => async (control, viewModel, config) =>
+        {
+            var resp = (await viewModel.ApiService.GetIndexV8(0, page: viewModel.Page, lastItem: viewModel.LastItemID));
+            if (resp.Error != null) throw new Exception(resp.Error);
+            return resp.Data;
+        };
+
     }
 }

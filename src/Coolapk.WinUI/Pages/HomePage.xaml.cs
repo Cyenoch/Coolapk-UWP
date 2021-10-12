@@ -109,12 +109,7 @@ namespace Coolapk.WinUI.Pages
                         {
                             Title = item.Config.Title,
                             Url = item.Config.Url,
-                            Fetcher = async (control, vm, config) =>
-                            {
-                                var resp = (await vm.ApiService.GetDataList(config.Url, config.Title, vm.Page));
-                                if (resp.Error != null) throw new Exception(resp.Error);
-                                return resp.Data;
-                            },
+                            Fetcher = item.Config.Title.Equals("头条") ? DefaultFetchers.HomeHeadlineFetcher : DefaultFetchers.DataListFetcher,
                         });
                         LastSelectedItem = item;
                         break;

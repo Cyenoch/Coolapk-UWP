@@ -5,6 +5,7 @@
     xmlns:local="using:Coolapk.WinUI.Controls.AdaptiveEntityList"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     DataContext="Coolapk.WinUI.Controls.AdaptiveEntityList.AdaptiveEntityListControl"
     d:DesignHeight="300"
@@ -20,14 +21,23 @@
         <TextBlock x:Name="TextA"/>
         <TextBlock x:Name="ErrorA"/>
 
-        <ListView x:Name="DataListControl"
+        <GridView x:Name="DataListControl"
             IncrementalLoadingTrigger="Edge"
             IncrementalLoadingThreshold="1"
             DataFetchSize="20"
             SelectionMode="None"
             IsItemClickEnabled="False"
+            Padding="0,12,0,0"
             ItemsSource="{x:Bind ViewModel.Data}"
             ItemTemplate="{StaticResource AdaptiveItemControlSelector}">
-        </ListView>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:StaggeredPanel DesiredColumnWidth="450"
+                                             HorizontalAlignment="Stretch"
+                                             ColumnSpacing="5"
+                                             RowSpacing="5" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
     </Grid>
 </UserControl>

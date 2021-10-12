@@ -37,7 +37,7 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
         {
             return AsyncInfo.Run(async cancelToken =>
             {
-                
+
                 var countBeforeLoad = ViewModel.Data.Count;
                 await ViewModel.NextPage();
                 var countAfterLoaded = ViewModel.Data.Count;
@@ -54,6 +54,11 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
 
     public class AdaptiveEntityListViewModel : ApiRequestViewModelBase, IDeltaRequestViewModel
     {
+        public uint InstallTime = (uint)Common.Utils.DateToTimeStamp(DateTime.Now);
+
+        public uint? FirstItemID => this.Data.Count == 0 ? null : this.Data.First()?.Unwrapped?.EntityID;
+        public uint? LastItemID => this.Data.Count == 0 ? null : this.Data.LastOrDefault(item => item.Unwrapped.EntityID > 900)?.Unwrapped?.EntityID;
+
         [Reactive]
         public uint Page { get; private set; }
 
