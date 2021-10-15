@@ -32,9 +32,10 @@
             ItemTemplate="{StaticResource AdaptiveItemControlSelector}">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <controls:StaggeredPanel DesiredColumnWidth="450"
+                    <controls:StaggeredPanel DesiredColumnWidth="430"
                                              HorizontalAlignment="Stretch"
                                              ColumnSpacing="5"
+                                             Padding="12,0,12,0"
                                              RowSpacing="5" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>

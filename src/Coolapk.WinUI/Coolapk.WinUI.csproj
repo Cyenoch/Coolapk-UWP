@@ -129,6 +129,9 @@
     <Compile Include="Controls\AdaptiveEntityList\ItemControls\CarouselCard.xaml.cs">
       <DependentUpon>CarouselCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AdaptiveEntityList\ItemControls\IconLinkGridCard.xaml.cs">
+      <DependentUpon>IconLinkGridCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AdaptiveEntityList\ItemControls\UnAdaptedItem.xaml.cs">
       <DependentUpon>UnAdaptedItem.xaml</DependentUpon>
     </Compile>
@@ -726,6 +729,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\AdaptiveEntityList\ItemControls\CarouselCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AdaptiveEntityList\ItemControls\IconLinkGridCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

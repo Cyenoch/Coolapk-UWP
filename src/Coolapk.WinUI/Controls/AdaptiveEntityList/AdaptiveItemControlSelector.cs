@@ -35,6 +35,9 @@ namespace Coolapk.WinUI.Controls.AdaptiveEntityList
                 case ImageCarouselCard icc:
                     card = new CarouselCard(icc);
                     break;
+                case Models.IconLinkGridCard ilgc:
+                    card = new ItemControls.IconLinkGridCard(ilgc);
+                    break;
                 default:
                     card = new UnAdaptedItem(Entity);
                     break;

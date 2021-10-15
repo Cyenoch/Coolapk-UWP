@@ -14,20 +14,17 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+//https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
+
 namespace Coolapk.WinUI.Controls.AdaptiveEntityList.ItemControls
 {
-    public sealed partial class UnAdaptedItem : UserControl
+    public sealed partial class IconLinkGridCard : UserControl
     {
-        public Entity Entity { get; set; }
-        public UnAdaptedItem(Entity entity)
+        public Models.IconLinkGridCard Entity { get; set; }
+        public IconLinkGridCard(Models.IconLinkGridCard entity)
         {
             Entity = entity;
             this.InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            _ = Entity;
         }
     }
 }

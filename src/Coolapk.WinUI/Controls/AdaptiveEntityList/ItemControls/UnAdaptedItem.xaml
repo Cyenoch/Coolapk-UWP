@@ -12,6 +12,7 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{x:Bind Entity.EntityID}"/>
+            <Button Click="Button_Click">T</Button>
         </StackPanel>
     </Grid>
 </UserControl>
